@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Checklist Pellegrino – Camino de Santiago</title>
+<title>Pilgrim Checklist – Camino de Santiago</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -14,31 +14,93 @@
     --gold-pale: #e8c97a;
     --parch: #f2ead8;
     --parch-dark: #e2d4b8;
-    --stone: #8a7a6a;
     --fog: #b8a898;
     --white: #faf7f2;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { width: 100%; background: var(--white); color: var(--ink); font-family: 'Jost', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+  /* HERO */
   .hero { background: var(--ink); color: var(--parch); padding: 2.8rem 2rem 2.2rem; position: relative; overflow: hidden; }
   .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 50%, rgba(196,146,42,0.18) 0%, transparent 60%), radial-gradient(ellipse at 10% 80%, rgba(168,74,42,0.14) 0%, transparent 50%); pointer-events: none; }
-  .hero-inner { position: relative; max-width: 560px; margin: 0 auto; }
+  .hero-inner { position: relative; max-width: 580px; margin: 0 auto; }
   .route-label { font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-pale); margin-bottom: 0.8rem; opacity: 0; animation: slideIn 0.6s 0.1s ease forwards; }
   .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 6vw, 2.8rem); font-weight: 600; line-height: 1.05; color: var(--white); opacity: 0; animation: slideIn 0.6s 0.2s ease forwards; }
   .hero h1 em { font-style: italic; color: var(--gold-pale); }
   .hero-sub { margin-top: 0.5rem; font-size: 0.85rem; color: var(--fog); font-weight: 300; opacity: 0; animation: slideIn 0.6s 0.3s ease forwards; }
-  .progress-area { margin-top: 1.6rem; opacity: 0; animation: slideIn 0.6s 0.4s ease forwards; }
+
+  /* WEIGHT SLIDER */
+  .weight-area { margin-top: 1.8rem; opacity: 0; animation: slideIn 0.6s 0.35s ease forwards; }
+  .weight-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.8rem; }
+  .weight-label { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fog); }
+  .weight-display { display: flex; align-items: baseline; gap: 0.3rem; }
+  .weight-kg { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 600; color: var(--gold-pale); line-height: 1; transition: color 0.3s; }
+  .weight-unit { font-size: 0.7rem; letter-spacing: 0.1em; color: var(--fog); text-transform: uppercase; }
+  .weight-profile { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rust-light); margin-top: 0.15rem; transition: color 0.3s; }
+
+  .slider-wrap { position: relative; padding: 0.4rem 0; }
+  input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 2px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 1px;
+    outline: none;
+    cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--gold-pale);
+    border: 2px solid var(--ink);
+    box-shadow: 0 0 0 3px rgba(232,201,122,0.25);
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  input[type=range]::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 0 5px rgba(232,201,122,0.3);
+    transform: scale(1.1);
+  }
+  input[type=range]::-moz-range-thumb {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--gold-pale); border: 2px solid var(--ink);
+    cursor: pointer;
+  }
+  .slider-track-fill {
+    position: absolute;
+    top: 50%; left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--rust-light), var(--gold));
+    border-radius: 1px;
+    pointer-events: none;
+    transform: translateY(-50%);
+    transition: width 0.2s;
+  }
+  .slider-labels { display: flex; justify-content: space-between; margin-top: 0.4rem; }
+  .slider-labels span { font-size: 0.62rem; color: rgba(184,168,152,0.5); letter-spacing: 0.06em; }
+
+  /* PROGRESS */
+  .progress-area { margin-top: 1.4rem; opacity: 0; animation: slideIn 0.6s 0.4s ease forwards; }
   .progress-track { height: 2px; background: rgba(255,255,255,0.12); border-radius: 1px; overflow: hidden; margin-bottom: 0.5rem; }
   .progress-fill { height: 100%; background: linear-gradient(90deg, var(--rust-light), var(--gold)); border-radius: 1px; width: 0%; transition: width 0.5s cubic-bezier(0.4,0,0.2,1); }
   .progress-meta { display: flex; justify-content: space-between; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fog); }
-  .progress-pct { color: var(--gold-pale); font-weight: 500; transition: color 0.3s; }
-  .body { max-width: 560px; margin: 0 auto; padding: 0 1.4rem 3rem; }
+  .progress-pct { color: var(--gold-pale); font-weight: 500; }
+
+  /* BODY */
+  .body { max-width: 580px; margin: 0 auto; padding: 0 1.4rem 3rem; }
+
   .category { margin-top: 2rem; opacity: 0; transform: translateY(16px); animation: fadeUp 0.5s ease forwards; }
   .category:nth-child(1) { animation-delay: 0.5s; }
-  .category:nth-child(2) { animation-delay: 0.62s; }
-  .category:nth-child(3) { animation-delay: 0.74s; }
-  .category:nth-child(4) { animation-delay: 0.86s; }
-  .category:nth-child(5) { animation-delay: 0.98s; }
+  .category:nth-child(2) { animation-delay: 0.60s; }
+  .category:nth-child(3) { animation-delay: 0.70s; }
+  .category:nth-child(4) { animation-delay: 0.80s; }
+  .category:nth-child(5) { animation-delay: 0.90s; }
+  .category:nth-child(6) { animation-delay: 1.00s; }
+  .category:nth-child(7) { animation-delay: 1.10s; }
+
   .cat-head { display: flex; align-items: center; gap: 0.7rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--parch-dark); margin-bottom: 0.3rem; }
   .cat-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rust); flex-shrink: 0; transition: background 0.3s; }
   .cat-head.all-done .cat-dot { background: var(--gold); }
@@ -46,9 +108,21 @@
   .cat-head.all-done .cat-name { color: var(--gold); }
   .cat-icon { font-size: 0.95rem; margin-left: auto; opacity: 0.7; }
   .cat-tally { font-size: 0.68rem; letter-spacing: 0.08em; color: var(--fog); margin-left: 0.3rem; }
-  .item { display: flex; align-items: flex-start; gap: 0.85rem; padding: 0.65rem 0.5rem; cursor: pointer; border-radius: 4px; transition: background 0.15s; position: relative; }
+
+  .item { display: flex; align-items: flex-start; gap: 0.85rem; padding: 0.65rem 0.5rem; cursor: pointer; border-radius: 4px; transition: background 0.15s; position: relative; overflow: hidden; }
   .item:hover { background: rgba(168,74,42,0.04); }
   .item:active { background: rgba(168,74,42,0.08); }
+
+  .item.hidden { display: none; }
+  .item.appearing { animation: itemAppear 0.3s ease forwards; }
+  .item.disappearing { animation: itemDisappear 0.2s ease forwards; }
+
+  @keyframes itemAppear { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes itemDisappear { from { opacity: 1; } to { opacity: 0; } }
+
+  .item-emoji { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; width: 24px; text-align: center; opacity: 0.85; transition: opacity 0.2s; }
+  .item:hover .item-emoji { opacity: 1; }
+  .item.done .item-emoji { opacity: 0.35; }
   .cb-wrap { width: 20px; height: 20px; flex-shrink: 0; margin-top: 1px; position: relative; }
   .cb-wrap input { display: none; }
   .cb-box { position: absolute; inset: 0; border: 1.5px solid var(--fog); border-radius: 3px; background: transparent; transition: border-color 0.2s, background 0.2s; display: flex; align-items: center; justify-content: center; }
@@ -60,8 +134,14 @@
   .item-label { font-size: 0.97rem; font-weight: 400; line-height: 1.4; color: var(--ink); transition: color 0.25s; }
   .item.done .item-label { color: var(--fog); text-decoration: line-through; text-decoration-color: rgba(168,74,42,0.4); }
   .item-hint { font-size: 0.76rem; color: var(--fog); margin-top: 0.15rem; font-style: italic; font-family: 'Cormorant Garamond', serif; font-weight: 300; }
+  .item-weight-tag { display: inline-block; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(168,74,42,0.08); color: var(--rust); border-radius: 2px; padding: 0.1rem 0.35rem; margin-left: 0.4rem; vertical-align: middle; }
+
   .ripple { position: absolute; border-radius: 50%; background: rgba(168,74,42,0.15); transform: scale(0); animation: rippleAnim 0.5s linear; pointer-events: none; }
   @keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }
+
+  /* category hidden if all items hidden */
+  .category.cat-hidden { display: none; }
+
   .completion { margin: 2rem 0 0; padding: 2rem; background: var(--ink); border-radius: 6px; text-align: center; color: var(--parch); display: none; animation: fadeUp 0.6s ease; position: relative; overflow: hidden; }
   .completion::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(196,146,42,0.2) 0%, transparent 70%); pointer-events: none; }
   .completion.show { display: block; }
@@ -69,9 +149,11 @@
   @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-6px); } }
   .completion h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 600; margin: 0.5rem 0 0.3rem; color: var(--gold-pale); }
   .completion p { font-size: 0.88rem; color: var(--fog); font-weight: 300; }
+
   .footer { text-align: center; padding: 1.5rem 0 0; }
   .reset { background: none; border: 1px solid var(--parch-dark); color: var(--fog); font-family: 'Jost', sans-serif; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.45rem 1.2rem; border-radius: 2px; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
   .reset:hover { border-color: var(--rust); color: var(--rust); }
+
   @keyframes slideIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
   ::-webkit-scrollbar { width: 4px; }
@@ -80,80 +162,298 @@
 </style>
 </head>
 <body>
+
 <div class="hero">
   <div class="hero-inner">
-    <div class="route-label">Camino Francés · Sarria → Santiago de Compostela</div>
-    <h1>Checklist <em>del Pellegrino</em></h1>
-    <div class="hero-sub">Tutto ciò che ti serve per percorrere gli ultimi 100 km</div>
+    <div class="route-label">Camino de Santiago &nbsp;·&nbsp; Pilgrim's Packing Guide</div>
+    <h1>The Pilgrim's <em>Checklist</em></h1>
+    <div class="hero-sub">Everything you need for your Camino — whatever route you choose</div>
+
+    <div class="weight-area">
+      <div class="weight-header">
+        <div>
+          <div class="weight-label">Target pack weight</div>
+          <div class="weight-profile" id="weightProfile">Ultra Light</div>
+        </div>
+        <div class="weight-display">
+          <span class="weight-kg" id="weightDisplay">7</span>
+          <span class="weight-unit">kg</span>
+        </div>
+      </div>
+      <div class="slider-wrap">
+        <div class="slider-track-fill" id="trackFill"></div>
+        <input type="range" id="weightSlider" min="7" max="12" value="7" step="0.5">
+      </div>
+      <div class="slider-labels">
+        <span>7 kg · Ultra Light</span>
+        <span>9.5 kg · Standard</span>
+        <span>12 kg · Full Kit</span>
+      </div>
+    </div>
+
     <div class="progress-area">
       <div class="progress-track"><div class="progress-fill" id="pFill"></div></div>
       <div class="progress-meta">
-        <span id="pLabel">0 voci completate</span>
+        <span id="pLabel">0 items checked</span>
         <span class="progress-pct" id="pPct">0%</span>
       </div>
     </div>
   </div>
 </div>
+
 <div class="body" id="lists"></div>
+
 <div class="body">
   <div class="completion" id="completionBanner">
     <div class="completion-shell">🐚</div>
     <h2>¡Buen Camino!</h2>
-    <p>Lo zaino è pronto. Il cammino ti aspetta.</p>
+    <p>Your pack is ready. The path is waiting.</p>
   </div>
-  <div class="footer"><button class="reset" onclick="resetAll()">Ricomincia da capo</button></div>
+  <div class="footer"><button class="reset" onclick="resetAll()">Start over</button></div>
 </div>
+
 <script>
+// minWeight = minimum weight to show this item (7 = always shown, 9 = only at 9kg+, etc.)
 const CATEGORIES = [
-  { icon: "🎒", name: "Zaino & Documenti", items: [
-    { label: "Zaino 30–45 litri", hint: "Peso ideale: max 10% del proprio peso corporeo" },
-    { label: "Credencial del Peregrino", hint: "Da timbrare (sello) ad ogni tappa" },
-    { label: "Sacco lenzuolo (liner)", hint: "Obbligatorio nella maggior parte degli albergue" },
-    { label: "Documento d'identità / passaporto" },
-    { label: "Prenotazioni prime tappe confermate", hint: "Consigliato in alta stagione" },
-  ]},
-  { icon: "👟", name: "Abbigliamento & Calzature", items: [
-    { label: "Scarponcini da trekking ben rodati", hint: "Fondamentale: non partire con scarpe nuove" },
-    { label: "Sandali o ciabatte per la sera" },
-    { label: "3 paia calzini tecnici anti-vesciche" },
-    { label: "2 magliette traspiranti" },
-    { label: "Pantaloni / leggings da trekking" },
-    { label: "Giacca impermeabile leggera" },
-    { label: "Cappello da sole e/o berretto" },
-  ]},
-  { icon: "🩹", name: "Salute & Primo Soccorso", items: [
-    { label: "Cerotti per vesciche (Compeed)", hint: "L'essenziale del pellegrino" },
-    { label: "Crema anti-sfregamento" },
-    { label: "Ibuprofene / antidolorifico" },
-    { label: "Disinfettante spray e cerotti normali" },
-    { label: "Protezione solare SPF 50+" },
-    { label: "Tessera sanitaria europea (TEAM/EHIC)" },
-  ]},
-  { icon: "📱", name: "Tecnologia", items: [
-    { label: "App Buen Camino o Wise Pilgrim", hint: "Mappe offline delle tappe" },
-    { label: "Powerbank carico (min. 10.000 mAh)" },
-    { label: "Cavi di ricarica + adattatore EU" },
-    { label: "Cuffie / auricolari" },
-  ]},
-  { icon: "✨", name: "Piccoli Essenziali", items: [
-    { label: "Bastoni da trekking telescopici" },
-    { label: "Borraccia o sacca idrica 1.5–2 L" },
-    { label: "Snack energetici (barrette, frutta secca)" },
-    { label: "Lucchetto per armadietto albergue" },
-    { label: "Tappi per le orecchie" },
-    { label: "Torcia frontale con batterie di riserva" },
-  ]},
+  {
+    icon: "🎒", name: "Pack & Documents",
+    items: [
+      { emoji: "🎒", label: "Backpack 30–45 litres", hint: "Ideal weight: no more than 10% of your body weight", minWeight: 7 },
+      { emoji: "📋", label: "Credencial del Peregrino (Pilgrim Passport)", hint: "Get it stamped (sello) at each stage", minWeight: 7 },
+      { emoji: "🛏️", label: "Sleep liner / sleeping bag liner", hint: "Required in most albergues", minWeight: 7 },
+      { emoji: "🪪", label: "Identity document or passport", minWeight: 7 },
+      { emoji: "🏥", label: "European Health Insurance Card (EHIC)", hint: "Free medical care in Spain", minWeight: 7 },
+      { emoji: "🛡️", label: "Travel insurance with repatriation cover", hint: "Strongly recommended", minWeight: 7 },
+      { emoji: "🏠", label: "First few nights pre-booked", hint: "Essential in high season (May–Sept)", minWeight: 7 },
+      { emoji: "🔒", label: "Small padlock for locker", hint: "Most albergues provide lockers", minWeight: 7 },
+      { emoji: "💶", label: "Cash (euros)", hint: "Many small bars and albergues don't accept cards", minWeight: 7 },
+    ]
+  },
+  {
+    icon: "👟", name: "Footwear & Clothing",
+    items: [
+      { emoji: "🥾", label: "Well broken-in hiking boots or trail runners", hint: "Never start with new shoes — blisters guaranteed", minWeight: 7 },
+      { emoji: "🩴", label: "Sandals or flip-flops for evenings", minWeight: 7 },
+      { emoji: "🧦", label: "3 pairs of technical anti-blister socks", hint: "Merino wool or synthetic — avoid cotton", minWeight: 7 },
+      { emoji: "👕", label: "2 moisture-wicking t-shirts", minWeight: 7 },
+      { emoji: "🩳", label: "Hiking trousers or leggings", minWeight: 7 },
+      { emoji: "🧥", label: "Lightweight waterproof jacket (packable)", hint: "Galicia is rainy even in summer", minWeight: 7 },
+      { emoji: "🧢", label: "Sun hat or cap", minWeight: 7 },
+      { emoji: "👔", label: "1 long-sleeve base layer", minWeight: 8.5 },
+      { emoji: "🧣", label: "Lightweight fleece or mid-layer", minWeight: 9 },
+      { emoji: "🧤", label: "Warm hat and gloves", hint: "Mornings can be cold even in spring", minWeight: 9 },
+      { emoji: "🩲", label: "Underwear x3 (quick-dry)", minWeight: 8 },
+      { emoji: "😴", label: "Sleepwear (light & compact)", minWeight: 9 },
+    ]
+  },
+  {
+    icon: "🩹", name: "Health & First Aid",
+    items: [
+      { emoji: "🩹", label: "Blister plasters (Compeed or similar)", hint: "The pilgrim's most essential item", minWeight: 7 },
+      { emoji: "🧴", label: "Anti-chafing cream or balm", hint: "Apply before each stage, not after", minWeight: 7 },
+      { emoji: "💊", label: "Ibuprofen / pain reliever", minWeight: 7 },
+      { emoji: "🩺", label: "Antiseptic spray and regular plasters", minWeight: 7 },
+      { emoji: "☀️", label: "Sun cream SPF 50+", minWeight: 7 },
+      { emoji: "🪡", label: "Blister needle and thread", hint: "For draining large blisters", minWeight: 8 },
+      { emoji: "👄", label: "Lip balm with SPF", minWeight: 8.5 },
+      { emoji: "🦟", label: "Insect repellent", minWeight: 9 },
+      { emoji: "🦵", label: "Elastic bandage / knee support", hint: "Useful for knee or ankle protection on descents", minWeight: 9.5 },
+      { emoji: "💉", label: "Any personal prescription medication", hint: "Bring enough for the full trip plus extra", minWeight: 7 },
+    ]
+  },
+  {
+    icon: "🚿", name: "Hygiene & Personal Care",
+    items: [
+      { emoji: "🏖️", label: "Microfibre towel (small)", hint: "Quick-drying and compact — albergues rarely provide towels", minWeight: 7 },
+      { emoji: "🧼", label: "Biodegradable soap / travel shampoo", hint: "One bar can replace both", minWeight: 7 },
+      { emoji: "🪥", label: "Toothbrush and toothpaste (travel size)", minWeight: 7 },
+      { emoji: "🌿", label: "Deodorant (solid or roll-on)", minWeight: 7 },
+      { emoji: "🔇", label: "Earplugs", hint: "Dormitory snoring is real — protect your sleep", minWeight: 7 },
+      { emoji: "🤧", label: "Small pack of tissues / wet wipes", hint: "Some toilets on the route lack paper", minWeight: 7 },
+      { emoji: "🧪", label: "Hand sanitiser (travel size)", minWeight: 7 },
+      { emoji: "🫧", label: "Laundry detergent (travel sachets)", hint: "Most albergues have sinks or machines", minWeight: 8 },
+      { emoji: "✂️", label: "Nail scissors or clippers", minWeight: 8.5 },
+      { emoji: "🪒", label: "Razor / shaving essentials", minWeight: 9 },
+      { emoji: "😷", label: "Eye mask for sleeping", minWeight: 9 },
+      { emoji: "🌸", label: "Menstrual products if needed", minWeight: 8 },
+    ]
+  },
+  {
+    icon: "🍎", name: "Food & Water",
+    items: [
+      { emoji: "💧", label: "Water bottle or hydration bladder (1.5–2 L)", hint: "Refill at every village fountain", minWeight: 7 },
+      { emoji: "🍫", label: "Energy bars or trail mix", hint: "Some stages have no bars for 10+ km", minWeight: 7 },
+      { emoji: "🥜", label: "Small snacks for the first hour", hint: "Cafés often don't open until 8am", minWeight: 7 },
+      { emoji: "⚡", label: "Electrolyte tablets or sachets", hint: "Essential on hot days to avoid cramps", minWeight: 8.5 },
+      { emoji: "🍇", label: "Dried fruit and nuts", minWeight: 9 },
+      { emoji: "🍊", label: "A piece of fruit for the morning start", minWeight: 10 },
+    ]
+  },
+  {
+    icon: "📱", name: "Technology",
+    items: [
+      { emoji: "🗺️", label: "Buen Camino or Wise Pilgrim app", hint: "Download offline maps before you go", minWeight: 7 },
+      { emoji: "🔋", label: "Powerbank (min. 10,000 mAh)", minWeight: 7 },
+      { emoji: "🔌", label: "Charging cables + EU plug adaptor", minWeight: 7 },
+      { emoji: "🔦", label: "Headtorch / headlamp with spare batteries", hint: "Early morning starts in the dark are common", minWeight: 7 },
+      { emoji: "🎧", label: "Headphones / earbuds", minWeight: 8.5 },
+    ]
+  },
+  {
+    icon: "✨", name: "Nice to Have",
+    items: [
+      { emoji: "🥢", label: "Telescopic trekking poles", hint: "Hugely helpful on descents and for tired knees", minWeight: 9 },
+      { emoji: "🛍️", label: "Lightweight dry bags or zip-lock bags", hint: "Keep clothes dry inside your pack", minWeight: 8.5 },
+      { emoji: "📓", label: "Small notebook and pen", hint: "For reflections, contacts, stamps", minWeight: 9.5 },
+      { emoji: "🐚", label: "A shell (vieira) for your pack", hint: "The symbol of the Camino — tradition and identity", minWeight: 9 },
+      { emoji: "🎁", label: "A small gift or token from home", hint: "Many pilgrims leave mementos at the Cruz de Ferro", minWeight: 10 },
+    ]
+  },
 ];
+
+const MIN_W = 7, MAX_W = 12;
+let currentWeight = 7;
 let state = {};
-function save() { try { localStorage.setItem('camino_v2', JSON.stringify(state)); } catch(e) {} }
-function load() { try { const d = localStorage.getItem('camino_v2'); if(d) state = JSON.parse(d); } catch(e) {} }
-function countAll() { let total=0,done=0; CATEGORIES.forEach((c,ci)=>c.items.forEach((_,ii)=>{total++;if(state[`${ci}-${ii}`])done++;})); return {total,done}; }
-function updateProgress() { const {total,done}=countAll(); const pct=total?Math.round(done/total*100):0; document.getElementById('pFill').style.width=pct+'%'; document.getElementById('pLabel').textContent=`${done} di ${total} completate`; document.getElementById('pPct').textContent=pct+'%'; document.getElementById('completionBanner').classList.toggle('show',done===total&&total>0); }
-function toggleItem(ci,ii,el) { const key=`${ci}-${ii}`; state[key]=!state[key]; save(); el.classList.toggle('done',state[key]); const cat=CATEGORIES[ci]; const catDone=cat.items.filter((_,x)=>state[`${ci}-${x}`]).length; const head=document.querySelector(`.cat-head[data-ci="${ci}"]`); if(head){head.classList.toggle('all-done',catDone===cat.items.length);head.querySelector('.cat-tally').textContent=`${catDone}/${cat.items.length}`;} updateProgress(); }
-function addRipple(e,el) { const rect=el.getBoundingClientRect(); const r=document.createElement('span'); r.className='ripple'; const size=Math.max(rect.width,rect.height); r.style.cssText=`width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px`; el.appendChild(r); setTimeout(()=>r.remove(),600); }
-function render() { const container=document.getElementById('lists'); container.innerHTML=''; CATEGORIES.forEach((cat,ci)=>{ const catDone=cat.items.filter((_,ii)=>state[`${ci}-${ii}`]).length; const allDone=catDone===cat.items.length; const div=document.createElement('div'); div.className='category'; const head=document.createElement('div'); head.className='cat-head'+(allDone?' all-done':''); head.dataset.ci=ci; head.innerHTML=`<div class="cat-dot"></div><span class="cat-name">${cat.name}</span><span class="cat-tally">${catDone}/${cat.items.length}</span><span class="cat-icon">${cat.icon}</span>`; div.appendChild(head); cat.items.forEach((item,ii)=>{ const key=`${ci}-${ii}`; const isDone=!!state[key]; const row=document.createElement('div'); row.className='item'+(isDone?' done':''); row.innerHTML=`<div class="cb-wrap"><div class="cb-box"><div class="cb-check"><svg viewBox="0 0 12 10"><polyline points="1,5 4.5,8.5 11,1"/></svg></div></div></div><div class="item-body"><div class="item-label">${item.label}</div>${item.hint?`<div class="item-hint">${item.hint}</div>`:''}</div>`; row.addEventListener('click',(e)=>{addRipple(e,row);toggleItem(ci,ii,row);}); div.appendChild(row); }); container.appendChild(div); }); updateProgress(); }
-function resetAll() { state={}; save(); render(); }
-load(); render();
+
+function save() { try { localStorage.setItem('camino_v3', JSON.stringify({state, weight: currentWeight})); } catch(e) {} }
+function load() {
+  try {
+    const d = localStorage.getItem('camino_v3');
+    if(d) { const p = JSON.parse(d); state = p.state || {}; currentWeight = p.weight || 7; }
+  } catch(e) {}
+}
+
+function getProfile(w) {
+  if(w <= 7.5) return 'Ultra Light';
+  if(w <= 9) return 'Standard';
+  if(w <= 10.5) return 'Comfortable';
+  return 'Full Kit';
+}
+
+function updateSliderUI(w) {
+  const pct = (w - MIN_W) / (MAX_W - MIN_W) * 100;
+  document.getElementById('trackFill').style.width = pct + '%';
+  document.getElementById('weightDisplay').textContent = w % 1 === 0 ? w : w.toFixed(1);
+  document.getElementById('weightProfile').textContent = getProfile(w);
+  document.getElementById('weightSlider').value = w;
+}
+
+function isVisible(item) { return item.minWeight <= currentWeight; }
+
+function countVisible() {
+  let total = 0, done = 0;
+  CATEGORIES.forEach((c,ci) => c.items.forEach((item,ii) => {
+    if(isVisible(item)) { total++; if(state[`${ci}-${ii}`]) done++; }
+  }));
+  return { total, done };
+}
+
+function updateProgress() {
+  const { total, done } = countVisible();
+  const pct = total ? Math.round(done/total*100) : 0;
+  document.getElementById('pFill').style.width = pct + '%';
+  document.getElementById('pLabel').textContent = `${done} of ${total} items checked`;
+  document.getElementById('pPct').textContent = pct + '%';
+  document.getElementById('completionBanner').classList.toggle('show', done === total && total > 0);
+}
+
+function applyWeightFilter() {
+  CATEGORIES.forEach((cat, ci) => {
+    let visibleCount = 0;
+    cat.items.forEach((item, ii) => {
+      const row = document.querySelector(`.item[data-ci="${ci}"][data-ii="${ii}"]`);
+      if(!row) return;
+      const visible = isVisible(item);
+      if(visible) { row.classList.remove('hidden'); visibleCount++; }
+      else { row.classList.add('hidden'); }
+    });
+    const catEl = document.querySelector(`.category[data-ci="${ci}"]`);
+    if(catEl) catEl.classList.toggle('cat-hidden', visibleCount === 0);
+    // update tally
+    const head = document.querySelector(`.cat-head[data-ci="${ci}"]`);
+    if(head) {
+      const done = cat.items.filter((item,ii) => isVisible(item) && state[`${ci}-${ii}`]).length;
+      head.querySelector('.cat-tally').textContent = `${done}/${visibleCount}`;
+      head.classList.toggle('all-done', visibleCount > 0 && done === visibleCount);
+    }
+  });
+  updateProgress();
+}
+
+function toggleItem(ci, ii, el) {
+  const key = `${ci}-${ii}`;
+  state[key] = !state[key];
+  save();
+  el.classList.toggle('done', state[key]);
+  applyWeightFilter();
+}
+
+function addRipple(e, el) {
+  const rect = el.getBoundingClientRect();
+  const r = document.createElement('span');
+  r.className = 'ripple';
+  const size = Math.max(rect.width, rect.height);
+  r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px`;
+  el.appendChild(r);
+  setTimeout(() => r.remove(), 600);
+}
+
+function render() {
+  const container = document.getElementById('lists');
+  container.innerHTML = '';
+  CATEGORIES.forEach((cat, ci) => {
+    const div = document.createElement('div');
+    div.className = 'category';
+    div.dataset.ci = ci;
+
+    const visibleItems = cat.items.filter(item => isVisible(item));
+    const doneItems = cat.items.filter((item,ii) => isVisible(item) && state[`${ci}-${ii}`]);
+
+    const head = document.createElement('div');
+    head.className = 'cat-head' + (visibleItems.length > 0 && doneItems.length === visibleItems.length ? ' all-done' : '');
+    head.dataset.ci = ci;
+    head.innerHTML = `<div class="cat-dot"></div><span class="cat-name">${cat.name}</span><span class="cat-tally">${doneItems.length}/${visibleItems.length}</span><span class="cat-icon">${cat.icon}</span>`;
+    div.appendChild(head);
+
+    cat.items.forEach((item, ii) => {
+      const key = `${ci}-${ii}`;
+      const isDone = !!state[key];
+      const visible = isVisible(item);
+      const row = document.createElement('div');
+      row.className = 'item' + (isDone ? ' done' : '') + (visible ? '' : ' hidden');
+      row.dataset.ci = ci;
+      row.dataset.ii = ii;
+      row.innerHTML = `
+        <div class="cb-wrap"><div class="cb-box"><div class="cb-check"><svg viewBox="0 0 12 10"><polyline points="1,5 4.5,8.5 11,1"/></svg></div></div></div>
+        ${item.emoji ? `<div class="item-emoji">${item.emoji}</div>` : ''}
+        <div class="item-body">
+          <div class="item-label">${item.label}</div>
+          ${item.hint ? `<div class="item-hint">${item.hint}</div>` : ''}
+        </div>`;
+      row.addEventListener('click', (e) => { addRipple(e, row); toggleItem(ci, ii, row); });
+      div.appendChild(row);
+    });
+
+    if(visibleItems.length === 0) div.classList.add('cat-hidden');
+    container.appendChild(div);
+  });
+  updateProgress();
+}
+
+function resetAll() { state = {}; save(); render(); }
+
+// slider event
+document.getElementById('weightSlider').addEventListener('input', function() {
+  currentWeight = parseFloat(this.value);
+  updateSliderUI(currentWeight);
+  save();
+  applyWeightFilter();
+});
+
+load();
+updateSliderUI(currentWeight);
+render();
 </script>
 </body>
 </html>
+
