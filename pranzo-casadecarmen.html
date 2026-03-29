@@ -682,26 +682,18 @@ async function handleSubmit() {
   const arrivalText = arrival === 'yes' ? t.arrivo : t.lblNo;
 
   try {
-    const res = await fetch('https://api.web3forms.com/submit', {
+    await fetch('https://script.google.com/macros/s/AKfycbxL_QhhmFaJuXhkHKBDBxlj4BbTln437TArH_Rl4u44qfZzSJSCtDZFw_-hNiyznnIElw/exec', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        access_key: 'a2f278f7-000d-467b-beb6-3ce67922b0dc',
-        subject: '🥖 Nuovo ordine pranzo — Casa de Carmen',
-        from_name: 'Casa de Carmen · Prenotazioni Pranzo',
         panino: sandwichName,
         bevanda: drinkName,
         arrivo: arrivalText,
-        lingua: lang.toUpperCase(),
-        messaggio: arrival === 'no'
-          ? '⚠️ Il pellegrino ha annullato l\'arrivo.'
-          : `Panino: ${sandwichName} | Bevanda: ${drinkName}`
+        lingua: lang.toUpperCase()
       })
     });
 
-    const data = await res.json();
-
-    if (data.success) {
+    if (true) {
       document.getElementById('form-view').style.display = 'none';
       const sv = document.getElementById('success-view');
       sv.style.display = 'block';
@@ -727,7 +719,7 @@ async function handleSubmit() {
         document.getElementById('succ-summary').style.display = 'none';
       }
     } else {
-      throw new Error('Web3Forms error');
+      throw new Error('Sheets error');
     }
   } catch(e) {
     btn.disabled = false;
