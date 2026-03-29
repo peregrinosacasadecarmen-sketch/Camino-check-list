@@ -682,15 +682,17 @@ async function handleSubmit() {
   const arrivalText = arrival === 'yes' ? t.arrivo : t.lblNo;
 
   try {
-    await fetch('https://script.google.com/macros/s/AKfycbxL_QhhmFaJuXhkHKBDBxlj4BbTln437TArH_Rl4u44qfZzSJSCtDZFw_-hNiyznnIElw/exec', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        panino: sandwichName,
-        bevanda: drinkName,
-        arrivo: arrivalText,
-        lingua: lang.toUpperCase()
-      })
+    const scriptUrl = 'https://script.google.com/macros/s/AKfycbw6uxzpprAb3NE3MOBdBw9aX3TC6pacZVWuIWKjRPhd2fhy3VLK4pYThQSzhPTlx4IA/exec';
+    const params = new URLSearchParams({
+      panino: sandwichName,
+      bevanda: drinkName,
+      arrivo: arrivalText,
+      lingua: lang.toUpperCase()
+    });
+
+    await fetch(scriptUrl + '?' + params.toString(), {
+      method: 'GET',
+      mode: 'no-cors'
     });
 
     if (true) {
