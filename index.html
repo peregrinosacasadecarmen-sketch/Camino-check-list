@@ -24,6 +24,25 @@
   .hero { background: var(--ink); color: var(--parch); padding: 2.8rem 2rem 2.2rem; position: relative; overflow: hidden; }
   .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 50%, rgba(196,146,42,0.18) 0%, transparent 60%), radial-gradient(ellipse at 10% 80%, rgba(168,74,42,0.14) 0%, transparent 50%); pointer-events: none; }
   .hero-inner { position: relative; max-width: 580px; margin: 0 auto; }
+
+  /* LANG SWITCHER */
+  .lang-switcher { display: flex; gap: 0.4rem; margin-bottom: 1.4rem; }
+  .lang-btn {
+    background: none;
+    border: 1px solid rgba(232,201,122,0.25);
+    color: var(--fog);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.65rem;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .lang-btn:hover { border-color: rgba(232,201,122,0.5); color: var(--gold-pale); }
+  .lang-btn.active { border-color: var(--gold-pale); color: var(--gold-pale); background: rgba(232,201,122,0.08); }
+
   .route-label { font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-pale); margin-bottom: 0.8rem; opacity: 0; animation: slideIn 0.6s 0.1s ease forwards; }
   .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 6vw, 2.8rem); font-weight: 600; line-height: 1.05; color: var(--white); opacity: 0; animation: slideIn 0.6s 0.2s ease forwards; }
   .hero h1 em { font-style: italic; color: var(--gold-pale); }
@@ -39,46 +58,11 @@
   .weight-profile { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rust-light); margin-top: 0.15rem; transition: color 0.3s; }
 
   .slider-wrap { position: relative; padding: 0.4rem 0; }
-  input[type=range] {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 100%;
-    height: 2px;
-    background: rgba(255,255,255,0.15);
-    border-radius: 1px;
-    outline: none;
-    cursor: pointer;
-  }
-  input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--gold-pale);
-    border: 2px solid var(--ink);
-    box-shadow: 0 0 0 3px rgba(232,201,122,0.25);
-    cursor: pointer;
-    transition: box-shadow 0.2s, transform 0.2s;
-  }
-  input[type=range]::-webkit-slider-thumb:hover {
-    box-shadow: 0 0 0 5px rgba(232,201,122,0.3);
-    transform: scale(1.1);
-  }
-  input[type=range]::-moz-range-thumb {
-    width: 18px; height: 18px; border-radius: 50%;
-    background: var(--gold-pale); border: 2px solid var(--ink);
-    cursor: pointer;
-  }
-  .slider-track-fill {
-    position: absolute;
-    top: 50%; left: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--rust-light), var(--gold));
-    border-radius: 1px;
-    pointer-events: none;
-    transform: translateY(-50%);
-    transition: width 0.2s;
-  }
+  input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 2px; background: rgba(255,255,255,0.15); border-radius: 1px; outline: none; cursor: pointer; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--gold-pale); border: 2px solid var(--ink); box-shadow: 0 0 0 3px rgba(232,201,122,0.25); cursor: pointer; transition: box-shadow 0.2s, transform 0.2s; }
+  input[type=range]::-webkit-slider-thumb:hover { box-shadow: 0 0 0 5px rgba(232,201,122,0.3); transform: scale(1.1); }
+  input[type=range]::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: var(--gold-pale); border: 2px solid var(--ink); cursor: pointer; }
+  .slider-track-fill { position: absolute; top: 50%; left: 0; height: 2px; background: linear-gradient(90deg, var(--rust-light), var(--gold)); border-radius: 1px; pointer-events: none; transform: translateY(-50%); transition: width 0.2s; }
   .slider-labels { display: flex; justify-content: space-between; margin-top: 0.4rem; }
   .slider-labels span { font-size: 0.62rem; color: rgba(184,168,152,0.5); letter-spacing: 0.06em; }
 
@@ -91,7 +75,6 @@
 
   /* BODY */
   .body { max-width: 580px; margin: 0 auto; padding: 0 1.4rem 3rem; }
-
   .category { margin-top: 2rem; opacity: 0; transform: translateY(16px); animation: fadeUp 0.5s ease forwards; }
   .category:nth-child(1) { animation-delay: 0.5s; }
   .category:nth-child(2) { animation-delay: 0.60s; }
@@ -112,19 +95,12 @@
   .item { display: flex; align-items: flex-start; gap: 0.85rem; padding: 0.65rem 0.5rem; cursor: pointer; border-radius: 4px; transition: background 0.15s; position: relative; overflow: hidden; }
   .item:hover { background: rgba(168,74,42,0.04); }
   .item:active { background: rgba(168,74,42,0.08); }
-
   .item.hidden { display: none; }
-  .item.appearing { animation: itemAppear 0.3s ease forwards; }
-  .item.disappearing { animation: itemDisappear 0.2s ease forwards; }
-
-  @keyframes itemAppear { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes itemDisappear { from { opacity: 1; } to { opacity: 0; } }
 
   .item-emoji { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; width: 24px; text-align: center; opacity: 0.85; transition: opacity 0.2s; }
   .item:hover .item-emoji { opacity: 1; }
   .item.done .item-emoji { opacity: 0.35; }
   .cb-wrap { width: 20px; height: 20px; flex-shrink: 0; margin-top: 1px; position: relative; }
-  .cb-wrap input { display: none; }
   .cb-box { position: absolute; inset: 0; border: 1.5px solid var(--fog); border-radius: 3px; background: transparent; transition: border-color 0.2s, background 0.2s; display: flex; align-items: center; justify-content: center; }
   .cb-check { opacity: 0; transform: scale(0.4) rotate(-10deg); transition: opacity 0.2s, transform 0.25s cubic-bezier(0.34,1.56,0.64,1); }
   .cb-check svg { width: 11px; height: 11px; stroke: white; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
@@ -134,12 +110,10 @@
   .item-label { font-size: 0.97rem; font-weight: 400; line-height: 1.4; color: var(--ink); transition: color 0.25s; }
   .item.done .item-label { color: var(--fog); text-decoration: line-through; text-decoration-color: rgba(168,74,42,0.4); }
   .item-hint { font-size: 0.76rem; color: var(--fog); margin-top: 0.15rem; font-style: italic; font-family: 'Cormorant Garamond', serif; font-weight: 300; }
-  .item-weight-tag { display: inline-block; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(168,74,42,0.08); color: var(--rust); border-radius: 2px; padding: 0.1rem 0.35rem; margin-left: 0.4rem; vertical-align: middle; }
 
   .ripple { position: absolute; border-radius: 50%; background: rgba(168,74,42,0.15); transform: scale(0); animation: rippleAnim 0.5s linear; pointer-events: none; }
   @keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }
 
-  /* category hidden if all items hidden */
   .category.cat-hidden { display: none; }
 
   .completion { margin: 2rem 0 0; padding: 2rem; background: var(--ink); border-radius: 6px; text-align: center; color: var(--parch); display: none; animation: fadeUp 0.6s ease; position: relative; overflow: hidden; }
@@ -165,15 +139,22 @@
 
 <div class="hero">
   <div class="hero-inner">
-    <div class="route-label">Camino de Santiago &nbsp;·&nbsp; Pilgrim's Packing Guide</div>
-    <h1>The Pilgrim's <em>Checklist</em></h1>
-    <div class="hero-sub">Everything you need for your Camino — whatever route you choose</div>
+
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('it')">IT</button>
+      <button class="lang-btn" onclick="setLang('es')">ES</button>
+    </div>
+
+    <div class="route-label" id="heroLabel"></div>
+    <h1 id="heroTitle"></h1>
+    <div class="hero-sub" id="heroSub"></div>
 
     <div class="weight-area">
       <div class="weight-header">
         <div>
-          <div class="weight-label">Target pack weight</div>
-          <div class="weight-profile" id="weightProfile">Ultra Light</div>
+          <div class="weight-label" id="weightLabel"></div>
+          <div class="weight-profile" id="weightProfile"></div>
         </div>
         <div class="weight-display">
           <span class="weight-kg" id="weightDisplay">7</span>
@@ -185,16 +166,16 @@
         <input type="range" id="weightSlider" min="7" max="12" value="7" step="0.5">
       </div>
       <div class="slider-labels">
-        <span>7 kg · Ultra Light</span>
-        <span>9.5 kg · Standard</span>
-        <span>12 kg · Full Kit</span>
+        <span id="sliderL1"></span>
+        <span id="sliderL2"></span>
+        <span id="sliderL3"></span>
       </div>
     </div>
 
     <div class="progress-area">
       <div class="progress-track"><div class="progress-fill" id="pFill"></div></div>
       <div class="progress-meta">
-        <span id="pLabel">0 items checked</span>
+        <span id="pLabel"></span>
         <span class="progress-pct" id="pPct">0%</span>
       </div>
     </div>
@@ -206,18 +187,57 @@
 <div class="body">
   <div class="completion" id="completionBanner">
     <div class="completion-shell">🐚</div>
-    <h2>¡Buen Camino!</h2>
-    <p>Your pack is ready. The path is waiting.</p>
+    <h2 id="completionTitle"></h2>
+    <p id="completionSub"></p>
   </div>
-  <div class="footer"><button class="reset" onclick="resetAll()">Start over</button></div>
+  <div class="footer"><button class="reset" id="resetBtn" onclick="resetAll()"></button></div>
 </div>
 
 <script>
-// minWeight = minimum weight to show this item (7 = always shown, 9 = only at 9kg+, etc.)
-const CATEGORIES = [
-  {
-    icon: "🎒", name: "Pack & Documents",
-    items: [
+// ─── TRANSLATIONS ───────────────────────────────────────────────────────────
+const T = {
+  en: {
+    heroLabel: "Camino de Santiago · Pilgrim's Packing Guide",
+    heroTitle: "The Pilgrim's <em>Checklist</em>",
+    heroSub: "Everything you need for your Camino — whatever route you choose",
+    weightLabel: "Target pack weight",
+    sliderLabels: ["7 kg · Ultra Light", "9.5 kg · Standard", "12 kg · Full Kit"],
+    profiles: { ultralight: "Ultra Light", standard: "Standard", comfortable: "Comfortable", full: "Full Kit" },
+    progressItems: (done, total) => `${done} of ${total} items checked`,
+    completionTitle: "¡Buen Camino!",
+    completionSub: "Your pack is ready. The path is waiting.",
+    resetBtn: "Start over",
+  },
+  it: {
+    heroLabel: "Camino de Santiago · Guida all'equipaggiamento del pellegrino",
+    heroTitle: "La <em>Lista</em> del Pellegrino",
+    heroSub: "Tutto quello che ti serve per il tuo Cammino — qualunque percorso tu scelga",
+    weightLabel: "Peso zaino obiettivo",
+    sliderLabels: ["7 kg · Ultra Leggero", "9,5 kg · Standard", "12 kg · Completo"],
+    profiles: { ultralight: "Ultra Leggero", standard: "Standard", comfortable: "Comodo", full: "Completo" },
+    progressItems: (done, total) => `${done} di ${total} oggetti spuntati`,
+    completionTitle: "Buen Camino!",
+    completionSub: "Il tuo zaino è pronto. Il cammino ti aspetta.",
+    resetBtn: "Ricomincia",
+  },
+  es: {
+    heroLabel: "Camino de Santiago · Guía de equipaje del peregrino",
+    heroTitle: "La <em>Lista</em> del Peregrino",
+    heroSub: "Todo lo que necesitas para tu Camino — cualquier ruta que elijas",
+    weightLabel: "Peso objetivo de la mochila",
+    sliderLabels: ["7 kg · Ultra Ligera", "9,5 kg · Estándar", "12 kg · Completa"],
+    profiles: { ultralight: "Ultra Ligera", standard: "Estándar", comfortable: "Confortable", full: "Completa" },
+    progressItems: (done, total) => `${done} de ${total} elementos marcados`,
+    completionTitle: "¡Buen Camino!",
+    completionSub: "Tu mochila está lista. El camino te espera.",
+    resetBtn: "Empezar de nuevo",
+  },
+};
+
+// ─── CATEGORIES (all three languages) ────────────────────────────────────────
+const CATEGORIES = {
+  en: [
+    { icon: "🎒", name: "Pack & Documents", items: [
       { emoji: "🎒", label: "Backpack 30–45 litres", hint: "Ideal weight: no more than 10% of your body weight", minWeight: 7 },
       { emoji: "📋", label: "Credencial del Peregrino (Pilgrim Passport)", hint: "Get it stamped (sello) at each stage", minWeight: 7 },
       { emoji: "🛏️", label: "Sleep liner / sleeping bag liner", hint: "Required in most albergues", minWeight: 7 },
@@ -227,11 +247,8 @@ const CATEGORIES = [
       { emoji: "🏠", label: "First few nights pre-booked", hint: "Essential in high season (May–Sept)", minWeight: 7 },
       { emoji: "🔒", label: "Small padlock for locker", hint: "Most albergues provide lockers", minWeight: 7 },
       { emoji: "💶", label: "Cash (euros)", hint: "Many small bars and albergues don't accept cards", minWeight: 7 },
-    ]
-  },
-  {
-    icon: "👟", name: "Footwear & Clothing",
-    items: [
+    ]},
+    { icon: "👟", name: "Footwear & Clothing", items: [
       { emoji: "🥾", label: "Well broken-in hiking boots or trail runners", hint: "Never start with new shoes — blisters guaranteed", minWeight: 7 },
       { emoji: "🩴", label: "Sandals or flip-flops for evenings", minWeight: 7 },
       { emoji: "🧦", label: "3 pairs of technical anti-blister socks", hint: "Merino wool or synthetic — avoid cotton", minWeight: 7 },
@@ -244,11 +261,8 @@ const CATEGORIES = [
       { emoji: "🧤", label: "Warm hat and gloves", hint: "Mornings can be cold even in spring", minWeight: 9 },
       { emoji: "🩲", label: "Underwear x3 (quick-dry)", minWeight: 8 },
       { emoji: "😴", label: "Sleepwear (light & compact)", minWeight: 9 },
-    ]
-  },
-  {
-    icon: "🩹", name: "Health & First Aid",
-    items: [
+    ]},
+    { icon: "🩹", name: "Health & First Aid", items: [
       { emoji: "🩹", label: "Blister plasters (Compeed or similar)", hint: "The pilgrim's most essential item", minWeight: 7 },
       { emoji: "🧴", label: "Anti-chafing cream or balm", hint: "Apply before each stage, not after", minWeight: 7 },
       { emoji: "💊", label: "Ibuprofen / pain reliever", minWeight: 7 },
@@ -259,11 +273,8 @@ const CATEGORIES = [
       { emoji: "🦟", label: "Insect repellent", minWeight: 9 },
       { emoji: "🦵", label: "Elastic bandage / knee support", hint: "Useful for knee or ankle protection on descents", minWeight: 9.5 },
       { emoji: "💉", label: "Any personal prescription medication", hint: "Bring enough for the full trip plus extra", minWeight: 7 },
-    ]
-  },
-  {
-    icon: "🚿", name: "Hygiene & Personal Care",
-    items: [
+    ]},
+    { icon: "🚿", name: "Hygiene & Personal Care", items: [
       { emoji: "🏖️", label: "Microfibre towel (small)", hint: "Quick-drying and compact — albergues rarely provide towels", minWeight: 7 },
       { emoji: "🧼", label: "Biodegradable soap / travel shampoo", hint: "One bar can replace both", minWeight: 7 },
       { emoji: "🪥", label: "Toothbrush and toothpaste (travel size)", minWeight: 7 },
@@ -276,64 +287,229 @@ const CATEGORIES = [
       { emoji: "🪒", label: "Razor / shaving essentials", minWeight: 9 },
       { emoji: "😷", label: "Eye mask for sleeping", minWeight: 9 },
       { emoji: "🌸", label: "Menstrual products if needed", minWeight: 8 },
-    ]
-  },
-  {
-    icon: "🍎", name: "Food & Water",
-    items: [
+    ]},
+    { icon: "🍎", name: "Food & Water", items: [
       { emoji: "💧", label: "Water bottle or hydration bladder (1.5–2 L)", hint: "Refill at every village fountain", minWeight: 7 },
       { emoji: "🍫", label: "Energy bars or trail mix", hint: "Some stages have no bars for 10+ km", minWeight: 7 },
       { emoji: "🥜", label: "Small snacks for the first hour", hint: "Cafés often don't open until 8am", minWeight: 7 },
       { emoji: "⚡", label: "Electrolyte tablets or sachets", hint: "Essential on hot days to avoid cramps", minWeight: 8.5 },
       { emoji: "🍇", label: "Dried fruit and nuts", minWeight: 9 },
       { emoji: "🍊", label: "A piece of fruit for the morning start", minWeight: 10 },
-    ]
-  },
-  {
-    icon: "📱", name: "Technology",
-    items: [
+    ]},
+    { icon: "📱", name: "Technology", items: [
       { emoji: "🗺️", label: "Buen Camino or Wise Pilgrim app", hint: "Download offline maps before you go", minWeight: 7 },
       { emoji: "🔋", label: "Powerbank (min. 10,000 mAh)", minWeight: 7 },
       { emoji: "🔌", label: "Charging cables + EU plug adaptor", minWeight: 7 },
       { emoji: "🔦", label: "Headtorch / headlamp with spare batteries", hint: "Early morning starts in the dark are common", minWeight: 7 },
       { emoji: "🎧", label: "Headphones / earbuds", minWeight: 8.5 },
-    ]
-  },
-  {
-    icon: "✨", name: "Nice to Have",
-    items: [
+    ]},
+    { icon: "✨", name: "Nice to Have", items: [
       { emoji: "🥢", label: "Telescopic trekking poles", hint: "Hugely helpful on descents and for tired knees", minWeight: 9 },
       { emoji: "🛍️", label: "Lightweight dry bags or zip-lock bags", hint: "Keep clothes dry inside your pack", minWeight: 8.5 },
       { emoji: "📓", label: "Small notebook and pen", hint: "For reflections, contacts, stamps", minWeight: 9.5 },
       { emoji: "🐚", label: "A shell (vieira) for your pack", hint: "The symbol of the Camino — tradition and identity", minWeight: 9 },
       { emoji: "🎁", label: "A small gift or token from home", hint: "Many pilgrims leave mementos at the Cruz de Ferro", minWeight: 10 },
-    ]
-  },
-];
+    ]},
+  ],
+  it: [
+    { icon: "🎒", name: "Zaino e documenti", items: [
+      { emoji: "🎒", label: "Zaino da 30–45 litri", hint: "Peso ideale: non più del 10% del tuo peso corporeo", minWeight: 7 },
+      { emoji: "📋", label: "Credencial del Peregrino (Passaporto del pellegrino)", hint: "Fallo timbrare (sello) ad ogni tappa", minWeight: 7 },
+      { emoji: "🛏️", label: "Sacco lenzuolo / fodera per sacco a pelo", hint: "Obbligatorio nella maggior parte degli albergue", minWeight: 7 },
+      { emoji: "🪪", label: "Documento d'identità o passaporto", minWeight: 7 },
+      { emoji: "🏥", label: "Tessera Europea di Assicurazione Malattia (TEAM)", hint: "Assistenza sanitaria gratuita in Spagna", minWeight: 7 },
+      { emoji: "🛡️", label: "Assicurazione viaggio con copertura rimpatrio", hint: "Fortemente consigliata", minWeight: 7 },
+      { emoji: "🏠", label: "Prime notti prenotate", hint: "Indispensabile in alta stagione (maggio–settembre)", minWeight: 7 },
+      { emoji: "🔒", label: "Lucchetto per l'armadietto", hint: "La maggior parte degli albergue ha armadietti", minWeight: 7 },
+      { emoji: "💶", label: "Contanti (euro)", hint: "Molti bar e albergue non accettano carta", minWeight: 7 },
+    ]},
+    { icon: "👟", name: "Calzature e abbigliamento", items: [
+      { emoji: "🥾", label: "Scarpe da trekking già rodate o trail runner", hint: "Mai partire con scarpe nuove — vesciche garantite", minWeight: 7 },
+      { emoji: "🩴", label: "Sandali o infradito per la sera", minWeight: 7 },
+      { emoji: "🧦", label: "3 paia di calze tecniche anti-vescica", hint: "Lana merino o sintetiche — evita il cotone", minWeight: 7 },
+      { emoji: "👕", label: "2 magliette traspiranti", minWeight: 7 },
+      { emoji: "🩳", label: "Pantaloni da trekking o leggings", minWeight: 7 },
+      { emoji: "🧥", label: "Giacca impermeabile leggera (comprimibile)", hint: "La Galizia è piovosa anche d'estate", minWeight: 7 },
+      { emoji: "🧢", label: "Cappello da sole o berretto", minWeight: 7 },
+      { emoji: "👔", label: "1 maglia a maniche lunghe come base layer", minWeight: 8.5 },
+      { emoji: "🧣", label: "Pile leggero o strato intermedio", minWeight: 9 },
+      { emoji: "🧤", label: "Cappello caldo e guanti", hint: "Le mattine possono essere fredde anche in primavera", minWeight: 9 },
+      { emoji: "🩲", label: "Biancheria intima x3 (ad asciugatura rapida)", minWeight: 8 },
+      { emoji: "😴", label: "Indumenti per dormire (leggeri e compatti)", minWeight: 9 },
+    ]},
+    { icon: "🩹", name: "Salute e primo soccorso", items: [
+      { emoji: "🩹", label: "Cerotti per vesciche (Compeed o simili)", hint: "L'oggetto più essenziale del pellegrino", minWeight: 7 },
+      { emoji: "🧴", label: "Crema o balsamo anti-sfregamento", hint: "Applicare prima di ogni tappa, non dopo", minWeight: 7 },
+      { emoji: "💊", label: "Ibuprofene / antidolorifico", minWeight: 7 },
+      { emoji: "🩺", label: "Spray antisettico e cerotti normali", minWeight: 7 },
+      { emoji: "☀️", label: "Crema solare SPF 50+", minWeight: 7 },
+      { emoji: "🪡", label: "Ago e filo per vesciche", hint: "Per svuotare le vesciche grandi", minWeight: 8 },
+      { emoji: "👄", label: "Burro cacao con SPF", minWeight: 8.5 },
+      { emoji: "🦟", label: "Repellente per insetti", minWeight: 9 },
+      { emoji: "🦵", label: "Fascia elastica / supporto per il ginocchio", hint: "Utile per proteggere ginocchia e caviglie nelle discese", minWeight: 9.5 },
+      { emoji: "💉", label: "Eventuali farmaci personali su prescrizione", hint: "Porta scorta sufficiente per tutto il viaggio più riserva", minWeight: 7 },
+    ]},
+    { icon: "🚿", name: "Igiene e cura personale", items: [
+      { emoji: "🏖️", label: "Asciugamano in microfibra (piccolo)", hint: "Ad asciugatura rapida e compatto — gli albergue raramente li forniscono", minWeight: 7 },
+      { emoji: "🧼", label: "Sapone biodegradabile / shampoo da viaggio", hint: "Una saponetta può sostituire entrambi", minWeight: 7 },
+      { emoji: "🪥", label: "Spazzolino e dentifricio (formato viaggio)", minWeight: 7 },
+      { emoji: "🌿", label: "Deodorante (solido o roll-on)", minWeight: 7 },
+      { emoji: "🔇", label: "Tappi per le orecchie", hint: "Il russare in dormitorio è reale — proteggi il tuo sonno", minWeight: 7 },
+      { emoji: "🤧", label: "Fazzolettini / salviettine umidificate", hint: "Alcuni bagni sul percorso non hanno carta", minWeight: 7 },
+      { emoji: "🧪", label: "Gel igienizzante mani (formato viaggio)", minWeight: 7 },
+      { emoji: "🫧", label: "Detersivo per bucato (bustine da viaggio)", hint: "La maggior parte degli albergue ha lavandini o lavatrici", minWeight: 8 },
+      { emoji: "✂️", label: "Forbicine o tagliaunghie", minWeight: 8.5 },
+      { emoji: "🪒", label: "Rasoio / occorrente per la rasatura", minWeight: 9 },
+      { emoji: "😷", label: "Maschera per dormire", minWeight: 9 },
+      { emoji: "🌸", label: "Prodotti igienici femminili se necessario", minWeight: 8 },
+    ]},
+    { icon: "🍎", name: "Cibo e acqua", items: [
+      { emoji: "💧", label: "Borraccia o sacca per l'idratazione (1,5–2 L)", hint: "Ricarica ad ogni fontana del paese", minWeight: 7 },
+      { emoji: "🍫", label: "Barrette energetiche o frutta secca", hint: "Alcune tappe non hanno bar per 10+ km", minWeight: 7 },
+      { emoji: "🥜", label: "Piccoli snack per il primo tratto", hint: "I bar spesso non aprono fino alle 8:00", minWeight: 7 },
+      { emoji: "⚡", label: "Compresse o bustine di elettroliti", hint: "Indispensabili nelle giornate calde per evitare crampi", minWeight: 8.5 },
+      { emoji: "🍇", label: "Frutta secca e noci", minWeight: 9 },
+      { emoji: "🍊", label: "Un frutto fresco per la partenza mattutina", minWeight: 10 },
+    ]},
+    { icon: "📱", name: "Tecnologia", items: [
+      { emoji: "🗺️", label: "App Buen Camino o Wise Pilgrim", hint: "Scarica le mappe offline prima di partire", minWeight: 7 },
+      { emoji: "🔋", label: "Power bank (min. 10.000 mAh)", minWeight: 7 },
+      { emoji: "🔌", label: "Cavi di ricarica + adattatore spina EU", minWeight: 7 },
+      { emoji: "🔦", label: "Torcia frontale con pile di ricambio", hint: "Le partenze mattutine al buio sono frequenti", minWeight: 7 },
+      { emoji: "🎧", label: "Cuffie / auricolari", minWeight: 8.5 },
+    ]},
+    { icon: "✨", name: "Piacevoli ma non essenziali", items: [
+      { emoji: "🥢", label: "Bastoncini da trekking telescopici", hint: "Molto utili nelle discese e per le ginocchia stanche", minWeight: 9 },
+      { emoji: "🛍️", label: "Sacche impermeabili leggere o buste zip", hint: "Tengono i vestiti asciutti dentro lo zaino", minWeight: 8.5 },
+      { emoji: "📓", label: "Piccolo taccuino e penna", hint: "Per riflessioni, contatti, timbri", minWeight: 9.5 },
+      { emoji: "🐚", label: "Una conchiglia (vieira) per lo zaino", hint: "Il simbolo del Cammino — tradizione e identità", minWeight: 9 },
+      { emoji: "🎁", label: "Un piccolo regalo o ricordo da casa", hint: "Molti pellegrini lasciano oggetti alla Cruz de Ferro", minWeight: 10 },
+    ]},
+  ],
+  es: [
+    { icon: "🎒", name: "Mochila y documentos", items: [
+      { emoji: "🎒", label: "Mochila de 30–45 litros", hint: "Peso ideal: no más del 10% de tu peso corporal", minWeight: 7 },
+      { emoji: "📋", label: "Credencial del Peregrino", hint: "Consigue el sello en cada etapa", minWeight: 7 },
+      { emoji: "🛏️", label: "Sábana saco / funda para saco de dormir", hint: "Obligatoria en la mayoría de albergues", minWeight: 7 },
+      { emoji: "🪪", label: "Documento de identidad o pasaporte", minWeight: 7 },
+      { emoji: "🏥", label: "Tarjeta Sanitaria Europea (TSE)", hint: "Atención médica gratuita en España", minWeight: 7 },
+      { emoji: "🛡️", label: "Seguro de viaje con cobertura de repatriación", hint: "Muy recomendable", minWeight: 7 },
+      { emoji: "🏠", label: "Primeras noches reservadas", hint: "Imprescindible en temporada alta (mayo–septiembre)", minWeight: 7 },
+      { emoji: "🔒", label: "Candado pequeño para la taquilla", hint: "La mayoría de albergues tienen taquillas", minWeight: 7 },
+      { emoji: "💶", label: "Efectivo (euros)", hint: "Muchos bares y albergues no aceptan tarjeta", minWeight: 7 },
+    ]},
+    { icon: "👟", name: "Calzado y ropa", items: [
+      { emoji: "🥾", label: "Botas de senderismo ya amoldadas o trail runners", hint: "Nunca empieces con zapatos nuevos — las ampollas están garantizadas", minWeight: 7 },
+      { emoji: "🩴", label: "Sandalias o chanclas para la tarde", minWeight: 7 },
+      { emoji: "🧦", label: "3 pares de calcetines técnicos anti-ampollas", hint: "Lana merino o sintéticos — evita el algodón", minWeight: 7 },
+      { emoji: "👕", label: "2 camisetas de tejido técnico transpirable", minWeight: 7 },
+      { emoji: "🩳", label: "Pantalón de senderismo o mallas", minWeight: 7 },
+      { emoji: "🧥", label: "Chubasquero ligero (plegable)", hint: "Galicia es lluviosa incluso en verano", minWeight: 7 },
+      { emoji: "🧢", label: "Sombrero o gorra para el sol", minWeight: 7 },
+      { emoji: "👔", label: "1 camiseta de manga larga como capa base", minWeight: 8.5 },
+      { emoji: "🧣", label: "Forro polar ligero o capa intermedia", minWeight: 9 },
+      { emoji: "🧤", label: "Gorro de abrigo y guantes", hint: "Las mañanas pueden ser frías incluso en primavera", minWeight: 9 },
+      { emoji: "🩲", label: "Ropa interior x3 (de secado rápido)", minWeight: 8 },
+      { emoji: "😴", label: "Ropa para dormir (ligera y compacta)", minWeight: 9 },
+    ]},
+    { icon: "🩹", name: "Salud y primeros auxilios", items: [
+      { emoji: "🩹", label: "Apósitos para ampollas (Compeed o similar)", hint: "El objeto más esencial del peregrino", minWeight: 7 },
+      { emoji: "🧴", label: "Crema o bálsamo anti-rozaduras", hint: "Aplícalo antes de cada etapa, no después", minWeight: 7 },
+      { emoji: "💊", label: "Ibuprofeno / analgésico", minWeight: 7 },
+      { emoji: "🩺", label: "Spray antiséptico y tiritas normales", minWeight: 7 },
+      { emoji: "☀️", label: "Crema solar SPF 50+", minWeight: 7 },
+      { emoji: "🪡", label: "Aguja e hilo para ampollas", hint: "Para drenar las ampollas grandes", minWeight: 8 },
+      { emoji: "👄", label: "Cacao labial con SPF", minWeight: 8.5 },
+      { emoji: "🦟", label: "Repelente de insectos", minWeight: 9 },
+      { emoji: "🦵", label: "Venda elástica / rodillera", hint: "Útil para proteger rodillas y tobillos en los descensos", minWeight: 9.5 },
+      { emoji: "💉", label: "Medicación personal con receta si la necesitas", hint: "Lleva suficiente para todo el viaje más reserva", minWeight: 7 },
+    ]},
+    { icon: "🚿", name: "Higiene y cuidado personal", items: [
+      { emoji: "🏖️", label: "Toalla de microfibra (pequeña)", hint: "De secado rápido y compacta — los albergues raramente las proporcionan", minWeight: 7 },
+      { emoji: "🧼", label: "Jabón biodegradable / champú de viaje", hint: "Una pastilla puede sustituir a los dos", minWeight: 7 },
+      { emoji: "🪥", label: "Cepillo de dientes y pasta (tamaño viaje)", minWeight: 7 },
+      { emoji: "🌿", label: "Desodorante (sólido o roll-on)", minWeight: 7 },
+      { emoji: "🔇", label: "Tapones para los oídos", hint: "Los ronquidos en el dormitorio son reales — protege tu sueño", minWeight: 7 },
+      { emoji: "🤧", label: "Pañuelos de papel / toallitas húmedas", hint: "Algunos baños en la ruta no tienen papel", minWeight: 7 },
+      { emoji: "🧪", label: "Gel hidroalcohólico (tamaño viaje)", minWeight: 7 },
+      { emoji: "🫧", label: "Detergente para ropa (sobres de viaje)", hint: "La mayoría de albergues tienen lavabos o lavadoras", minWeight: 8 },
+      { emoji: "✂️", label: "Tijeras de uñas o cortaúñas", minWeight: 8.5 },
+      { emoji: "🪒", label: "Maquinilla / artículos de afeitado", minWeight: 9 },
+      { emoji: "😷", label: "Antifaz para dormir", minWeight: 9 },
+      { emoji: "🌸", label: "Productos de higiene femenina si los necesitas", minWeight: 8 },
+    ]},
+    { icon: "🍎", name: "Comida y agua", items: [
+      { emoji: "💧", label: "Botella de agua o mochila de hidratación (1,5–2 L)", hint: "Recarga en cada fuente del pueblo", minWeight: 7 },
+      { emoji: "🍫", label: "Barritas energéticas o frutos secos", hint: "Algunas etapas no tienen bares en 10+ km", minWeight: 7 },
+      { emoji: "🥜", label: "Pequeños tentempiés para el primer tramo", hint: "Los bares a menudo no abren hasta las 8h", minWeight: 7 },
+      { emoji: "⚡", label: "Pastillas o sobres de electrolitos", hint: "Imprescindibles en días calurosos para evitar calambres", minWeight: 8.5 },
+      { emoji: "🍇", label: "Fruta seca y nueces", minWeight: 9 },
+      { emoji: "🍊", label: "Una pieza de fruta para la salida matutina", minWeight: 10 },
+    ]},
+    { icon: "📱", name: "Tecnología", items: [
+      { emoji: "🗺️", label: "App Buen Camino o Wise Pilgrim", hint: "Descarga los mapas sin conexión antes de salir", minWeight: 7 },
+      { emoji: "🔋", label: "Batería externa (mín. 10.000 mAh)", minWeight: 7 },
+      { emoji: "🔌", label: "Cables de carga + adaptador de enchufe EU", minWeight: 7 },
+      { emoji: "🔦", label: "Frontal / linterna de cabeza con pilas de repuesto", hint: "Las salidas madrugadoras en la oscuridad son frecuentes", minWeight: 7 },
+      { emoji: "🎧", label: "Auriculares", minWeight: 8.5 },
+    ]},
+    { icon: "✨", name: "Agradables pero no esenciales", items: [
+      { emoji: "🥢", label: "Bastones de trekking telescópicos", hint: "Muy útiles en los descensos y para las rodillas cansadas", minWeight: 9 },
+      { emoji: "🛍️", label: "Bolsas impermeables ligeras o bolsas zip", hint: "Mantienen la ropa seca dentro de la mochila", minWeight: 8.5 },
+      { emoji: "📓", label: "Libreta pequeña y bolígrafo", hint: "Para reflexiones, contactos, sellos", minWeight: 9.5 },
+      { emoji: "🐚", label: "Una concha (vieira) para la mochila", hint: "El símbolo del Camino — tradición e identidad", minWeight: 9 },
+      { emoji: "🎁", label: "Un pequeño regalo o recuerdo de casa", hint: "Muchos peregrinos dejan objetos en la Cruz de Ferro", minWeight: 10 },
+    ]},
+  ],
+};
 
+// ─── STATE ───────────────────────────────────────────────────────────────────
 const MIN_W = 7, MAX_W = 12;
+let currentLang = 'en';
 let currentWeight = 7;
 let state = {};
 
-function save() { try { localStorage.setItem('camino_v3', JSON.stringify({state, weight: currentWeight})); } catch(e) {} }
+function save() {
+  try { localStorage.setItem('camino_ml_v1', JSON.stringify({ state, weight: currentWeight, lang: currentLang })); } catch(e) {}
+}
 function load() {
   try {
-    const d = localStorage.getItem('camino_v3');
-    if(d) { const p = JSON.parse(d); state = p.state || {}; currentWeight = p.weight || 7; }
+    const d = localStorage.getItem('camino_ml_v1');
+    if(d) { const p = JSON.parse(d); state = p.state || {}; currentWeight = p.weight || 7; currentLang = p.lang || 'en'; }
   } catch(e) {}
 }
 
 function getProfile(w) {
-  if(w <= 7.5) return 'Ultra Light';
-  if(w <= 9) return 'Standard';
-  if(w <= 10.5) return 'Comfortable';
-  return 'Full Kit';
+  const t = T[currentLang];
+  if(w <= 7.5) return t.profiles.ultralight;
+  if(w <= 9)   return t.profiles.standard;
+  if(w <= 10.5) return t.profiles.comfortable;
+  return t.profiles.full;
+}
+
+function updateStaticText() {
+  const t = T[currentLang];
+  document.getElementById('heroLabel').textContent = t.heroLabel;
+  document.getElementById('heroTitle').innerHTML = t.heroTitle;
+  document.getElementById('heroSub').textContent = t.heroSub;
+  document.getElementById('weightLabel').textContent = t.weightLabel;
+  document.getElementById('sliderL1').textContent = t.sliderLabels[0];
+  document.getElementById('sliderL2').textContent = t.sliderLabels[1];
+  document.getElementById('sliderL3').textContent = t.sliderLabels[2];
+  document.getElementById('completionTitle').textContent = t.completionTitle;
+  document.getElementById('completionSub').textContent = t.completionSub;
+  document.getElementById('resetBtn').textContent = t.resetBtn;
+  document.documentElement.lang = currentLang;
+  // update lang buttons
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.toLowerCase() === currentLang);
+  });
 }
 
 function updateSliderUI(w) {
   const pct = (w - MIN_W) / (MAX_W - MIN_W) * 100;
   document.getElementById('trackFill').style.width = pct + '%';
-  document.getElementById('weightDisplay').textContent = w % 1 === 0 ? w : w.toFixed(1);
+  document.getElementById('weightDisplay').textContent = w % 1 === 0 ? w : w.toFixed(1).replace('.', currentLang === 'en' ? '.' : ',');
   document.getElementById('weightProfile').textContent = getProfile(w);
   document.getElementById('weightSlider').value = w;
 }
@@ -342,7 +518,7 @@ function isVisible(item) { return item.minWeight <= currentWeight; }
 
 function countVisible() {
   let total = 0, done = 0;
-  CATEGORIES.forEach((c,ci) => c.items.forEach((item,ii) => {
+  CATEGORIES[currentLang].forEach((c,ci) => c.items.forEach((item,ii) => {
     if(isVisible(item)) { total++; if(state[`${ci}-${ii}`]) done++; }
   }));
   return { total, done };
@@ -352,13 +528,13 @@ function updateProgress() {
   const { total, done } = countVisible();
   const pct = total ? Math.round(done/total*100) : 0;
   document.getElementById('pFill').style.width = pct + '%';
-  document.getElementById('pLabel').textContent = `${done} of ${total} items checked`;
+  document.getElementById('pLabel').textContent = T[currentLang].progressItems(done, total);
   document.getElementById('pPct').textContent = pct + '%';
   document.getElementById('completionBanner').classList.toggle('show', done === total && total > 0);
 }
 
 function applyWeightFilter() {
-  CATEGORIES.forEach((cat, ci) => {
+  CATEGORIES[currentLang].forEach((cat, ci) => {
     let visibleCount = 0;
     cat.items.forEach((item, ii) => {
       const row = document.querySelector(`.item[data-ci="${ci}"][data-ii="${ii}"]`);
@@ -369,7 +545,6 @@ function applyWeightFilter() {
     });
     const catEl = document.querySelector(`.category[data-ci="${ci}"]`);
     if(catEl) catEl.classList.toggle('cat-hidden', visibleCount === 0);
-    // update tally
     const head = document.querySelector(`.cat-head[data-ci="${ci}"]`);
     if(head) {
       const done = cat.items.filter((item,ii) => isVisible(item) && state[`${ci}-${ii}`]).length;
@@ -401,20 +576,17 @@ function addRipple(e, el) {
 function render() {
   const container = document.getElementById('lists');
   container.innerHTML = '';
-  CATEGORIES.forEach((cat, ci) => {
+  CATEGORIES[currentLang].forEach((cat, ci) => {
     const div = document.createElement('div');
     div.className = 'category';
     div.dataset.ci = ci;
-
     const visibleItems = cat.items.filter(item => isVisible(item));
     const doneItems = cat.items.filter((item,ii) => isVisible(item) && state[`${ci}-${ii}`]);
-
     const head = document.createElement('div');
     head.className = 'cat-head' + (visibleItems.length > 0 && doneItems.length === visibleItems.length ? ' all-done' : '');
     head.dataset.ci = ci;
     head.innerHTML = `<div class="cat-dot"></div><span class="cat-name">${cat.name}</span><span class="cat-tally">${doneItems.length}/${visibleItems.length}</span><span class="cat-icon">${cat.icon}</span>`;
     div.appendChild(head);
-
     cat.items.forEach((item, ii) => {
       const key = `${ci}-${ii}`;
       const isDone = !!state[key];
@@ -433,16 +605,22 @@ function render() {
       row.addEventListener('click', (e) => { addRipple(e, row); toggleItem(ci, ii, row); });
       div.appendChild(row);
     });
-
     if(visibleItems.length === 0) div.classList.add('cat-hidden');
     container.appendChild(div);
   });
   updateProgress();
 }
 
-function resetAll() { state = {}; save(); render(); }
+function setLang(lang) {
+  currentLang = lang;
+  save();
+  updateStaticText();
+  updateSliderUI(currentWeight);
+  render();
+}
 
-// slider event
+function resetAll() { state = {}; save(); render(); updateProgress(); }
+
 document.getElementById('weightSlider').addEventListener('input', function() {
   currentWeight = parseFloat(this.value);
   updateSliderUI(currentWeight);
@@ -451,9 +629,9 @@ document.getElementById('weightSlider').addEventListener('input', function() {
 });
 
 load();
+updateStaticText();
 updateSliderUI(currentWeight);
 render();
 </script>
 </body>
 </html>
-
