@@ -163,7 +163,7 @@
       </div>
       <div class="slider-wrap">
         <div class="slider-track-fill" id="trackFill"></div>
-        <input type="range" id="weightSlider" min="7" max="12" value="7" step="0.5">
+        <input type="range" id="weightSlider" min="7" max="10" value="7" step="0.5">
       </div>
       <div class="slider-labels">
         <span id="sliderL1"></span>
@@ -201,7 +201,7 @@ const T = {
     heroTitle: "The Pilgrim's <em>Checklist</em>",
     heroSub: "Everything you need for your Camino — whatever route you choose",
     weightLabel: "Target pack weight",
-    sliderLabels: ["7 kg · Ultra Light", "9.5 kg · Standard", "12 kg · Full Kit"],
+    sliderLabels: ["7 kg · Ultra Light", "8.5 kg · Standard", "10 kg · Full Kit"],
     profiles: { ultralight: "Ultra Light", standard: "Standard", comfortable: "Comfortable", full: "Full Kit" },
     progressItems: (done, total) => `${done} of ${total} items checked`,
     completionTitle: "¡Buen Camino!",
@@ -213,7 +213,7 @@ const T = {
     heroTitle: "La <em>Lista</em> del Pellegrino",
     heroSub: "Tutto quello che ti serve per il tuo Cammino — qualunque percorso tu scelga",
     weightLabel: "Peso zaino obiettivo",
-    sliderLabels: ["7 kg · Ultra Leggero", "9,5 kg · Standard", "12 kg · Completo"],
+    sliderLabels: ["7 kg · Ultra Leggero", "8,5 kg · Standard", "10 kg · Completo"],
     profiles: { ultralight: "Ultra Leggero", standard: "Standard", comfortable: "Comodo", full: "Completo" },
     progressItems: (done, total) => `${done} di ${total} oggetti spuntati`,
     completionTitle: "Buen Camino!",
@@ -225,7 +225,7 @@ const T = {
     heroTitle: "La <em>Lista</em> del Peregrino",
     heroSub: "Todo lo que necesitas para tu Camino — cualquier ruta que elijas",
     weightLabel: "Peso objetivo de la mochila",
-    sliderLabels: ["7 kg · Ultra Ligera", "9,5 kg · Estándar", "12 kg · Completa"],
+    sliderLabels: ["7 kg · Ultra Ligera", "8,5 kg · Estándar", "10 kg · Completa"],
     profiles: { ultralight: "Ultra Ligera", standard: "Estándar", comfortable: "Confortable", full: "Completa" },
     progressItems: (done, total) => `${done} de ${total} elementos marcados`,
     completionTitle: "¡Buen Camino!",
@@ -464,7 +464,7 @@ const CATEGORIES = {
 };
 
 // ─── STATE ───────────────────────────────────────────────────────────────────
-const MIN_W = 7, MAX_W = 12;
+const MIN_W = 7, MAX_W = 10;
 let currentLang = 'en';
 let currentWeight = 7;
 let state = {};
@@ -482,8 +482,8 @@ function load() {
 function getProfile(w) {
   const t = T[currentLang];
   if(w <= 7.5) return t.profiles.ultralight;
-  if(w <= 9)   return t.profiles.standard;
-  if(w <= 10.5) return t.profiles.comfortable;
+  if(w <= 8.5) return t.profiles.standard;
+  if(w <= 9.5) return t.profiles.comfortable;
   return t.profiles.full;
 }
 
