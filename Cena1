@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casa de Carmen — Cena Comunitaria</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --stone: #f5f0e8;
+  --stone-dark: #e8e0d0;
+  --ink: #2a2118;
+  --ink-soft: #6b5c4a;
+  --green: #3a6b4a;
+  --green-light: #edf4ee;
+  --green-mid: #c8dfc8;
+  --red: #c0392b;
+  --amber: #c07830;
+  --amber-light: #fdf3e7;
+  --border: #d8cfc0;
+  --radius: 14px;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--stone);
+  color: var(--ink);
+  min-height: 100vh;
+  padding: 2rem 1rem 4rem;
+}
+
+.page { max-width: 480px; margin: 0 auto; }
+
+.header { text-align: center; padding: 2rem 0 2rem; }
+.header-icon { font-size: 2.8rem; display: block; margin-bottom: 0.75rem; }
+.header h1 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 600; margin-bottom: 4px; }
+.header .sub { font-size: 0.8rem; color: var(--ink-soft); letter-spacing: 0.12em; text-transform: uppercase; }
+
+.lang-bar { display: flex; gap: 6px; justify-content: center; margin-bottom: 2rem; }
+.lang-btn {
+  padding: 5px 16px; border: 1px solid var(--border); border-radius: 20px;
+  font-size: 0.75rem; font-family: 'DM Sans', sans-serif; font-weight: 500;
+  letter-spacing: 0.05em; cursor: pointer; background: white; color: var(--ink-soft);
+  transition: all 0.15s;
+}
+.lang-btn:hover { border-color: var(--green); color: var(--green); }
+.lang-btn.active { background: var(--green); border-color: var(--green); color: white; }
+
+.section-label {
+  font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--ink-soft); margin-bottom: 0.75rem;
+}
+
+/* Name input */
+.name-input {
+  width: 100%; padding: 0.9rem 1rem; border: 1px solid var(--border);
+  border-radius: var(--radius); font-family: 'DM Sans', sans-serif;
+  font-size: 1rem; background: white; color: var(--ink);
+  margin-bottom: 1.5rem; transition: border-color 0.15s; outline: none;
+}
+.name-input:focus { border-color: var(--green); }
+.name-input::placeholder { color: var(--ink-soft); opacity: 0.6; }
+
+.notes-input {
+  width: 100%; padding: 0.9rem 1rem; border: 1px solid var(--border);
+  border-radius: var(--radius); font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem; background: white; color: var(--ink);
+  margin-bottom: 1.5rem; transition: border-color 0.15s; outline: none;
+  resize: none; line-height: 1.5; min-height: 90px;
+}
+.notes-input:focus { border-color: var(--green); }
+.notes-input::placeholder { color: var(--ink-soft); opacity: 0.6; }
+
+hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+
+/* Arrival */
+.arrival-select {
+  width: 100%; padding: 0.9rem 1rem; border: 1px solid var(--border);
+  border-radius: var(--radius); font-family: 'DM Sans', sans-serif;
+  font-size: 1rem; background: white; color: var(--ink);
+  margin-bottom: 1.5rem; transition: border-color 0.15s; outline: none;
+  appearance: none; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b5c4a' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+.arrival-select:focus { border-color: var(--green); }
+
+/* Dinner card */
+.dinner-banner {
+  background: var(--amber-light); border: 1px solid #e8c898;
+  border-radius: var(--radius); padding: 1.1rem 1.25rem; margin-bottom: 1rem;
+}
+.dinner-banner-title {
+  font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600;
+  color: var(--amber); margin-bottom: 4px;
+}
+.dinner-banner-time { font-size: 0.82rem; color: var(--ink-soft); margin-bottom: 0.75rem; }
+.dinner-includes { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.7; }
+.dinner-includes span { display: block; }
+
+/* Menu cards */
+.card {
+  background: white; border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 1rem 1.25rem; margin-bottom: 0.75rem; cursor: pointer;
+  display: flex; align-items: center; gap: 1rem;
+  transition: border-color 0.15s, transform 0.1s;
+}
+.card:hover { border-color: var(--green); }
+.card:active { transform: scale(0.99); }
+.card.selected { border: 2px solid var(--green); background: var(--green-light); }
+.card.no-dinner { cursor: default; opacity: 0.5; pointer-events: none; }
+
+.card-emoji {
+  width: 46px; height: 46px; border-radius: 10px; background: var(--stone);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; flex-shrink: 0;
+}
+.card.selected .card-emoji { background: var(--green-mid); }
+
+.card-body { flex: 1; min-width: 0; }
+.card-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600; margin-bottom: 2px; }
+.card-desc { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.4; }
+.card-tag {
+  display: inline-block; font-size: 0.68rem; font-weight: 500; padding: 2px 8px;
+  border-radius: 20px; margin-top: 4px; letter-spacing: 0.04em;
+}
+.tag-veg { background: var(--green-light); color: var(--green); }
+.tag-meat { background: #fdf0ee; color: #a03020; }
+
+.card-price { font-size: 15px; font-weight: 500; color: var(--green); flex-shrink: 0; }
+
+.card-check {
+  width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--border);
+  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.card.selected .card-check { background: var(--green); border-color: var(--green); }
+.card-check svg { display: none; }
+.card.selected .card-check svg { display: block; }
+
+/* No dinner option */
+.no-dinner-btn {
+  width: 100%; padding: 0.9rem; background: white; border: 1px solid var(--border);
+  border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+  color: var(--ink-soft); cursor: pointer; margin-bottom: 1.5rem; transition: all 0.15s;
+  text-align: center;
+}
+.no-dinner-btn:hover { border-color: var(--border); color: var(--ink); }
+.no-dinner-btn.selected { border: 2px solid var(--ink-soft); color: var(--ink); font-weight: 500; background: var(--stone-dark); }
+
+/* Submit */
+.submit-btn {
+  width: 100%; padding: 1.1rem; background: var(--green); color: white;
+  border: none; border-radius: var(--radius); font-family: 'DM Sans', sans-serif;
+  font-size: 1rem; font-weight: 500; cursor: pointer; transition: background 0.15s;
+}
+.submit-btn:hover:not(:disabled) { background: #2d5438; }
+.submit-btn:disabled { background: var(--stone-dark); color: var(--ink-soft); cursor: not-allowed; }
+
+.error-msg { display: none; color: var(--red); font-size: 0.82rem; text-align: center; margin-top: 0.75rem; }
+.error-msg.visible { display: block; }
+
+.footer { text-align: center; margin-top: 2rem; font-size: 0.75rem; color: var(--ink-soft); opacity: 0.6; }
+
+/* Success */
+.success-screen { display: none; text-align: center; padding: 3rem 1rem; }
+.success-circle {
+  width: 72px; height: 72px; background: var(--green-light); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.5rem; font-size: 1.8rem;
+}
+.success-screen h2 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 0.75rem; }
+.success-screen p { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.6; max-width: 300px; margin: 0 auto 1.5rem; }
+
+.summary {
+  background: white; border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 1.25rem; text-align: left; max-width: 320px; margin: 0 auto;
+}
+.summary-row { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 6px 0; border-bottom: 1px solid var(--stone-dark); }
+.summary-row:last-child { border-bottom: none; }
+.summary-key { color: var(--ink-soft); }
+.summary-val { font-weight: 500; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div id="form-view">
+
+    <div class="header">
+      <span class="header-icon">🍝</span>
+      <h1>Casa de Carmen</h1>
+      <p class="sub" id="hdr-sub">Cena Comunitaria · 18:30</p>
+    </div>
+
+    <div class="lang-bar">
+      <button class="lang-btn active" onclick="setLang('it',this)">IT</button>
+      <button class="lang-btn" onclick="setLang('es',this)">ES</button>
+      <button class="lang-btn" onclick="setLang('en',this)">EN</button>
+      <button class="lang-btn" onclick="setLang('de',this)">DE</button>
+    </div>
+
+    <!-- NAME -->
+    <p class="section-label" id="lbl-name">Il tuo nome</p>
+    <input class="name-input" type="text" id="pilgrim-name" placeholder="Maria García" oninput="checkReady()">
+
+    <hr>
+
+    <!-- ARRIVAL -->
+    <p class="section-label" id="lbl-arrival">Ora di arrivo indicativa</p>
+    <select class="arrival-select" id="arrival-time" onchange="checkReady()">
+      <option value="" id="opt-placeholder">— Seleziona un orario —</option>
+      <option value="14:00">14:00</option>
+      <option value="15:00">15:00</option>
+      <option value="16:00">16:00</option>
+      <option value="17:00">17:00</option>
+      <option value="18:00">18:00</option>
+      <option value="19:00">19:00</option>
+      <option value="20:00">20:00</option>
+      <option value="21:00">21:00</option>
+    </select>
+
+    <hr>
+
+    <!-- DINNER -->
+    <div id="dinner-section">
+      <div class="dinner-banner">
+        <p class="dinner-banner-title" id="dinner-title">🕡 Cena comunitaria — 18:30</p>
+        <p class="dinner-banner-time" id="dinner-subtitle">Cucina fatta in casa · 16€ a persona</p>
+        <div class="dinner-includes">
+          <span id="dinner-item1">🍝 Pasta al sugo fatta in casa</span>
+          <span id="dinner-item2">🥘 Pastel di carne o vegetariano (vegano)</span>
+          <span id="dinner-item3">🍮 Dolce fatto in casa</span>
+          <span id="dinner-item4">🍷 Acqua e vino inclusi</span>
+        </div>
+      </div>
+
+      <p class="section-label" id="lbl-menu">Scegli il tuo menù</p>
+
+      <div class="card" onclick="selectDinner('meat',this)" id="card-meat">
+        <div class="card-emoji">🥘</div>
+        <div class="card-body">
+          <p class="card-name" id="name-meat">Menù con carne</p>
+          <p class="card-desc" id="desc-meat">Pasta al sugo, pastel di carne, dolce, acqua e vino</p>
+          <span class="card-tag tag-meat" id="tag-meat">Con carne</span>
+        </div>
+        <span class="card-price">16€</span>
+        <div class="card-check"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><polyline points="1.5,5.5 4.5,8.5 9.5,2.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <div class="card" onclick="selectDinner('veg',this)" id="card-veg">
+        <div class="card-emoji">🌿</div>
+        <div class="card-body">
+          <p class="card-name" id="name-veg">Menù vegetariano</p>
+          <p class="card-desc" id="desc-veg">Pasta al sugo, pastel vegetariano (vegano), dolce, acqua e vino</p>
+          <span class="card-tag tag-veg" id="tag-veg">Vegetariano · Vegano</span>
+        </div>
+        <span class="card-price">16€</span>
+        <div class="card-check"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><polyline points="1.5,5.5 4.5,8.5 9.5,2.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <button class="no-dinner-btn" id="btn-no-dinner" onclick="selectDinner('none',this)">
+        <span id="lbl-no-dinner">Non ceno stasera</span>
+      </button>
+    </div>
+
+    <p class="section-label" id="lbl-notes">Note (allergie, intolleranze, richieste)</p>
+    <textarea class="notes-input" id="pilgrim-notes" placeholder="Es. sono celiaco, allergia alle noci..." rows="3"></textarea>
+
+    <button class="submit-btn" id="submit-btn" onclick="handleSubmit()" disabled>
+      <span id="lbl-submit">Conferma</span>
+    </button>
+    <p class="error-msg" id="error-msg">Si è verificato un errore. Riprova o contattaci.</p>
+
+    <p class="footer">Casa de Carmen · Barbadelo, Lugo · Camino Francés</p>
+  </div>
+
+  <div class="success-screen" id="success-view">
+    <div class="success-circle">✓</div>
+    <h2 id="succ-title">Grazie, pellegrino!</h2>
+    <p id="succ-msg">La tua prenotazione è confermata. Ti aspettiamo domani a Casa de Carmen.</p>
+    <div class="summary" id="succ-summary"></div>
+  </div>
+
+</div>
+<script>
+const T = {
+  it: {
+    hdrSub: 'Cena Comunitaria · 18:30',
+    lblName: 'Il tuo nome', namePlaceholder: 'Maria García',
+    lblArrival: 'Ora di arrivo indicativa',
+    arrivalPlaceholder: '— Seleziona un orario —',
+
+
+    dinnerTitle: '🕡 Cena comunitaria — 18:30',
+    dinnerSubtitle: 'Cucina fatta in casa · 16€ a persona',
+    dinnerItem1: '🍝 Pasta al sugo fatta in casa',
+    dinnerItem2: '🥘 Pastel di carne o vegetariano (vegano)',
+    dinnerItem3: '🍮 Dolce fatto in casa',
+    dinnerItem4: '🍷 Acqua e vino inclusi',
+    lblMenu: 'Scegli il tuo menù',
+    nameMeat: 'Menù con carne', descMeat: 'Pasta al sugo, pastel di carne, dolce, acqua e vino', tagMeat: 'Con carne',
+    nameVeg: 'Menù vegetariano', descVeg: 'Pasta al sugo, pastel vegetariano (vegano), dolce, acqua e vino', tagVeg: 'Vegetariano · Vegano',
+    lblNoDinner: 'Non ceno stasera',
+    lblSubmit: 'Conferma', loading: 'Invio in corso...',
+    succTitle: 'Grazie, pellegrino!', succMsg: 'La tua prenotazione è confermata. Ti aspettiamo domani a Casa de Carmen.',
+    summNome: 'Nome', summArrivo: 'Arrivo', summCena: 'Cena',
+
+    cenaMeat: 'Menù con carne', cenaVeg: 'Menù vegetariano', cenaNo: 'Non partecipa',
+    lblNotes: 'Note (allergie, intolleranze, richieste)',
+    notesPlaceholder: 'Es. sono celiaco, allergia alle noci...',
+    summNote: 'Note',
+    errorMsg: 'Si è verificato un errore. Riprova o contattaci.',
+  },
+  es: {
+    hdrSub: 'Cena Comunitaria · 18:30',
+    lblName: 'Tu nombre', namePlaceholder: 'Maria García',
+    lblArrival: 'Hora de llegada aproximada',
+    arrivalPlaceholder: '— Selecciona una hora —',
+
+
+    dinnerTitle: '🕡 Cena comunitaria — 18:30',
+    dinnerSubtitle: 'Cocina casera · 16€ por persona',
+    dinnerItem1: '🍝 Pasta con salsa casera',
+    dinnerItem2: '🥘 Pastel de carne o vegetariano (vegano)',
+    dinnerItem3: '🍮 Postre casero',
+    dinnerItem4: '🍷 Agua y vino incluidos',
+    lblMenu: 'Elige tu menú',
+    nameMeat: 'Menú con carne', descMeat: 'Pasta, pastel de carne, postre, agua y vino', tagMeat: 'Con carne',
+    nameVeg: 'Menú vegetariano', descVeg: 'Pasta, pastel vegetariano (vegano), postre, agua y vino', tagVeg: 'Vegetariano · Vegano',
+    lblNoDinner: 'No ceno esta noche',
+    lblSubmit: 'Confirmar', loading: 'Enviando...',
+    succTitle: '¡Gracias, peregrino!', succMsg: 'Tu reserva está confirmada. Te esperamos mañana en Casa de Carmen.',
+    summNome: 'Nombre', summArrivo: 'Llegada', summCena: 'Cena',
+
+    cenaMeat: 'Menú con carne', cenaVeg: 'Menú vegetariano', cenaNo: 'No participa',
+    lblNotes: 'Notas (alergias, intolerancias, peticiones)',
+    notesPlaceholder: 'Ej. soy celíaco, alergia a los frutos secos...',
+    summNote: 'Notas',
+    errorMsg: 'Ha ocurrido un error. Inténtalo de nuevo o contáctanos.',
+  },
+  en: {
+    hdrSub: 'Community Dinner · 6:30 PM',
+    lblName: 'Your name', namePlaceholder: 'Maria García',
+    lblArrival: 'Estimated arrival time',
+    arrivalPlaceholder: '— Select a time —',
+
+
+    dinnerTitle: '🕡 Community dinner — 6:30 PM',
+    dinnerSubtitle: 'Home-cooked food · €16 per person',
+    dinnerItem1: '🍝 Homemade pasta with tomato sauce',
+    dinnerItem2: '🥘 Meat pie or vegetarian (vegan)',
+    dinnerItem3: '🍮 Homemade dessert',
+    dinnerItem4: '🍷 Water and wine included',
+    lblMenu: 'Choose your menu',
+    nameMeat: 'Meat menu', descMeat: 'Pasta, meat pie, dessert, water and wine', tagMeat: 'With meat',
+    nameVeg: 'Vegetarian menu', descVeg: 'Pasta, vegetarian pie (vegan), dessert, water and wine', tagVeg: 'Vegetarian · Vegan',
+    lblNoDinner: "I won't join dinner",
+    lblSubmit: 'Confirm', loading: 'Sending...',
+    succTitle: 'Thank you, pilgrim!', succMsg: 'Your booking is confirmed. See you tomorrow at Casa de Carmen.',
+    summNome: 'Name', summArrivo: 'Arrival', summCena: 'Dinner',
+
+    cenaMeat: 'Meat menu', cenaVeg: 'Vegetarian menu', cenaNo: 'Not joining',
+    lblNotes: 'Notes (allergies, intolerances, requests)',
+    notesPlaceholder: 'E.g. gluten-free, nut allergy...',
+    summNote: 'Notes',
+    errorMsg: 'Something went wrong. Please try again or contact us.',
+  },
+  de: {
+    hdrSub: 'Gemeinschaftsabendessen · 18:30',
+    lblName: 'Dein Name', namePlaceholder: 'Maria García',
+    lblArrival: 'Ungefähre Ankunftszeit',
+    arrivalPlaceholder: '— Uhrzeit wählen —',
+
+
+    dinnerTitle: '🕡 Gemeinschaftsessen — 18:30',
+    dinnerSubtitle: 'Hausgemachte Küche · 16€ pro Person',
+    dinnerItem1: '🍝 Hausgemachte Pasta mit Tomatensoße',
+    dinnerItem2: '🥘 Fleischpastete oder vegetarisch (vegan)',
+    dinnerItem3: '🍮 Hausgemachtes Dessert',
+    dinnerItem4: '🍷 Wasser und Wein inklusive',
+    lblMenu: 'Wähle dein Menü',
+    nameMeat: 'Menü mit Fleisch', descMeat: 'Pasta, Fleischpastete, Dessert, Wasser und Wein', tagMeat: 'Mit Fleisch',
+    nameVeg: 'Vegetarisches Menü', descVeg: 'Pasta, vegetarische Pastete (vegan), Dessert, Wasser und Wein', tagVeg: 'Vegetarisch · Vegan',
+    lblNoDinner: 'Ich nehme nicht am Abendessen teil',
+    lblSubmit: 'Bestätigen', loading: 'Wird gesendet...',
+    succTitle: 'Danke, Pilger!', succMsg: 'Deine Buchung ist bestätigt. Wir freuen uns morgen auf dich.',
+    summNome: 'Name', summArrivo: 'Ankunft', summCena: 'Abendessen',
+
+    cenaMeat: 'Menü mit Fleisch', cenaVeg: 'Vegetarisches Menü', cenaNo: 'Nimmt nicht teil',
+    lblNotes: 'Anmerkungen (Allergien, Unverträglichkeiten, Wünsche)',
+    notesPlaceholder: 'Z.B. glutenfrei, Nussallergie...',
+    summNote: 'Anmerkungen',
+    errorMsg: 'Ein Fehler ist aufgetreten. Bitte versuche es erneut.',
+  }
+};
+
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw6uxzpprAb3NE3MOBdBw9aX3TC6pacZVWuIWKjRPhd2fhy3VLK4pYThQSzhPTlx4IA/exec';
+
+let lang = 'it';
+let dinner = null;
+
+function applyLang() {
+  const t = T[lang];
+  document.getElementById('hdr-sub').textContent = t.hdrSub;
+  document.getElementById('lbl-name').textContent = t.lblName;
+  document.getElementById('pilgrim-name').placeholder = t.namePlaceholder;
+  document.getElementById('lbl-arrival').textContent = t.lblArrival;
+  document.getElementById('opt-placeholder').textContent = t.arrivalPlaceholder;
+  document.getElementById('dinner-title').textContent = t.dinnerTitle;
+  document.getElementById('dinner-subtitle').textContent = t.dinnerSubtitle;
+  document.getElementById('dinner-item1').textContent = t.dinnerItem1;
+  document.getElementById('dinner-item2').textContent = t.dinnerItem2;
+  document.getElementById('dinner-item3').textContent = t.dinnerItem3;
+  document.getElementById('dinner-item4').textContent = t.dinnerItem4;
+  document.getElementById('lbl-menu').textContent = t.lblMenu;
+  document.getElementById('name-meat').textContent = t.nameMeat;
+  document.getElementById('desc-meat').textContent = t.descMeat;
+  document.getElementById('tag-meat').textContent = t.tagMeat;
+  document.getElementById('name-veg').textContent = t.nameVeg;
+  document.getElementById('desc-veg').textContent = t.descVeg;
+  document.getElementById('tag-veg').textContent = t.tagVeg;
+  document.getElementById('lbl-no-dinner').textContent = t.lblNoDinner;
+  document.getElementById('lbl-submit').textContent = t.lblSubmit;
+  document.getElementById('error-msg').textContent = t.errorMsg;
+  document.getElementById('lbl-notes').textContent = t.lblNotes;
+  document.getElementById('pilgrim-notes').placeholder = t.notesPlaceholder;
+}
+
+function setLang(l, btn) {
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyLang();
+}
+
+
+
+function selectDinner(d) {
+  dinner = d;
+  ['meat','veg'].forEach(id => document.getElementById('card-'+id).classList.remove('selected'));
+  document.getElementById('btn-no-dinner').classList.remove('selected');
+  if (d === 'none') {
+    document.getElementById('btn-no-dinner').classList.add('selected');
+  } else {
+    document.getElementById('card-'+d).classList.add('selected');
+  }
+  checkReady();
+}
+
+function checkReady() {
+  const name = document.getElementById('pilgrim-name').value.trim();
+  const time = document.getElementById('arrival-time').value;
+  document.getElementById('submit-btn').disabled = !(name && time && dinner);
+}
+
+async function handleSubmit() {
+  const t = T[lang];
+  const name = document.getElementById('pilgrim-name').value.trim();
+  const arrivalTime = document.getElementById('arrival-time').value;
+  if (!name || !arrivalTime || !dinner) return;
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  document.getElementById('lbl-submit').textContent = t.loading;
+  document.getElementById('error-msg').classList.remove('visible');
+
+  const arrivoText = arrivalTime;
+  const cenaText = dinner === 'meat' ? t.cenaMeat : dinner === 'veg' ? t.cenaVeg : t.cenaNo;
+
+  try {
+    const notes = document.getElementById('pilgrim-notes').value.trim();
+    const params = new URLSearchParams({
+      nome: name,
+      ora: arrivoText,
+      cena: cenaText,
+      note: notes || '-',
+      lingua: lang.toUpperCase()
+    });
+    await fetch(SCRIPT_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' });
+
+    document.getElementById('form-view').style.display = 'none';
+    document.getElementById('success-view').style.display = 'block';
+    document.getElementById('succ-title').textContent = t.succTitle;
+    document.getElementById('succ-msg').textContent = t.succMsg;
+
+    document.getElementById('succ-summary').innerHTML = `
+      <div class="summary-row"><span class="summary-key">${t.summNome}</span><span class="summary-val">${name}</span></div>
+      <div class="summary-row"><span class="summary-key">${t.summArrivo}</span><span class="summary-val" style="color:var(--green)">${arrivoText}</span></div>
+      <div class="summary-row"><span class="summary-key">${t.summCena}</span><span class="summary-val">${cenaText}</span></div>
+      ${notes ? `<div class="summary-row"><span class="summary-key">${t.summNote}</span><span class="summary-val" style="font-weight:400;color:var(--ink-soft)">${notes}</span></div>` : ''}
+    `;
+  } catch(e) {
+    btn.disabled = false;
+    document.getElementById('lbl-submit').textContent = t.lblSubmit;
+    document.getElementById('error-msg').classList.add('visible');
+  }
+}
+
+// Init — detect browser language
+const bl = (navigator.language || 'it').slice(0,2).toLowerCase();
+lang = ['it','es','en','de'].includes(bl) ? bl : 'it';
+document.querySelectorAll('.lang-btn').forEach(b => {
+  b.classList.toggle('active', b.textContent.toLowerCase() === lang);
+});
+applyLang();
+</script>
+</body>
+</html>
