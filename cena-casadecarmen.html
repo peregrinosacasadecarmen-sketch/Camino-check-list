@@ -53,6 +53,16 @@ body {
   text-transform: uppercase; color: var(--ink-soft); margin-bottom: 0.75rem;
 }
 
+/* Lunch info banner */
+.lunch-banner {
+  background: var(--amber-light); border: 1px solid #e8c898;
+  border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 1.5rem;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.lunch-banner-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+.lunch-banner-text { font-size: 0.85rem; color: var(--ink-soft); line-height: 1.6; }
+.lunch-banner-text strong { color: var(--amber); display: block; margin-bottom: 2px; font-size: 0.9rem; }
+
 /* Name input */
 .name-input {
   width: 100%; padding: 0.9rem 1rem; border: 1px solid var(--border);
@@ -270,6 +280,15 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
     <p class="section-label" id="lbl-notes">Note (allergie, intolleranze, richieste)</p>
     <textarea class="notes-input" id="pilgrim-notes" placeholder="Es. sono celiaco, allergia alle noci..." rows="3"></textarea>
 
+    <!-- LUNCH INFO BANNER -->
+    <div class="lunch-banner">
+      <div class="lunch-banner-icon">🥖</div>
+      <div class="lunch-banner-text">
+        <strong id="lunch-banner-title">Vuoi pranzare con noi?</strong>
+        <span id="lunch-banner-text">Abbiamo una scelta di panini gourmet — vegano, vegetariano e con carne. Faccelo sapere all'arrivo!</span>
+      </div>
+    </div>
+
     <button class="submit-btn" id="submit-btn" onclick="handleSubmit()" disabled>
       <span id="lbl-submit">Conferma</span>
     </button>
@@ -313,6 +332,8 @@ const T = {
     lblNotes: 'Note (allergie, intolleranze, richieste)',
     notesPlaceholder: 'Es. sono celiaco, allergia alle noci...',
     summNote: 'Note',
+    lunchBannerTitle: 'Vuoi pranzare con noi?',
+    lunchBannerText: 'Abbiamo una scelta di panini gourmet — vegano, vegetariano e con carne. Faccelo sapere all\'arrivo!',
     errorMsg: 'Si è verificato un errore. Riprova o contattaci.',
   },
   es: {
@@ -340,6 +361,8 @@ const T = {
     lblNotes: 'Notas (alergias, intolerancias, peticiones)',
     notesPlaceholder: 'Ej. soy celíaco, alergia a los frutos secos...',
     summNote: 'Notas',
+    lunchBannerTitle: '¿Queréis comer con nosotros?',
+    lunchBannerText: 'Tenemos una selección de bocadillos gourmet — vegano, vegetariano y con carne. ¡Avisadnos a la llegada!',
     errorMsg: 'Ha ocurrido un error. Inténtalo de nuevo o contáctanos.',
   },
   en: {
@@ -367,6 +390,8 @@ const T = {
     lblNotes: 'Notes (allergies, intolerances, requests)',
     notesPlaceholder: 'E.g. gluten-free, nut allergy...',
     summNote: 'Notes',
+    lunchBannerTitle: 'Want to have lunch with us?',
+    lunchBannerText: 'We offer a selection of gourmet sandwiches — vegan, vegetarian and with meat. Just let us know when you arrive!',
     errorMsg: 'Something went wrong. Please try again or contact us.',
   },
   de: {
@@ -394,11 +419,13 @@ const T = {
     lblNotes: 'Anmerkungen (Allergien, Unverträglichkeiten, Wünsche)',
     notesPlaceholder: 'Z.B. glutenfrei, Nussallergie...',
     summNote: 'Anmerkungen',
+    lunchBannerTitle: 'Wollt ihr bei uns zu Mittag essen?',
+    lunchBannerText: 'Wir haben eine Auswahl an Gourmet-Sandwiches — vegan, vegetarisch und mit Fleisch. Sagt uns einfach Bescheid, wenn ihr ankommt!',
     errorMsg: 'Ein Fehler ist aufgetreten. Bitte versuche es erneut.',
   }
 };
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw6uxzpprAb3NE3MOBdBw9aX3TC6pacZVWuIWKjRPhd2fhy3VLK4pYThQSzhPTlx4IA/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwEpQHM6u14QuduuKbt2XGoQbcFqixzvCt7rI2mCct7WWBWaLFar4-LU4BSV-qP9Adxrg/exec';
 
 let lang = 'it';
 let dinner = null;
@@ -426,6 +453,8 @@ function applyLang() {
   document.getElementById('lbl-no-dinner').textContent = t.lblNoDinner;
   document.getElementById('lbl-submit').textContent = t.lblSubmit;
   document.getElementById('error-msg').textContent = t.errorMsg;
+  document.getElementById('lunch-banner-title').textContent = t.lunchBannerTitle;
+  document.getElementById('lunch-banner-text').textContent = t.lunchBannerText;
   document.getElementById('lbl-notes').textContent = t.lblNotes;
   document.getElementById('pilgrim-notes').placeholder = t.notesPlaceholder;
 }
