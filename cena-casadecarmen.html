@@ -211,6 +211,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
       <button class="lang-btn" onclick="setLang('es',this)">ES</button>
       <button class="lang-btn" onclick="setLang('en',this)">EN</button>
       <button class="lang-btn" onclick="setLang('de',this)">DE</button>
+      <button class="lang-btn" onclick="setLang('fr',this)">FR</button>
     </div>
 
     <!-- NAME -->
@@ -423,6 +424,33 @@ const T = {
     lunchBannerText: 'Wir haben eine Auswahl an Gourmet-Sandwiches — vegan, vegetarisch und mit Fleisch. Sagt uns einfach Bescheid, wenn ihr ankommt!',
     errorMsg: 'Ein Fehler ist aufgetreten. Bitte versuche es erneut.',
   }
+  ,
+  fr: {
+    hdrSub: 'Dîner Communautaire · 19:00',
+    lblName: 'Votre nom', namePlaceholder: 'Maria García',
+    lblArrival: 'Heure d\'arrivée approximative',
+    arrivalPlaceholder: '— Choisissez une heure —',
+    dinnerTitle: '🕡 Dîner communautaire — 19:00',
+    dinnerSubtitle: 'Cuisine faite maison · 16€ par personne',
+    dinnerItem1: '🍝 Pâtes maison avec sauce tomate',
+    dinnerItem2: '🥘 Tourte à la viande ou végétarienne (vegan)',
+    dinnerItem3: '🍮 Dessert fait maison',
+    dinnerItem4: '🍷 Eau et vin inclus',
+    lblMenu: 'Choisissez votre menu',
+    nameMeat: 'Menu avec viande', descMeat: 'Pâtes, tourte à la viande, dessert, eau et vin', tagMeat: 'Avec viande',
+    nameVeg: 'Menu végétarien', descVeg: 'Pâtes, tourte végétarienne (vegan), dessert, eau et vin', tagVeg: 'Végétarien · Vegan',
+    lblNoDinner: 'Je ne dîne pas ce soir',
+    lblSubmit: 'Confirmer', loading: 'Envoi en cours...',
+    succTitle: 'Merci, pèlerin !', succMsg: 'Votre réservation est confirmée. À bientôt à Casa de Carmen.',
+    summNome: 'Nom', summArrivo: 'Arrivée', summCena: 'Dîner',
+    cenaMeat: 'Menu avec viande', cenaVeg: 'Menu végétarien', cenaNo: 'Ne participe pas',
+    lblNotes: 'Remarques (allergies, intolérances, demandes)',
+    notesPlaceholder: 'Ex. sans gluten, allergie aux noix...',
+    summNote: 'Remarques',
+    lunchBannerTitle: 'Vous voulez déjeuner avec nous ?',
+    lunchBannerText: 'Nous proposons une sélection de sandwichs gourmets — vegan, végétarien et avec viande. Dites-le nous à votre arrivée !',
+    errorMsg: 'Une erreur est survenue. Réessayez ou contactez-nous.',
+  }
 };
 
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwxIwIBVDqeMk9jmI4QiHAD_n7AWvO4LNmzRv9eqW7D-8CIXdM0G1qZo2JFT0HBGE5b8Q/exec';
@@ -531,7 +559,7 @@ async function handleSubmit() {
 
 // Init — detect browser language
 const bl = (navigator.language || 'it').slice(0,2).toLowerCase();
-lang = ['it','es','en','de'].includes(bl) ? bl : 'it';
+lang = ['it','es','en','de','fr'].includes(bl) ? bl : 'it';
 document.querySelectorAll('.lang-btn').forEach(b => {
   b.classList.toggle('active', b.textContent.toLowerCase() === lang);
 });
