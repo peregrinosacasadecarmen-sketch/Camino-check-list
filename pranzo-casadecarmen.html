@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Casa de Carmen — Pranzo</title>
+<title>Casa de Carmen — Pranzo al Sacco</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -51,6 +51,21 @@ body {
   text-transform: uppercase; color: var(--ink-soft); margin-bottom: 0.75rem;
 }
 
+/* Bag banner */
+.bag-banner {
+  background: var(--green-light); border: 1px solid var(--green-mid);
+  border-radius: var(--radius); padding: 1.1rem 1.25rem; margin-bottom: 1.5rem;
+}
+.bag-banner-title {
+  font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600;
+  color: var(--green); margin-bottom: 8px;
+}
+.bag-banner-includes { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.8; }
+.bag-banner-includes span { display: block; }
+.bag-banner-price {
+  margin-top: 10px; font-size: 1rem; font-weight: 500; color: var(--green);
+}
+
 .card {
   background: white; border: 1px solid var(--border); border-radius: var(--radius);
   padding: 1rem 1.25rem; margin-bottom: 0.75rem; cursor: pointer;
@@ -64,15 +79,13 @@ body {
 .card-emoji {
   width: 46px; height: 46px; border-radius: 10px; background: var(--stone);
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.5rem; flex-shrink: 0; transition: background 0.15s;
+  font-size: 1.5rem; flex-shrink: 0;
 }
 .card.selected .card-emoji { background: var(--green-mid); }
 
 .card-body { flex: 1; min-width: 0; }
 .card-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600; margin-bottom: 2px; }
 .card-desc { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.4; }
-
-.card-price { font-size: 15px; font-weight: 500; color: var(--green); flex-shrink: 0; }
 
 .card-check {
   width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--border);
@@ -83,24 +96,20 @@ body {
 .card-check svg { display: none; }
 .card.selected .card-check svg { display: block; }
 
-hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
-
-.arrival-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1.5rem; }
-.arrival-btn {
+/* Drink grid */
+.drink-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 1.75rem; }
+.drink-btn {
   background: white; border: 1px solid var(--border); border-radius: 10px;
-  padding: 1rem; cursor: pointer; text-align: center;
-  font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--ink-soft);
-  transition: all 0.15s;
+  padding: 0.8rem 0.4rem; cursor: pointer; text-align: center;
+  font-family: 'DM Sans', sans-serif; transition: all 0.15s;
 }
-.arrival-btn.yes.selected { border: 2px solid var(--green); background: var(--green-light); color: var(--green); font-weight: 500; }
-.arrival-btn.no.selected { border: 2px solid var(--red); background: #fdf0ee; color: var(--red); font-weight: 500; }
+.drink-btn:hover { border-color: var(--green); }
+.drink-btn.selected { border: 2px solid var(--green); background: var(--green-light); }
+.drink-emoji { font-size: 1.3rem; display: block; margin-bottom: 4px; }
+.drink-label { font-size: 0.72rem; color: var(--ink-soft); }
+.drink-btn.selected .drink-label { color: var(--green); font-weight: 500; }
 
-.cancel-note {
-  display: none; background: #fdf0ee; border: 1px solid #f0c0b8;
-  border-radius: 10px; padding: 0.9rem 1rem; font-size: 0.82rem;
-  color: var(--red); margin-bottom: 1.5rem; line-height: 1.5;
-}
-.cancel-note.visible { display: block; }
+hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
 
 .submit-btn {
   width: 100%; padding: 1.1rem; background: var(--green); color: white;
@@ -138,9 +147,8 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
 <div class="page">
 
   <div id="form-view">
-
     <div class="header">
-      <span class="header-icon">🏡</span>
+      <span class="header-icon">🧺</span>
       <h1>Casa de Carmen</h1>
       <p class="sub">Barbadelo · Camino de Santiago</p>
     </div>
@@ -150,8 +158,21 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
       <button class="lang-btn" onclick="setLang('es',this)">ES</button>
       <button class="lang-btn" onclick="setLang('en',this)">EN</button>
       <button class="lang-btn" onclick="setLang('de',this)">DE</button>
+      <button class="lang-btn" onclick="setLang('fr',this)">FR</button>
     </div>
 
+    <!-- BAG INFO -->
+    <div class="bag-banner">
+      <p class="bag-banner-title" id="bag-title">Pranzo al sacco</p>
+      <div class="bag-banner-includes">
+        <span id="bag-item1">🥖 Un panino gourmet a scelta</span>
+        <span id="bag-item2">🥤 Una bibita a scelta</span>
+        <span id="bag-item3">🍰 Un dolcino fatto in casa</span>
+      </div>
+      <p class="bag-banner-price">13€</p>
+    </div>
+
+    <!-- SANDWICH -->
     <p class="section-label" id="lbl-sandwich">Scegli il tuo panino</p>
 
     <div class="card" onclick="selectSandwich('crudo',this)" id="card-crudo">
@@ -160,7 +181,6 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
         <p class="card-name" id="name-crudo">Crudo & Provola</p>
         <p class="card-desc" id="desc-crudo">Prosciutto crudo, provola, confit</p>
       </div>
-      <span class="card-price">9€</span>
       <div class="card-check"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><polyline points="1.5,5.5 4.5,8.5 9.5,2.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     </div>
 
@@ -170,7 +190,6 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
         <p class="card-name" id="name-veggie">Veggie</p>
         <p class="card-desc" id="desc-veggie">Hummus, pomodori secchi, burger veg (no lattosio)</p>
       </div>
-      <span class="card-price">8€</span>
       <div class="card-check"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><polyline points="1.5,5.5 4.5,8.5 9.5,2.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     </div>
 
@@ -180,31 +199,43 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
         <p class="card-name" id="name-vegetarian">Vegetariano</p>
         <p class="card-desc" id="desc-vegetarian">Pomodori secchi, formaggio di capra, pesto</p>
       </div>
-      <span class="card-price">8€</span>
       <div class="card-check"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><polyline points="1.5,5.5 4.5,8.5 9.5,2.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     </div>
 
     <hr>
 
-    <p class="section-label" id="lbl-arrival">Conferma arrivo domani</p>
-    <div class="arrival-grid">
-      <div class="arrival-btn yes" onclick="selectArrival('yes',this)" id="arr-yes">✓ &nbsp;<span id="lbl-yes">Sì, arrivo</span></div>
-      <div class="arrival-btn no" onclick="selectArrival('no',this)" id="arr-no">✗ &nbsp;<span id="lbl-no">Non arrivo</span></div>
+    <!-- DRINK -->
+    <p class="section-label" id="lbl-drink">Scegli la tua bibita</p>
+    <div class="drink-grid">
+      <div class="drink-btn" onclick="selectDrink('cola',this)" id="drink-cola">
+        <span class="drink-emoji">🥤</span>
+        <span class="drink-label">Coca Cola</span>
+      </div>
+      <div class="drink-btn" onclick="selectDrink('acquarius',this)" id="drink-acquarius">
+        <span class="drink-emoji">💧</span>
+        <span class="drink-label">Acquarius</span>
+      </div>
+      <div class="drink-btn" onclick="selectDrink('lipton',this)" id="drink-lipton">
+        <span class="drink-emoji">🍵</span>
+        <span class="drink-label">Lipton Tea</span>
+      </div>
+      <div class="drink-btn" onclick="selectDrink('water',this)" id="drink-water">
+        <span class="drink-emoji">💧</span>
+        <span class="drink-label" id="lbl-water">Acqua</span>
+      </div>
     </div>
-    <div class="cancel-note" id="cancel-note"><span id="lbl-cancel">Grazie per averci avvisato. Se cambi idea siamo qui!</span></div>
 
     <button class="submit-btn" id="submit-btn" onclick="handleSubmit()" disabled>
       <span id="lbl-submit">Conferma ordine</span>
     </button>
-    <p class="error-msg" id="error-msg">Si è verificato un errore. Riprova o contattaci direttamente.</p>
-
+    <p class="error-msg" id="error-msg">Si è verificato un errore. Riprova o contattaci.</p>
     <p class="footer">Casa de Carmen · Barbadelo, Lugo · Camino Francés</p>
   </div>
 
   <div class="success-screen" id="success-view">
     <div class="success-circle">✓</div>
     <h2 id="succ-title">Grazie, pellegrino!</h2>
-    <p id="succ-msg">Il tuo ordine è confermato. Ti aspettiamo domani a Casa de Carmen.</p>
+    <p id="succ-msg">Il tuo ordine è confermato. Ti aspettiamo a Casa de Carmen.</p>
     <div class="summary" id="succ-summary"></div>
   </div>
 
@@ -212,60 +243,94 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
 <script>
 const T = {
   it: {
+    bagTitle: 'Pranzo al sacco',
+    bagItem1: '🥖 Un panino gourmet a scelta',
+    bagItem2: '🥤 Una bibita a scelta',
+    bagItem3: '🍰 Un dolcino fatto in casa',
     lblSandwich: 'Scegli il tuo panino',
-    lblArrival: 'Conferma arrivo domani',
-    lblYes: 'Sì, arrivo', lblNo: 'Non arrivo',
+    lblDrink: 'Scegli la tua bibita',
+    lblWater: 'Acqua',
     lblSubmit: 'Conferma ordine', loading: 'Invio in corso...',
-    lblCancel: 'Grazie per averci avvisato. Se cambi idea siamo qui!',
     nameCrudo: 'Crudo & Provola', descCrudo: 'Prosciutto crudo, provola, confit',
     nameVeggie: 'Veggie', descVeggie: 'Hummus, pomodori secchi, burger veg (no lattosio)',
     nameVegetarian: 'Vegetariano', descVegetarian: 'Pomodori secchi, formaggio di capra, pesto',
-    succTitle: 'Grazie, pellegrino!', succMsg: 'Il tuo ordine è confermato. Ti aspettiamo domani a Casa de Carmen.',
-    summPanino: 'Panino', summArrivo: 'Arrivo', arrivo: 'Confermato',
+    succTitle: 'Grazie, pellegrino!', succMsg: 'Il tuo ordine è confermato. Ti aspettiamo a Casa de Carmen.',
+    summPanino: 'Panino', summBibita: 'Bibita',
     sandwiches: { crudo: 'Crudo & Provola', veggie: 'Veggie', vegetarian: 'Vegetariano' },
-    errorMsg: 'Si è verificato un errore. Riprova o contattaci direttamente.',
+    drinks: { cola: 'Coca Cola', acquarius: 'Acquarius', lipton: 'Lipton Tea', water: 'Acqua' },
+    errorMsg: 'Si è verificato un errore. Riprova o contattaci.',
   },
   es: {
+    bagTitle: 'Almuerzo para llevar',
+    bagItem1: '🥖 Un bocadillo gourmet a elegir',
+    bagItem2: '🥤 Una bebida a elegir',
+    bagItem3: '🍰 Un dulce casero',
     lblSandwich: 'Elige tu bocadillo',
-    lblArrival: 'Confirma tu llegada mañana',
-    lblYes: 'Sí, llego', lblNo: 'No llego',
+    lblDrink: 'Elige tu bebida',
+    lblWater: 'Agua',
     lblSubmit: 'Confirmar pedido', loading: 'Enviando...',
-    lblCancel: '¡Gracias por avisarnos! Si cambias de idea, aquí estamos.',
     nameCrudo: 'Crudo & Provola', descCrudo: 'Jamón crudo, provola, confit',
     nameVeggie: 'Veggie', descVeggie: 'Hummus, tomates secos, hamburguesa vegana (sin lactosa)',
     nameVegetarian: 'Vegetariano', descVegetarian: 'Tomates secos, queso de cabra, pesto',
-    succTitle: '¡Gracias, peregrino!', succMsg: 'Tu pedido está confirmado. Te esperamos mañana en Casa de Carmen.',
-    summPanino: 'Bocadillo', summArrivo: 'Llegada', arrivo: 'Confirmada',
+    succTitle: '¡Gracias, peregrino!', succMsg: 'Tu pedido está confirmado. Te esperamos en Casa de Carmen.',
+    summPanino: 'Bocadillo', summBibita: 'Bebida',
     sandwiches: { crudo: 'Crudo & Provola', veggie: 'Veggie', vegetarian: 'Vegetariano' },
+    drinks: { cola: 'Coca Cola', acquarius: 'Acquarius', lipton: 'Lipton Tea', water: 'Agua' },
     errorMsg: 'Ha ocurrido un error. Inténtalo de nuevo o contáctanos.',
   },
   en: {
+    bagTitle: 'Packed lunch',
+    bagItem1: '🥖 One gourmet sandwich of your choice',
+    bagItem2: '🥤 One drink of your choice',
+    bagItem3: '🍰 One homemade sweet',
     lblSandwich: 'Choose your sandwich',
-    lblArrival: "Confirm tomorrow's arrival",
-    lblYes: "Yes, I'm coming", lblNo: "I won't make it",
+    lblDrink: 'Choose your drink',
+    lblWater: 'Water',
     lblSubmit: 'Confirm order', loading: 'Sending...',
-    lblCancel: "Thanks for letting us know! If you change your mind, we're here.",
     nameCrudo: 'Crudo & Provola', descCrudo: 'Cured ham, provola cheese, confit',
     nameVeggie: 'Veggie', descVeggie: 'Hummus, sun-dried tomatoes, veggie burger (lactose-free)',
     nameVegetarian: 'Vegetarian', descVegetarian: 'Sun-dried tomatoes, goat cheese, pesto',
-    succTitle: 'Thank you, pilgrim!', succMsg: 'Your order is confirmed. See you tomorrow at Casa de Carmen.',
-    summPanino: 'Sandwich', summArrivo: 'Arrival', arrivo: 'Confirmed',
+    succTitle: 'Thank you, pilgrim!', succMsg: 'Your order is confirmed. See you at Casa de Carmen.',
+    summPanino: 'Sandwich', summBibita: 'Drink',
     sandwiches: { crudo: 'Crudo & Provola', veggie: 'Veggie', vegetarian: 'Vegetarian' },
-    errorMsg: 'Something went wrong. Please try again or contact us directly.',
+    drinks: { cola: 'Coca Cola', acquarius: 'Acquarius', lipton: 'Lipton Tea', water: 'Water' },
+    errorMsg: 'Something went wrong. Please try again or contact us.',
   },
   de: {
+    bagTitle: 'Lunchpaket',
+    bagItem1: '🥖 Ein Gourmet-Sandwich nach Wahl',
+    bagItem2: '🥤 Ein Getränk nach Wahl',
+    bagItem3: '🍰 Ein hausgemachtes Süßgebäck',
     lblSandwich: 'Wähle dein Sandwich',
-    lblArrival: 'Ankunft morgen bestätigen',
-    lblYes: 'Ja, ich komme', lblNo: 'Ich komme nicht',
+    lblDrink: 'Wähle dein Getränk',
+    lblWater: 'Wasser',
     lblSubmit: 'Bestellung bestätigen', loading: 'Wird gesendet...',
-    lblCancel: 'Danke! Falls du es dir anders überlegst, sind wir hier.',
     nameCrudo: 'Crudo & Provola', descCrudo: 'Rohschinken, Provola-Käse, Confit',
     nameVeggie: 'Veggie', descVeggie: 'Hummus, getrocknete Tomaten, Veggie-Burger (laktosefrei)',
     nameVegetarian: 'Vegetarisch', descVegetarian: 'Getrocknete Tomaten, Ziegenkäse, Pesto',
-    succTitle: 'Danke, Pilger!', succMsg: 'Deine Bestellung ist bestätigt. Wir freuen uns morgen auf dich.',
-    summPanino: 'Sandwich', summArrivo: 'Ankunft', arrivo: 'Bestätigt',
+    succTitle: 'Danke, Pilger!', succMsg: 'Deine Bestellung ist bestätigt. Wir freuen uns auf dich.',
+    summPanino: 'Sandwich', summBibita: 'Getränk',
     sandwiches: { crudo: 'Crudo & Provola', veggie: 'Veggie', vegetarian: 'Vegetarisch' },
+    drinks: { cola: 'Coca Cola', acquarius: 'Acquarius', lipton: 'Lipton Tea', water: 'Wasser' },
     errorMsg: 'Ein Fehler ist aufgetreten. Bitte versuche es erneut.',
+  },
+  fr: {
+    bagTitle: 'Panier repas',
+    bagItem1: '🥖 Un sandwich gourmet au choix',
+    bagItem2: '🥤 Une boisson au choix',
+    bagItem3: '🍰 Un petit gâteau fait maison',
+    lblSandwich: 'Choisissez votre sandwich',
+    lblDrink: 'Choisissez votre boisson',
+    lblWater: 'Eau',
+    lblSubmit: 'Confirmer la commande', loading: 'Envoi en cours...',
+    nameCrudo: 'Crudo & Provola', descCrudo: 'Jambon cru, provola, confit',
+    nameVeggie: 'Veggie', descVeggie: 'Houmous, tomates séchées, burger vegan (sans lactose)',
+    nameVegetarian: 'Végétarien', descVegetarian: 'Tomates séchées, fromage de chèvre, pesto',
+    succTitle: 'Merci, pèlerin !', succMsg: 'Votre commande est confirmée. À bientôt à Casa de Carmen.',
+    summPanino: 'Sandwich', summBibita: 'Boisson',
+    sandwiches: { crudo: 'Crudo & Provola', veggie: 'Veggie', vegetarian: 'Végétarien' },
+    drinks: { cola: 'Coca Cola', acquarius: 'Acquarius', lipton: 'Lipton Tea', water: 'Eau' },
+    errorMsg: 'Une erreur est survenue. Réessayez ou contactez-nous.',
   }
 };
 
@@ -273,23 +338,25 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw6uxzpprAb3NE3MOBdB
 
 let lang = 'it';
 let sandwich = null;
-let arrival = null;
+let drink = null;
 
 function applyLang() {
   const t = T[lang];
+  document.getElementById('bag-title').textContent = t.bagTitle;
+  document.getElementById('bag-item1').textContent = t.bagItem1;
+  document.getElementById('bag-item2').textContent = t.bagItem2;
+  document.getElementById('bag-item3').textContent = t.bagItem3;
   document.getElementById('lbl-sandwich').textContent = t.lblSandwich;
-  document.getElementById('lbl-arrival').textContent = t.lblArrival;
-  document.getElementById('lbl-yes').textContent = t.lblYes;
-  document.getElementById('lbl-no').textContent = t.lblNo;
+  document.getElementById('lbl-drink').textContent = t.lblDrink;
+  document.getElementById('lbl-water').textContent = t.lblWater;
   document.getElementById('lbl-submit').textContent = t.lblSubmit;
-  document.getElementById('lbl-cancel').textContent = t.lblCancel;
-  document.getElementById('error-msg').textContent = t.errorMsg;
   document.getElementById('name-crudo').textContent = t.nameCrudo;
   document.getElementById('desc-crudo').textContent = t.descCrudo;
   document.getElementById('name-veggie').textContent = t.nameVeggie;
   document.getElementById('desc-veggie').textContent = t.descVeggie;
   document.getElementById('name-vegetarian').textContent = t.nameVegetarian;
   document.getElementById('desc-vegetarian').textContent = t.descVegetarian;
+  document.getElementById('error-msg').textContent = t.errorMsg;
 }
 
 function setLang(l, btn) {
@@ -306,21 +373,19 @@ function selectSandwich(s) {
   checkReady();
 }
 
-function selectArrival(a) {
-  arrival = a;
-  document.getElementById('arr-yes').classList.remove('selected');
-  document.getElementById('arr-no').classList.remove('selected');
-  document.getElementById('arr-'+a).classList.add('selected');
-  document.getElementById('cancel-note').classList.toggle('visible', a === 'no');
+function selectDrink(d) {
+  drink = d;
+  ['cola','acquarius','lipton','water'].forEach(id => document.getElementById('drink-'+id).classList.remove('selected'));
+  document.getElementById('drink-'+d).classList.add('selected');
   checkReady();
 }
 
 function checkReady() {
-  document.getElementById('submit-btn').disabled = !(sandwich && arrival);
+  document.getElementById('submit-btn').disabled = !(sandwich && drink);
 }
 
 async function handleSubmit() {
-  if (!sandwich || !arrival) return;
+  if (!sandwich || !drink) return;
   const t = T[lang];
   const btn = document.getElementById('submit-btn');
   btn.disabled = true;
@@ -328,26 +393,24 @@ async function handleSubmit() {
   document.getElementById('error-msg').classList.remove('visible');
 
   const sandwichName = t.sandwiches[sandwich];
-  const arrivalText = arrival === 'yes' ? t.arrivo : t.lblNo;
+  const drinkName = t.drinks[drink];
 
   try {
-    const params = new URLSearchParams({ panino: sandwichName, arrivo: arrivalText, lingua: lang.toUpperCase() });
+    const params = new URLSearchParams({
+      panino: sandwichName,
+      bibita: drinkName,
+      lingua: lang.toUpperCase()
+    });
     await fetch(SCRIPT_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' });
 
     document.getElementById('form-view').style.display = 'none';
-    const sv = document.getElementById('success-view');
-    sv.style.display = 'block';
+    document.getElementById('success-view').style.display = 'block';
     document.getElementById('succ-title').textContent = t.succTitle;
     document.getElementById('succ-msg').textContent = t.succMsg;
-
-    if (arrival === 'yes') {
-      document.getElementById('succ-summary').innerHTML = `
-        <div class="summary-row"><span class="summary-key">${t.summPanino}</span><span class="summary-val">${sandwichName}</span></div>
-        <div class="summary-row"><span class="summary-key">${t.summArrivo}</span><span class="summary-val" style="color:var(--green)">✓ ${t.arrivo}</span></div>
-      `;
-    } else {
-      document.getElementById('succ-summary').style.display = 'none';
-    }
+    document.getElementById('succ-summary').innerHTML = `
+      <div class="summary-row"><span class="summary-key">${t.summPanino}</span><span class="summary-val">${sandwichName}</span></div>
+      <div class="summary-row"><span class="summary-key">${t.summBibita}</span><span class="summary-val">${drinkName}</span></div>
+    `;
   } catch(e) {
     btn.disabled = false;
     document.getElementById('lbl-submit').textContent = t.lblSubmit;
@@ -357,7 +420,7 @@ async function handleSubmit() {
 
 // Init
 const bl = (navigator.language || 'it').slice(0,2).toLowerCase();
-lang = ['it','es','en','de'].includes(bl) ? bl : 'it';
+lang = ['it','es','en','de','fr'].includes(bl) ? bl : 'it';
 document.querySelectorAll('.lang-btn').forEach(b => {
   b.classList.toggle('active', b.textContent.toLowerCase() === lang);
 });
