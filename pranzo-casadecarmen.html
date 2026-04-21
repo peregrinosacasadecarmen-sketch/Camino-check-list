@@ -119,6 +119,15 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
 .submit-btn:hover:not(:disabled) { background: #2d5438; }
 .submit-btn:disabled { background: var(--stone-dark); color: var(--ink-soft); cursor: not-allowed; }
 
+.notes-input {
+  width: 100%; padding: 0.9rem 1rem; border: 1px solid var(--border);
+  border-radius: var(--radius); font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem; background: white; color: var(--ink);
+  margin-bottom: 1.5rem; transition: border-color 0.15s; outline: none;
+  resize: none; line-height: 1.5; min-height: 80px;
+}
+.notes-input:focus { border-color: var(--green); }
+.notes-input::placeholder { color: var(--ink-soft); opacity: 0.6; }
 .error-msg { display: none; color: var(--red); font-size: 0.82rem; text-align: center; margin-top: 0.75rem; }
 .error-msg.visible { display: block; }
 
@@ -179,7 +188,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
       <div class="card-emoji">🥩</div>
       <div class="card-body">
         <p class="card-name" id="name-crudo">Crudo & Provola</p>
-        <p class="card-desc" id="desc-crudo">Prosciutto crudo, provola, confit</p>
+        <p class="card-desc" id="desc-crudo">Prosciutto crudo, provola, funghi</p>
       </div>
       <div class="card-check"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><polyline points="1.5,5.5 4.5,8.5 9.5,2.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     </div>
@@ -225,6 +234,9 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
       </div>
     </div>
 
+    <p class="section-label" id="lbl-notes">Note (allergie, intolleranze)</p>
+    <textarea class="notes-input" id="pilgrim-notes" placeholder="Es. sono celiaco, allergia alle noci..." rows="3"></textarea>
+
     <button class="submit-btn" id="submit-btn" onclick="handleSubmit()" disabled>
       <span id="lbl-submit">Conferma ordine</span>
     </button>
@@ -251,13 +263,14 @@ const T = {
     lblDrink: 'Scegli la tua bibita',
     lblWater: 'Acqua',
     lblSubmit: 'Conferma ordine', loading: 'Invio in corso...',
-    nameCrudo: 'Crudo & Provola', descCrudo: 'Prosciutto crudo, provola, confit',
+    nameCrudo: 'Crudo & Provola', descCrudo: 'Prosciutto crudo, provola, funghi',
     nameVeggie: 'Veggie', descVeggie: 'Hummus, pomodori secchi, burger veg (no lattosio)',
     nameVegetarian: 'Vegetariano', descVegetarian: 'Pomodori secchi, formaggio di capra, pesto',
     succTitle: 'Grazie, pellegrino!', succMsg: 'Il tuo ordine è confermato. Ti aspettiamo a Casa de Carmen.',
     summPanino: 'Panino', summBibita: 'Bibita',
     sandwiches: { crudo: 'Crudo & Provola', veggie: 'Veggie', vegetarian: 'Vegetariano' },
     drinks: { cola: 'Coca Cola', acquarius: 'Acquarius', lipton: 'Lipton Tea', water: 'Acqua' },
+    lblNotes: 'Note (allergie, intolleranze)', notesPlaceholder: 'Es. sono celiaco, allergia alle noci...', summNote: 'Note',
     errorMsg: 'Si è verificato un errore. Riprova o contattaci.',
   },
   es: {
@@ -269,13 +282,14 @@ const T = {
     lblDrink: 'Elige tu bebida',
     lblWater: 'Agua',
     lblSubmit: 'Confirmar pedido', loading: 'Enviando...',
-    nameCrudo: 'Crudo & Provola', descCrudo: 'Jamón crudo, provola, confit',
+    nameCrudo: 'Crudo & Provola', descCrudo: 'Jamón crudo, provola, setas',
     nameVeggie: 'Veggie', descVeggie: 'Hummus, tomates secos, hamburguesa vegana (sin lactosa)',
     nameVegetarian: 'Vegetariano', descVegetarian: 'Tomates secos, queso de cabra, pesto',
     succTitle: '¡Gracias, peregrino!', succMsg: 'Tu pedido está confirmado. Te esperamos en Casa de Carmen.',
     summPanino: 'Bocadillo', summBibita: 'Bebida',
     sandwiches: { crudo: 'Crudo & Provola', veggie: 'Veggie', vegetarian: 'Vegetariano' },
     drinks: { cola: 'Coca Cola', acquarius: 'Acquarius', lipton: 'Lipton Tea', water: 'Agua' },
+    lblNotes: 'Notas (alergias, intolerancias)', notesPlaceholder: 'Ej. soy celíaco, alergia a los frutos secos...', summNote: 'Notas',
     errorMsg: 'Ha ocurrido un error. Inténtalo de nuevo o contáctanos.',
   },
   en: {
@@ -287,13 +301,14 @@ const T = {
     lblDrink: 'Choose your drink',
     lblWater: 'Water',
     lblSubmit: 'Confirm order', loading: 'Sending...',
-    nameCrudo: 'Crudo & Provola', descCrudo: 'Cured ham, provola cheese, confit',
+    nameCrudo: 'Crudo & Provola', descCrudo: 'Cured ham, provola cheese, mushrooms',
     nameVeggie: 'Veggie', descVeggie: 'Hummus, sun-dried tomatoes, veggie burger (lactose-free)',
     nameVegetarian: 'Vegetarian', descVegetarian: 'Sun-dried tomatoes, goat cheese, pesto',
     succTitle: 'Thank you, pilgrim!', succMsg: 'Your order is confirmed. See you at Casa de Carmen.',
     summPanino: 'Sandwich', summBibita: 'Drink',
     sandwiches: { crudo: 'Crudo & Provola', veggie: 'Veggie', vegetarian: 'Vegetarian' },
     drinks: { cola: 'Coca Cola', acquarius: 'Acquarius', lipton: 'Lipton Tea', water: 'Water' },
+    lblNotes: 'Notes (allergies, intolerances)', notesPlaceholder: 'E.g. gluten-free, nut allergy...', summNote: 'Notes',
     errorMsg: 'Something went wrong. Please try again or contact us.',
   },
   de: {
@@ -305,13 +320,14 @@ const T = {
     lblDrink: 'Wähle dein Getränk',
     lblWater: 'Wasser',
     lblSubmit: 'Bestellung bestätigen', loading: 'Wird gesendet...',
-    nameCrudo: 'Crudo & Provola', descCrudo: 'Rohschinken, Provola-Käse, Confit',
+    nameCrudo: 'Crudo & Provola', descCrudo: 'Rohschinken, Provola-Käse, Pilze',
     nameVeggie: 'Veggie', descVeggie: 'Hummus, getrocknete Tomaten, Veggie-Burger (laktosefrei)',
     nameVegetarian: 'Vegetarisch', descVegetarian: 'Getrocknete Tomaten, Ziegenkäse, Pesto',
     succTitle: 'Danke, Pilger!', succMsg: 'Deine Bestellung ist bestätigt. Wir freuen uns auf dich.',
     summPanino: 'Sandwich', summBibita: 'Getränk',
     sandwiches: { crudo: 'Crudo & Provola', veggie: 'Veggie', vegetarian: 'Vegetarisch' },
     drinks: { cola: 'Coca Cola', acquarius: 'Acquarius', lipton: 'Lipton Tea', water: 'Wasser' },
+    lblNotes: 'Anmerkungen (Allergien, Unverträglichkeiten)', notesPlaceholder: 'Z.B. glutenfrei, Nussallergie...', summNote: 'Anmerkungen',
     errorMsg: 'Ein Fehler ist aufgetreten. Bitte versuche es erneut.',
   },
   fr: {
@@ -323,13 +339,14 @@ const T = {
     lblDrink: 'Choisissez votre boisson',
     lblWater: 'Eau',
     lblSubmit: 'Confirmer la commande', loading: 'Envoi en cours...',
-    nameCrudo: 'Crudo & Provola', descCrudo: 'Jambon cru, provola, confit',
+    nameCrudo: 'Crudo & Provola', descCrudo: 'Jambon cru, provola, champignons',
     nameVeggie: 'Veggie', descVeggie: 'Houmous, tomates séchées, burger vegan (sans lactose)',
     nameVegetarian: 'Végétarien', descVegetarian: 'Tomates séchées, fromage de chèvre, pesto',
     succTitle: 'Merci, pèlerin !', succMsg: 'Votre commande est confirmée. À bientôt à Casa de Carmen.',
     summPanino: 'Sandwich', summBibita: 'Boisson',
     sandwiches: { crudo: 'Crudo & Provola', veggie: 'Veggie', vegetarian: 'Végétarien' },
     drinks: { cola: 'Coca Cola', acquarius: 'Acquarius', lipton: 'Lipton Tea', water: 'Eau' },
+    lblNotes: 'Remarques (allergies, intolérances)', notesPlaceholder: 'Ex. sans gluten, allergie aux noix...', summNote: 'Remarques',
     errorMsg: 'Une erreur est survenue. Réessayez ou contactez-nous.',
   }
 };
@@ -357,6 +374,8 @@ function applyLang() {
   document.getElementById('name-vegetarian').textContent = t.nameVegetarian;
   document.getElementById('desc-vegetarian').textContent = t.descVegetarian;
   document.getElementById('error-msg').textContent = t.errorMsg;
+  document.getElementById('lbl-notes').textContent = t.lblNotes;
+  document.getElementById('pilgrim-notes').placeholder = t.notesPlaceholder;
 }
 
 function setLang(l, btn) {
@@ -396,9 +415,11 @@ async function handleSubmit() {
   const drinkName = t.drinks[drink];
 
   try {
+    const notes = document.getElementById('pilgrim-notes').value.trim();
     const params = new URLSearchParams({
       panino: sandwichName,
       bibita: drinkName,
+      note: notes || '-',
       lingua: lang.toUpperCase()
     });
     await fetch(SCRIPT_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' });
@@ -410,6 +431,7 @@ async function handleSubmit() {
     document.getElementById('succ-summary').innerHTML = `
       <div class="summary-row"><span class="summary-key">${t.summPanino}</span><span class="summary-val">${sandwichName}</span></div>
       <div class="summary-row"><span class="summary-key">${t.summBibita}</span><span class="summary-val">${drinkName}</span></div>
+      ${notes ? `<div class="summary-row"><span class="summary-key">${t.summNote}</span><span class="summary-val" style="font-weight:400;color:var(--ink-soft)">${notes}</span></div>` : ''}
     `;
   } catch(e) {
     btn.disabled = false;
