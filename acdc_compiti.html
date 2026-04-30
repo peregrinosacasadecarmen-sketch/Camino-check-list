@@ -342,13 +342,13 @@ input::placeholder { color: var(--text-subtle); }
 .task-wrapper { animation: fadeUp 0.18s var(--ease); }
 .task-wrapper.flash > .task-row { animation: flash 0.7s var(--ease); }
 .task-row {
-  display: flex; align-items: center; gap: 9px;
-  padding: 5px 8px;
+  display: flex; align-items: flex-start; gap: 9px;
+  padding: 3px 8px;
   border-radius: var(--radius-sm);
   margin-left: -8px; margin-right: -8px;
   transition: background 0.12s ease;
   position: relative;
-  min-height: 30px;
+  min-height: 22px;
 }
 .task-row:hover { background: var(--surface-hover); }
 .task-row .task-actions { opacity: 0; transition: opacity 0.12s ease; }
@@ -356,24 +356,26 @@ input::placeholder { color: var(--text-subtle); }
 .task-row:hover .link-pill,
 .task-row:hover .gcal-pill { opacity: 1; }
 .checkbox {
-  width: 16px; height: 16px;
+  width: 14px; height: 14px;
   border: 1.5px solid var(--border-strong);
-  border-radius: 4px;
+  border-radius: 3.5px;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
+  margin-top: 3px;
   cursor: pointer;
   transition: all 0.15s var(--ease);
   background: transparent;
 }
 .checkbox:hover { transform: scale(1.08); border-color: var(--text-soft); }
 .checkbox.done { color: white; box-shadow: var(--shadow-sm); }
-.task-body { flex: 1; min-width: 0; }
+.task-body { flex: 1; min-width: 0; line-height: 1.3; }
 .task-header {
   display: flex; align-items: center;
   gap: 6px; flex-wrap: wrap;
+  line-height: 1.3;
 }
 .task-text {
-  font-size: 13px; line-height: 1.4;
+  font-size: 12.5px; line-height: 1.35;
   color: var(--text); font-weight: 500;
   letter-spacing: -0.01em;
 }
@@ -383,35 +385,38 @@ input::placeholder { color: var(--text-subtle); }
   font-weight: 450;
 }
 .template-note {
-  font-size: 11.5px; color: var(--text-muted);
-  margin-top: 2px; line-height: 1.4;
+  font-size: 11px; color: var(--text-muted);
+  margin-top: 1px; line-height: 1.35;
   letter-spacing: -0.005em;
 }
 .template-note.monthly-note {
   color: var(--monthly);
-  padding: 3px 7px;
+  padding: 2px 6px;
   background: var(--monthly-soft);
-  border-radius: 4px;
+  border-radius: 3px;
   border-left: 2px solid var(--monthly);
-  margin-top: 4px;
-  font-size: 11px;
+  margin-top: 3px;
+  font-size: 10.5px;
+  line-height: 1.35;
 }
 .template-note.temp-note {
   color: var(--temp);
-  padding: 3px 7px;
+  padding: 2px 6px;
   background: var(--temp-soft);
-  border-radius: 4px;
+  border-radius: 3px;
   border-left: 2px solid var(--temp);
-  margin-top: 4px;
-  font-size: 11px;
+  margin-top: 3px;
+  font-size: 10.5px;
+  line-height: 1.35;
 }
 .link-pill, .gcal-pill {
   display: inline-flex; align-items: center; gap: 3px;
-  padding: 1px 6px;
+  padding: 0px 6px;
   border-radius: 100px;
-  font-size: 10px; font-weight: 500;
+  font-size: 9.5px; font-weight: 500;
   transition: all 0.15s ease;
   letter-spacing: -0.005em;
+  line-height: 1.5;
 }
 .link-pill {
   background: var(--surface-2);
@@ -427,38 +432,82 @@ input::placeholder { color: var(--text-subtle); }
   opacity: 0;
 }
 .gcal-pill:hover { background: #4285F4; color: white; }
+
+/* === COMPACT ROW (weekly compatto) === */
+.compact-row {
+  display: flex; align-items: flex-start; gap: 9px;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  margin-left: -8px; margin-right: -8px;
+  transition: background 0.12s ease;
+  position: relative;
+  min-height: 22px;
+}
+.compact-row:hover { background: var(--surface-hover); }
+.compact-row .task-actions { opacity: 0; transition: opacity 0.12s ease; }
+.compact-row:hover .task-actions { opacity: 1; }
+.compact-row:hover .link-pill,
+.compact-row:hover .gcal-pill { opacity: 1; }
+.compact-row.empty-row {
+  opacity: 0.55;
+  align-items: center;
+  min-height: 18px;
+  padding: 2px 8px;
+}
+.day-tag {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 9.5px; font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  min-width: 26px;
+  flex-shrink: 0;
+  padding-top: 4px;
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.4;
+}
+.day-tag.today { color: var(--accent); }
+.day-tag.empty { visibility: hidden; }
+.empty-day-inline {
+  font-size: 11px; color: var(--text-subtle);
+  letter-spacing: -0.005em;
+}
 .month-pill {
   display: inline-flex; align-items: center;
-  padding: 1.5px 7px; border-radius: 100px;
-  font-size: 10px; font-weight: 600;
+  padding: 0px 6px; border-radius: 100px;
+  font-size: 9.5px; font-weight: 600;
   background: var(--monthly-soft); color: var(--monthly);
   text-transform: uppercase; letter-spacing: 0.05em;
+  line-height: 1.5;
 }
 .due-pill {
   display: inline-flex; align-items: center;
-  padding: 1.5px 8px; border-radius: 100px;
-  font-size: 10.5px; font-weight: 600;
+  padding: 0px 7px; border-radius: 100px;
+  font-size: 9.5px; font-weight: 600;
   letter-spacing: -0.005em;
+  line-height: 1.5;
 }
 .due-pill.overdue { background: rgba(220, 38, 38, 0.1); color: #DC2626; }
 .due-pill.today { background: rgba(217, 119, 6, 0.12); color: #D97706; }
 .due-pill.soon { background: rgba(217, 119, 6, 0.08); color: #D97706; }
 .due-pill.future { background: var(--surface-2); color: var(--text-muted); }
 .section-label {
-  font-size: 11px; font-weight: 600;
+  font-size: 10.5px; font-weight: 600;
   color: var(--text-muted);
   text-transform: uppercase; letter-spacing: 0.07em;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   padding-left: 2px;
 }
 .time-pill {
   display: inline-flex; align-items: center; gap: 3px;
-  padding: 1.5px 7px; border-radius: 100px;
-  font-size: 10.5px; font-weight: 500;
+  padding: 0px 6px; border-radius: 100px;
+  font-size: 9.5px; font-weight: 500;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.005em;
   cursor: pointer;
   transition: all 0.12s ease;
+  line-height: 1.5;
 }
 .time-pill.empty { background: var(--surface-2); color: var(--text-subtle); }
 .time-pill.empty:hover { background: var(--surface-3); color: var(--text-muted); }
@@ -492,26 +541,27 @@ input::placeholder { color: var(--text-subtle); }
 .time-prompt-unit { font-size: 11px; color: var(--text-muted); }
 .time-prompt-save { padding: 4px 10px; font-size: 11px; }
 .runtime-note {
-  font-size: 12px; color: var(--accent);
-  margin-top: 4px; padding: 0;
+  font-size: 11px; color: var(--accent);
+  margin-top: 2px; padding: 0;
   text-align: left; display: block;
-  line-height: 1.5; font-weight: 500;
+  line-height: 1.35; font-weight: 500;
   cursor: pointer;
   letter-spacing: -0.005em;
   transition: color 0.12s ease;
 }
 .runtime-note:hover { color: var(--accent-hover); }
-.task-actions { display: flex; align-items: center; gap: 2px; flex-shrink: 0; }
+.task-actions { display: flex; align-items: center; gap: 2px; flex-shrink: 0; padding-top: 2px; }
 .action-text-btn {
-  font-size: 11px; padding: 3px 7px;
+  font-size: 10.5px; padding: 2px 6px;
   border-radius: 4px;
   color: var(--text-muted); font-weight: 500;
   transition: all 0.12s ease;
   letter-spacing: -0.005em;
+  line-height: 1.4;
 }
 .action-text-btn:hover { background: var(--surface-2); color: var(--text); }
 .icon-btn-small {
-  width: 24px; height: 24px; border-radius: 4px;
+  width: 22px; height: 22px; border-radius: 4px;
   display: flex; align-items: center; justify-content: center;
   color: var(--text-muted);
   transition: all 0.12s ease;
@@ -849,7 +899,7 @@ svg.lucide { width: 1em; height: 1em; stroke: currentColor; fill: none; stroke-w
 const ICONS = {
   plus: '<svg class="lucide" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M12 5v14M5 12h14"/></svg>',
   x: '<svg class="lucide" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M18 6 6 18M6 6l12 12"/></svg>',
-  check: '<svg class="lucide" viewBox="0 0 24 24" style="width:11px;height:11px;stroke-width:3"><path d="M20 6 9 17l-5-5"/></svg>',
+  check: '<svg class="lucide" viewBox="0 0 24 24" style="width:9px;height:9px;stroke-width:3.5"><path d="M20 6 9 17l-5-5"/></svg>',
   trash: '<svg class="lucide" viewBox="0 0 24 24" style="width:13px;height:13px"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>',
   chevronLeft: '<svg class="lucide" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="m15 18-6-6 6-6"/></svg>',
   chevronRight: '<svg class="lucide" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="m9 18 6-6-6-6"/></svg>',
@@ -867,6 +917,7 @@ const ICONS = {
   menu: '<svg class="lucide" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M4 6h16M4 12h16M4 18h16"/></svg>',
   gcal: '<svg class="lucide" viewBox="0 0 24 24" style="width:10px;height:10px"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
   sparkles2: '<svg class="lucide" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></svg>',
+  clock: '<svg class="lucide" viewBox="0 0 24 24" style="width:9px;height:9px;stroke-width:2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
 };
 
 // === DEFAULTS ===
@@ -1878,39 +1929,74 @@ function renderWeeklyView(wt, accent) {
   // Mensili pendenti per il mese corrente
   const pendingMonthly = state.monthly.filter(m => !state.monthlyState[m.id]?.done);
 
-  // Temporanei attivi con scadenza in questa settimana o senza scadenza
+  // Temporanei attivi rilevanti per la settimana
   const weekStart = parseWeekKey(state.currentWeek);
   const weekEnd = new Date(weekStart);
   weekEnd.setDate(weekEnd.getDate() + 6);
   weekEnd.setHours(23, 59, 59, 999);
   const relevantTemp = state.temporary.filter(t => {
     if (t.done) return false;
-    if (!t.dueDate) return true; // senza scadenza: sempre rilevante
+    if (!t.dueDate) return true;
     const due = parseWeekKey(t.dueDate);
-    return due <= weekEnd; // scadenza in questa settimana o passata
+    return due <= weekEnd;
   });
 
-  let extraPanels = '';
+  // Pannello temporanei sopra (sono urgenti)
+  let tempPanel = '';
   if (relevantTemp.length > 0) {
     const filtered = state.search
       ? relevantTemp.filter(t => t.text.toLowerCase().includes(state.search.toLowerCase()) || (t.note || '').toLowerCase().includes(state.search.toLowerCase()))
       : relevantTemp;
     if (filtered.length > 0) {
-      extraPanels += `
-        <div style="margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid var(--border)">
+      tempPanel = `
+        <div style="margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)">
           <div class="section-label" style="color:var(--temp)">⏵ Temporanei attivi (${filtered.length})</div>
           <div class="task-list">${filtered.map(t => renderTemporaryTaskRow(t)).join('')}</div>
         </div>
       `;
     }
   }
+
+  // Lista compatta dei giorni della settimana
+  let weekListHtml = '';
+  GIORNI.forEach(day => {
+    const list = (state.template[wt][day] || []).filter(t =>
+      !state.search || t.text.toLowerCase().includes(state.search.toLowerCase()) || (t.note || '').toLowerCase().includes(state.search.toLowerCase())
+    );
+    const isToday = today === day;
+    const dayShort = day.toUpperCase();
+
+    if (list.length === 0) {
+      weekListHtml += `
+        <div class="compact-row empty-row">
+          <span class="day-tag ${isToday ? 'today' : ''}" ${isToday ? `style="color:${accent}"` : ''}>${dayShort}</span>
+          <span class="empty-day-inline">— nessun task</span>
+          <button class="add-day-btn" data-add-day="${day}" style="margin-left:auto">${ICONS.plus}</button>
+        </div>
+        ${state.showAddForm === day ? renderAddForm(day) : ''}
+      `;
+      return;
+    }
+
+    list.forEach((t, i) => {
+      const showDayTag = i === 0; // mostra il tag solo sulla prima riga del giorno
+      weekListHtml += renderCompactTaskRow(t, accent, day, wt, showDayTag, isToday);
+    });
+
+    if (state.showAddForm === day) {
+      weekListHtml += renderAddForm(day);
+    }
+  });
+
+  // Pannello mensili SOTTO la settimana
+  let monthlyPanel = '';
   if (pendingMonthly.length > 0) {
     const filtered = state.search
       ? pendingMonthly.filter(m => m.text.toLowerCase().includes(state.search.toLowerCase()) || (m.note || '').toLowerCase().includes(state.search.toLowerCase()))
       : pendingMonthly;
     if (filtered.length > 0) {
-      extraPanels += `
-        <div style="margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid var(--border)">
+      monthlyPanel = `
+        <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border)">
           <div class="section-label" style="color:var(--monthly)">⏵ Mensili pendenti · ${formatMonthKey(state.currentMonth)} (${filtered.length})</div>
           <div class="task-list">${filtered.map(t => renderMonthlyTaskRow(t)).join('')}</div>
         </div>
@@ -1918,42 +2004,88 @@ function renderWeeklyView(wt, accent) {
     }
   }
 
-  const daysHtml = GIORNI.map(day => {
-    const list = (state.template[wt][day] || []).filter(t =>
-      !state.search || t.text.toLowerCase().includes(state.search.toLowerCase()) || (t.note || '').toLowerCase().includes(state.search.toLowerCase())
-    );
-    const isToday = today === day;
-    const dayDone = list.filter(t => state.tasks[t.id]?.done).length;
+  return `<div>${tempPanel}<div class="task-list">${weekListHtml}</div>${monthlyPanel}</div>`;
+}
+
+function renderCompactTaskRow(task, accent, day, weekType, showDayTag, isToday) {
+  const taskState = state.tasks[task.id];
+  const done = taskState?.done;
+  const runtimeNote = taskState?.note;
+  const flash = state.recentlyDone === task.id ? 'flash' : '';
+  const isEditing = state.editingTask === task.id;
+  const isMenuOpen = state.openMenu === task.id;
+  const isDetailOpen = state.taskDetailOpen === task.id;
+  const gcalUrl = day && weekType ? buildGCalUrl(task, day, weekType) : null;
+  const dayShort = day.toUpperCase();
+
+  if (isEditing) {
     return `
-      <div class="day-block ${isToday ? 'is-today' : ''}" ${isToday ? `style="border-left-color:${accent}"` : ''}>
-        <div class="day-header">
-          <div class="day-header-left">
-            <h3 class="day-name">${GIORNI_FULL[day]}</h3>
-            ${isToday ? `<span class="today-badge" style="background:${accent}">oggi</span>` : ''}
-            ${list.length > 0 ? `<span class="day-count">${dayDone}<span style="opacity:0.4">/${list.length}</span></span>` : ''}
+      <div class="task-wrapper">
+        <div class="compact-row" style="flex-direction:column;align-items:stretch;gap:6px;padding:8px">
+          <input class="edit-input" id="edit-text-${task.id}" value="${escapeHtml(task.text)}" autofocus />
+          <textarea class="edit-textarea" id="edit-note-${task.id}" placeholder="Nota / dettagli...">${escapeHtml(task.note || '')}</textarea>
+          <div style="display:flex;gap:4px;justify-content:flex-end">
+            <button class="icon-btn-small" data-cancel-edit>${ICONS.x}</button>
+            <button class="primary-btn" data-save-edit="${task.id}">Salva</button>
           </div>
-          <button class="add-day-btn" data-add-day="${day}">${ICONS.plus} aggiungi</button>
         </div>
-        ${state.showAddForm === day ? renderAddForm(day) : ''}
-        ${list.length === 0 && state.showAddForm !== day ? '<div class="empty-day">Nessun task</div>' : ''}
-        <div class="task-list">${list.map(t => renderTaskRow(t, accent, day, wt)).join('')}</div>
       </div>
     `;
-  }).join('');
+  }
 
-  return `<div style="display:flex;flex-direction:column;gap:14px">${extraPanels}${daysHtml}</div>`;
+  const dayTagColor = isToday ? `style="color:${accent}"` : '';
+  const dayTagHtml = showDayTag
+    ? `<span class="day-tag ${isToday ? 'today' : ''}" ${dayTagColor}>${dayShort}</span>`
+    : `<span class="day-tag empty"></span>`;
+
+  return `
+    <div class="task-wrapper ${flash}">
+      <div class="compact-row">
+        ${dayTagHtml}
+        <button class="checkbox ${done ? 'done' : ''}" data-toggle="${task.id}" style="${done ? `background:${accent};border-color:${accent}` : ''}">
+          ${done ? ICONS.check : ''}
+        </button>
+        <div class="task-body">
+          <div class="task-header">
+            <span class="task-text ${done ? 'done' : ''}">${escapeHtml(task.text)}</span>
+            ${renderTimePill(task)}
+            ${task.link ? `<a href="${escapeHtml(task.link)}" target="_blank" rel="noopener" class="link-pill">${ICONS.external} apri</a>` : ''}
+            ${gcalUrl ? `<a href="${gcalUrl}" target="_blank" rel="noopener" class="gcal-pill" title="Aggiungi a Google Calendar">${ICONS.gcal}</a>` : ''}
+          </div>
+          ${task.note ? `<div class="template-note">${escapeHtml(task.note)}</div>` : ''}
+          ${(state.timePromptFor && state.timePromptFor.id === task.id && state.timePromptFor.type === 'weekly') ? renderTimePrompt(task) : ''}
+          ${runtimeNote ? `<button class="runtime-note" data-edit-note="${task.id}"><span style="opacity:0.4">↳</span> ${escapeHtml(runtimeNote)}</button>` : ''}
+        </div>
+        <div class="task-actions">
+          ${!runtimeNote ? `<button class="action-text-btn" data-edit-note="${task.id}">+ nota</button>` : ''}
+          <div style="position:relative">
+            <button class="icon-btn-small" data-menu-toggle="${task.id}">${ICONS.more}</button>
+            ${isMenuOpen ? `
+              <div class="task-menu">
+                <button class="menu-item" data-edit-task="${task.id}">Modifica</button>
+                <button class="menu-item" data-toggle-detail="${task.id}">Configura link</button>
+                <div class="menu-divider"></div>
+                <button class="menu-item danger" data-delete-task="${task.id}">${ICONS.trash} Elimina</button>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      </div>
+      ${isDetailOpen ? renderLinkConfig(task) : ''}
+    </div>
+  `;
 }
 
 function renderTimePill(task) {
   const est = getEstimate(task);
   if (!est) {
-    return `<button class="time-pill empty" data-set-time="${task.id}" title="Imposta stima tempo">⏱ –</button>`;
+    return `<button class="time-pill empty" data-set-time="${task.id}" title="Imposta stima tempo">${ICONS.clock} –</button>`;
   }
   const cls = est.source === 'auto' ? 'auto' : (est.source === 'partial' ? 'partial' : 'manual');
   const title = est.source === 'auto'
     ? `Mediana ${est.samples} esecuzioni`
     : (est.source === 'partial' ? `${est.samples} esecuzioni` : 'Stima manuale');
-  return `<button class="time-pill ${cls}" data-set-time="${task.id}" title="${title}">⏱ ${formatMinutes(est.value)}</button>`;
+  return `<button class="time-pill ${cls}" data-set-time="${task.id}" title="${title}">${ICONS.clock} ${formatMinutes(est.value)}</button>`;
 }
 
 function renderTimePrompt(task) {
