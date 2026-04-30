@@ -46,6 +46,15 @@ body {
 .lang-btn:hover { border-color: var(--green); color: var(--green); }
 .lang-btn.active { background: var(--green); border-color: var(--green); color: white; }
 
+.name-input {
+  width: 100%; padding: 0.9rem 1rem; border: 1px solid var(--border);
+  border-radius: var(--radius); font-family: 'DM Sans', sans-serif;
+  font-size: 1rem; background: white; color: var(--ink);
+  margin-bottom: 1.5rem; transition: border-color 0.15s; outline: none;
+}
+.name-input:focus { border-color: var(--green); }
+.name-input::placeholder { color: var(--ink-soft); opacity: 0.6; }
+
 .section-label {
   font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em;
   text-transform: uppercase; color: var(--ink-soft); margin-bottom: 0.75rem;
@@ -170,6 +179,12 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
       <button class="lang-btn" onclick="setLang('fr',this)">FR</button>
     </div>
 
+    <!-- NAME -->
+    <p class="section-label" id="lbl-name">Il tuo nome</p>
+    <input class="name-input" type="text" id="pilgrim-name" placeholder="Maria García" oninput="checkReady()">
+
+    <hr>
+
     <!-- BAG INFO -->
     <div class="bag-banner">
       <p class="bag-banner-title" id="bag-title">Pranzo al sacco</p>
@@ -268,8 +283,10 @@ const T = {
     nameVegetarian: 'Vegetariano', descVegetarian: 'Pomodori secchi, formaggio di capra, pesto',
     succTitle: 'Grazie, pellegrino!', succMsg: 'Il tuo ordine è confermato. Ti aspettiamo a Casa de Carmen.',
     summPanino: 'Panino', summBibita: 'Bibita',
+    summNome: 'Nome',
     sandwiches: { crudo: 'Crudo & Provola', veggie: 'Veggie', vegetarian: 'Vegetariano' },
     drinks: { cola: 'Coca Cola', acquarius: 'Acquarius', lipton: 'Lipton Tea', water: 'Acqua' },
+    lblName: 'Il tuo nome', namePlaceholder: 'Maria García',
     lblNotes: 'Note (allergie, intolleranze)', notesPlaceholder: 'Es. sono celiaco, allergia alle noci...', summNote: 'Note',
     errorMsg: 'Si è verificato un errore. Riprova o contattaci.',
   },
@@ -287,8 +304,11 @@ const T = {
     nameVegetarian: 'Vegetariano', descVegetarian: 'Tomates secos, queso de cabra, pesto',
     succTitle: '¡Gracias, peregrino!', succMsg: 'Tu pedido está confirmado. Te esperamos en Casa de Carmen.',
     summPanino: 'Bocadillo', summBibita: 'Bebida',
+    summNome: 'Nome',
+    summNome: 'Nombre',
     sandwiches: { crudo: 'Crudo & Provola', veggie: 'Veggie', vegetarian: 'Vegetariano' },
     drinks: { cola: 'Coca Cola', acquarius: 'Acquarius', lipton: 'Lipton Tea', water: 'Agua' },
+    lblName: 'Tu nombre', namePlaceholder: 'Maria García',
     lblNotes: 'Notas (alergias, intolerancias)', notesPlaceholder: 'Ej. soy celíaco, alergia a los frutos secos...', summNote: 'Notas',
     errorMsg: 'Ha ocurrido un error. Inténtalo de nuevo o contáctanos.',
   },
@@ -306,8 +326,10 @@ const T = {
     nameVegetarian: 'Vegetarian', descVegetarian: 'Sun-dried tomatoes, goat cheese, pesto',
     succTitle: 'Thank you, pilgrim!', succMsg: 'Your order is confirmed. See you at Casa de Carmen.',
     summPanino: 'Sandwich', summBibita: 'Drink',
+    summNome: 'Name',
     sandwiches: { crudo: 'Crudo & Provola', veggie: 'Veggie', vegetarian: 'Vegetarian' },
     drinks: { cola: 'Coca Cola', acquarius: 'Acquarius', lipton: 'Lipton Tea', water: 'Water' },
+    lblName: 'Your name', namePlaceholder: 'Maria García',
     lblNotes: 'Notes (allergies, intolerances)', notesPlaceholder: 'E.g. gluten-free, nut allergy...', summNote: 'Notes',
     errorMsg: 'Something went wrong. Please try again or contact us.',
   },
@@ -325,8 +347,10 @@ const T = {
     nameVegetarian: 'Vegetarisch', descVegetarian: 'Getrocknete Tomaten, Ziegenkäse, Pesto',
     succTitle: 'Danke, Pilger!', succMsg: 'Deine Bestellung ist bestätigt. Wir freuen uns auf dich.',
     summPanino: 'Sandwich', summBibita: 'Getränk',
+    summNome: 'Name',
     sandwiches: { crudo: 'Crudo & Provola', veggie: 'Veggie', vegetarian: 'Vegetarisch' },
     drinks: { cola: 'Coca Cola', acquarius: 'Acquarius', lipton: 'Lipton Tea', water: 'Wasser' },
+    lblName: 'Dein Name', namePlaceholder: 'Maria García',
     lblNotes: 'Anmerkungen (Allergien, Unverträglichkeiten)', notesPlaceholder: 'Z.B. glutenfrei, Nussallergie...', summNote: 'Anmerkungen',
     errorMsg: 'Ein Fehler ist aufgetreten. Bitte versuche es erneut.',
   },
@@ -344,8 +368,10 @@ const T = {
     nameVegetarian: 'Végétarien', descVegetarian: 'Tomates séchées, fromage de chèvre, pesto',
     succTitle: 'Merci, pèlerin !', succMsg: 'Votre commande est confirmée. À bientôt à Casa de Carmen.',
     summPanino: 'Sandwich', summBibita: 'Boisson',
+    summNome: 'Nom',
     sandwiches: { crudo: 'Crudo & Provola', veggie: 'Veggie', vegetarian: 'Végétarien' },
     drinks: { cola: 'Coca Cola', acquarius: 'Acquarius', lipton: 'Lipton Tea', water: 'Eau' },
+    lblName: 'Votre nom', namePlaceholder: 'Maria García',
     lblNotes: 'Remarques (allergies, intolérances)', notesPlaceholder: 'Ex. sans gluten, allergie aux noix...', summNote: 'Remarques',
     errorMsg: 'Une erreur est survenue. Réessayez ou contactez-nous.',
   }
@@ -363,6 +389,8 @@ function applyLang() {
   document.getElementById('bag-item1').textContent = t.bagItem1;
   document.getElementById('bag-item2').textContent = t.bagItem2;
   document.getElementById('bag-item3').textContent = t.bagItem3;
+  document.getElementById('lbl-name').textContent = t.lblName;
+  document.getElementById('pilgrim-name').placeholder = t.namePlaceholder;
   document.getElementById('lbl-sandwich').textContent = t.lblSandwich;
   document.getElementById('lbl-drink').textContent = t.lblDrink;
   document.getElementById('lbl-water').textContent = t.lblWater;
@@ -400,11 +428,13 @@ function selectDrink(d) {
 }
 
 function checkReady() {
-  document.getElementById('submit-btn').disabled = !(sandwich && drink);
+  const name = document.getElementById('pilgrim-name').value.trim();
+  document.getElementById('submit-btn').disabled = !(name && sandwich && drink);
 }
 
 async function handleSubmit() {
-  if (!sandwich || !drink) return;
+  const name = document.getElementById('pilgrim-name').value.trim();
+  if (!name || !sandwich || !drink) return;
   const t = T[lang];
   const btn = document.getElementById('submit-btn');
   btn.disabled = true;
@@ -417,6 +447,7 @@ async function handleSubmit() {
   try {
     const notes = document.getElementById('pilgrim-notes').value.trim();
     const params = new URLSearchParams({
+      nome: name,
       panino: sandwichName,
       bibita: drinkName,
       note: notes || '-',
@@ -429,6 +460,7 @@ async function handleSubmit() {
     document.getElementById('succ-title').textContent = t.succTitle;
     document.getElementById('succ-msg').textContent = t.succMsg;
     document.getElementById('succ-summary').innerHTML = `
+      <div class="summary-row"><span class="summary-key">${t.summNome}</span><span class="summary-val">${name}</span></div>
       <div class="summary-row"><span class="summary-key">${t.summPanino}</span><span class="summary-val">${sandwichName}</span></div>
       <div class="summary-row"><span class="summary-key">${t.summBibita}</span><span class="summary-val">${drinkName}</span></div>
       ${notes ? `<div class="summary-row"><span class="summary-key">${t.summNote}</span><span class="summary-val" style="font-weight:400;color:var(--ink-soft)">${notes}</span></div>` : ''}
