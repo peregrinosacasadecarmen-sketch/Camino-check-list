@@ -412,12 +412,19 @@ input::placeholder { color: var(--text-subtle); }
 .link-pill, .gcal-pill {
   display: inline-flex; align-items: center; gap: 3px;
   padding: 0px 6px;
+  height: 16px;
   border-radius: 100px;
   font-size: 9.5px; font-weight: 500;
   transition: all 0.15s ease;
   letter-spacing: -0.005em;
-  line-height: 1.5;
+  line-height: 1;
+  align-self: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+  vertical-align: middle;
+  width: auto;
 }
+.link-pill svg, .gcal-pill svg { flex-shrink: 0; }
 .link-pill {
   background: var(--surface-2);
   color: var(--text-muted);
@@ -475,18 +482,32 @@ input::placeholder { color: var(--text-subtle); }
 }
 .month-pill {
   display: inline-flex; align-items: center;
-  padding: 0px 6px; border-radius: 100px;
+  padding: 0px 6px;
+  height: 16px;
+  border-radius: 100px;
   font-size: 9.5px; font-weight: 600;
   background: var(--monthly-soft); color: var(--monthly);
   text-transform: uppercase; letter-spacing: 0.05em;
-  line-height: 1.5;
+  line-height: 1;
+  align-self: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+  vertical-align: middle;
+  width: auto;
 }
 .due-pill {
   display: inline-flex; align-items: center;
-  padding: 0px 7px; border-radius: 100px;
+  padding: 0px 7px;
+  height: 16px;
+  border-radius: 100px;
   font-size: 9.5px; font-weight: 600;
   letter-spacing: -0.005em;
-  line-height: 1.5;
+  line-height: 1;
+  align-self: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+  vertical-align: middle;
+  width: auto;
 }
 .due-pill.overdue { background: rgba(220, 38, 38, 0.1); color: #DC2626; }
 .due-pill.today { background: rgba(217, 119, 6, 0.12); color: #D97706; }
@@ -501,13 +522,20 @@ input::placeholder { color: var(--text-subtle); }
 }
 .time-pill {
   display: inline-flex; align-items: center; gap: 3px;
-  padding: 0px 6px; border-radius: 100px;
+  padding: 0px 6px;
+  height: 16px;
+  border-radius: 100px;
   font-size: 9.5px; font-weight: 500;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.005em;
   cursor: pointer;
   transition: all 0.12s ease;
-  line-height: 1.5;
+  line-height: 1;
+  align-self: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+  vertical-align: middle;
+  width: auto;
 }
 .time-pill.empty { background: var(--surface-2); color: var(--text-subtle); }
 .time-pill.empty:hover { background: var(--surface-3); color: var(--text-muted); }
@@ -515,6 +543,7 @@ input::placeholder { color: var(--text-subtle); }
 .time-pill.partial { background: rgba(217, 119, 6, 0.08); color: #D97706; }
 .time-pill.auto { background: rgba(0, 168, 107, 0.08); color: #059669; font-weight: 600; }
 .time-pill:hover { transform: translateY(-1px); }
+.time-pill svg { flex-shrink: 0; }
 .time-prompt {
   display: flex; align-items: center; gap: 6px;
   margin-top: 8px; padding: 8px 10px;
@@ -883,6 +912,294 @@ input::placeholder { color: var(--text-subtle); }
 
 .hidden { display: none !important; }
 
+/* === DASHBOARD === */
+.dashboard {
+  display: flex; flex-direction: column; gap: 6px;
+}
+.dash-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 4px; gap: 12px; flex-wrap: wrap;
+}
+.dash-eyebrow {
+  font-size: 9.5px; font-weight: 500; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.07em;
+  margin-bottom: 3px;
+  display: flex; align-items: center; gap: 5px;
+}
+.dash-title {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 18px; font-weight: 600;
+  letter-spacing: -0.025em; line-height: 1.05;
+}
+.quick-add {
+  display: flex; gap: 3px; padding: 3px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  min-width: 240px;
+  transition: border-color 0.15s ease;
+}
+.quick-add:focus-within { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+.quick-add input {
+  flex: 1; border: none; outline: none;
+  padding: 3px 6px; font-size: 11.5px;
+  background: transparent;
+}
+.quick-add select {
+  border: none; padding: 3px 6px; font-size: 10.5px;
+  color: var(--text-soft); background: var(--surface-2);
+  border-radius: 3px; font-weight: 500;
+  cursor: pointer;
+}
+
+.dash-grid-3 {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+}
+.dash-grid-32 {
+  display: grid; grid-template-columns: 1.4fr 1fr;
+  gap: 6px;
+}
+@media (max-width: 720px) {
+  .dash-grid-3 { grid-template-columns: 1fr; }
+  .dash-grid-32 { grid-template-columns: 1fr; }
+}
+
+.dash-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 9px 10px;
+  transition: all 0.15s var(--ease);
+}
+.dash-card[data-clickable]:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+.dash-card-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 5px;
+}
+.dash-card-label {
+  font-size: 9.5px; font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.dash-card-stat {
+  display: flex; align-items: baseline; gap: 3px;
+  margin-top: 2px;
+}
+.dash-card-stat .big {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 17px; font-weight: 700;
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.dash-card-stat .sub {
+  font-size: 10px; color: var(--text-muted);
+  font-weight: 500;
+}
+.dash-progress {
+  height: 2.5px; background: var(--surface-3);
+  border-radius: 100px; margin-top: 5px; overflow: hidden;
+}
+.dash-progress-fill {
+  height: 100%; border-radius: 100px;
+  transition: width 0.6s var(--ease);
+}
+.dash-card-foot {
+  font-size: 9.5px; color: var(--text-muted);
+  margin-top: 4px;
+  display: flex; align-items: center; gap: 3px;
+}
+.dash-card-link {
+  font-size: 9.5px; color: var(--text-muted);
+  margin-top: 6px; padding-top: 6px;
+  border-top: 1px solid var(--border);
+}
+
+.badge-urgent {
+  font-size: 9.5px; color: var(--temp);
+  font-weight: 600;
+}
+.dash-empty-mini {
+  font-size: 11px; color: var(--text-subtle);
+  padding: 4px 0; text-align: center;
+}
+
+/* Upcoming list */
+.upcoming-list {
+  display: flex; flex-direction: column; gap: 0;
+}
+.upcoming-row {
+  display: flex; align-items: center; gap: 7px;
+  padding: 3px 0;
+  border-bottom: 1px solid var(--border);
+}
+.upcoming-row:last-child { border-bottom: none; }
+.upcoming-tag {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 8.5px; font-weight: 700;
+  min-width: 38px; flex-shrink: 0;
+  letter-spacing: 0.04em;
+}
+.upcoming-tag.overdue { color: var(--danger); }
+.upcoming-tag.today { color: var(--accent); }
+.upcoming-tag.soon { color: var(--text-muted); }
+.upcoming-tag.monthly { color: var(--monthly); }
+.upcoming-text {
+  font-size: 11px; color: var(--text);
+  flex: 1; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.upcoming-pill {
+  font-size: 9px; font-weight: 500;
+  padding: 0 5px; border-radius: 100px;
+  display: inline-flex; align-items: center; gap: 2px;
+  flex-shrink: 0; line-height: 1.5;
+}
+.upcoming-pill.overdue { color: var(--danger); background: rgba(220,38,38,0.1); font-weight: 600; }
+.upcoming-pill.time { color: #059669; background: rgba(0,168,107,0.08); font-weight: 600; }
+.upcoming-pill.link { color: #4285F4; background: rgba(66,133,244,0.08); font-weight: 600; }
+
+/* Calendarietto */
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 1px;
+  font-size: 9.5px;
+  width: 100%;
+  max-width: 240px;
+}
+.cal-head {
+  text-align: center; color: var(--text-subtle);
+  font-weight: 600;
+  font-size: 8.5px;
+  height: 14px;
+  display: flex; align-items: center; justify-content: center;
+  text-transform: uppercase;
+}
+.cal-cell {
+  height: 24px;
+  width: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  border-radius: 3px;
+  position: relative;
+  font-variant-numeric: tabular-nums;
+  font-size: 9.5px;
+  line-height: 1;
+  color: var(--text);
+}
+.cal-cell.empty { color: var(--text-subtle); opacity: 0.4; }
+.cal-cell.today {
+  background: var(--accent); color: white;
+  font-weight: 700;
+}
+.cal-dots {
+  display: flex; gap: 1.5px;
+  position: absolute; bottom: 2px;
+  height: 3px;
+}
+.cal-dot {
+  width: 2.5px; height: 2.5px; border-radius: 50%;
+}
+.cal-nav {
+  width: 18px; height: 18px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: var(--text-muted);
+  border-radius: 3px;
+  transition: all 0.12s ease;
+}
+.cal-nav:hover { background: var(--surface-2); color: var(--text); }
+.cal-legend {
+  display: flex; gap: 8px;
+  margin-top: 6px; padding-top: 6px;
+  border-top: 1px solid var(--border);
+  font-size: 8.5px; color: var(--text-muted);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.cal-legend span {
+  display: flex; align-items: center; gap: 3px;
+}
+.cal-legend .dot {
+  width: 4px; height: 4px; border-radius: 50%;
+}
+
+/* Mini list (mensili / temp in dashboard) */
+.mini-list {
+  display: flex; flex-direction: column; gap: 0;
+}
+.mini-row {
+  font-size: 11px; padding: 1.5px 0;
+  color: var(--text);
+  display: flex; justify-content: space-between; gap: 5px;
+  line-height: 1.4;
+}
+.mini-row.overdue { color: var(--danger); font-weight: 500; }
+.mini-due {
+  font-size: 8.5px; flex-shrink: 0;
+  padding: 0 4px; border-radius: 100px;
+  line-height: 1.5;
+}
+.mini-due.overdue { color: var(--danger); background: rgba(220,38,38,0.1); font-weight: 600; }
+.mini-due.today { color: #D97706; background: rgba(217,119,6,0.12); font-weight: 600; }
+.mini-due.soon { color: #D97706; background: rgba(217,119,6,0.08); font-weight: 600; }
+.mini-due.future { color: var(--text-muted); background: var(--surface-2); }
+
+/* Heatmap mini */
+.hm-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 3px;
+}
+.hm-cell {
+  aspect-ratio: 1; border-radius: 3px;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 9.5px; font-weight: 700;
+  font-family: 'Inter Tight', sans-serif;
+}
+.hm-labels {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 3px; margin-top: 3px;
+  font-size: 8.5px; color: var(--text-muted);
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Empty state dashboard */
+.dash-empty {
+  text-align: center;
+  padding: 50px 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  background: var(--surface);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius);
+}
+.dash-empty-icon {
+  width: 48px; height: 48px;
+  border-radius: 50%; background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted);
+}
+.dash-empty-icon svg { width: 22px !important; height: 22px !important; }
+.dash-empty-title {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 16px; font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.dash-empty-text {
+  font-size: 12px; color: var(--text-muted);
+  max-width: 380px; line-height: 1.5;
+  letter-spacing: -0.005em;
+}
+.dash-empty-actions {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  justify-content: center; margin-top: 4px;
+}
+
 /* Icons */
 svg.lucide { width: 1em; height: 1em; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
 </style>
@@ -918,6 +1235,7 @@ const ICONS = {
   gcal: '<svg class="lucide" viewBox="0 0 24 24" style="width:10px;height:10px"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
   sparkles2: '<svg class="lucide" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></svg>',
   clock: '<svg class="lucide" viewBox="0 0 24 24" style="width:9px;height:9px;stroke-width:2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+  home: '<svg class="lucide" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
 };
 
 // === DEFAULTS ===
@@ -1004,7 +1322,7 @@ const STORAGE_KEYS = {
 };
 
 let state = {
-  view: 'weekly',
+  view: 'home',
   currentWeek: getWeekKey(),
   currentMonth: getMonthKey(),
   overrideWeekType: null,
@@ -1650,6 +1968,7 @@ function render() {
 
 function renderSidebar(wt, accent) {
   const navItems = [
+    { id: 'home', icon: ICONS.home, label: 'Home' },
     { id: 'today', icon: ICONS.sparkles, label: 'Oggi' },
     { id: 'weekly', icon: ICONS.inbox, label: 'Settimana' },
     { id: 'biweekly', icon: ICONS.rotate, label: 'Bi-settimana' },
@@ -1709,6 +2028,8 @@ function renderSidebar(wt, accent) {
 }
 
 function renderHeader(wt, accent) {
+  if (state.view === 'home') return '';
+
   let eyebrow = '', title = '';
   if (state.view === 'today') {
     eyebrow = 'Oggi';
@@ -1846,6 +2167,7 @@ function renderStatsAndSearch(wt, accent) {
 
 function renderViewContent(wt, accent) {
   switch (state.view) {
+    case 'home': return renderHomeView(wt, accent);
     case 'today': return renderTodayView(wt, accent);
     case 'weekly': return renderWeeklyView(wt, accent);
     case 'biweekly': return renderBiweeklyView();
@@ -1856,6 +2178,385 @@ function renderViewContent(wt, accent) {
     case 'insights': return renderInsightsView();
     default: return '';
   }
+}
+
+function renderHomeView(wt, accent) {
+  // === DATI AGGREGATI ===
+  const today = getTodayShort();
+  const todayDate = new Date();
+  todayDate.setHours(0, 0, 0, 0);
+  const greeting = getGreeting();
+  const dateStr = todayDate.toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' });
+
+  // Stats Oggi
+  const todayList = state.template[wt][today] || [];
+  const todayDone = todayList.filter(t => state.tasks[t.id]?.done).length;
+  let todayTimeMin = 0;
+  todayList.forEach(t => {
+    if (state.tasks[t.id]?.done) {
+      const hist = state.timeHistory[t.id];
+      if (hist && hist.length > 0) todayTimeMin += hist[hist.length - 1];
+    }
+  });
+
+  // Stats Settimana
+  const weekTpl = state.template[wt];
+  const weekIds = Object.values(weekTpl).flat().map(t => t.id);
+  const weekDone = weekIds.filter(id => state.tasks[id]?.done).length;
+  let weekTimeMin = 0;
+  Object.values(weekTpl).flat().forEach(t => {
+    const est = getEstimate(t);
+    if (est) weekTimeMin += est.value;
+  });
+
+  // Stats Mensili
+  const monthDone = state.monthly.filter(m => state.monthlyState[m.id]?.done).length;
+  const monthTotal = state.monthly.length;
+  const monthPending = monthTotal - monthDone;
+
+  // Empty state
+  const isEmpty = weekIds.length === 0 && state.monthly.length === 0 && state.temporary.length === 0;
+  if (isEmpty) {
+    return `
+      <div style="padding: 40px 16px;">
+        <div class="dash-empty">
+          <div class="dash-empty-icon">${ICONS.home}</div>
+          <div class="dash-empty-title">Inizia configurando un task</div>
+          <div class="dash-empty-text">Vai su <strong>Settimana</strong> per aggiungere task ricorrenti, o <strong>Temporanei</strong> per cose una tantum. Quando avrai dei task, qui troverai una dashboard con tutto a colpo d'occhio.</div>
+          <div class="dash-empty-actions">
+            <button class="primary-btn" data-view="weekly">Vai a Settimana</button>
+            <button class="primary-btn" data-view="temporary" style="background: var(--temp)">Vai a Temporanei</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // === RIGA 1: HEADER + QUICK ADD ===
+  const headerRow = `
+    <div class="dash-header">
+      <div>
+        <div class="dash-eyebrow">
+          ${ICONS.home} Home · <span style="text-transform:capitalize">${dateStr}</span>
+        </div>
+        <div class="dash-title">${greeting} Fede</div>
+      </div>
+      <div class="quick-add">
+        <input id="quick-add-input" placeholder="+ aggiungi task veloce..." />
+        <select id="quick-add-target">
+          <option value="today">oggi</option>
+          <option value="weekly">settimana</option>
+          <option value="monthly">mensile</option>
+          <option value="temporary">una tantum</option>
+        </select>
+      </div>
+    </div>
+  `;
+
+  // === RIGA 2: 3 STATS CARDS ===
+  const todayPct = todayList.length > 0 ? Math.round((todayDone / todayList.length) * 100) : 0;
+  const weekPct = weekIds.length > 0 ? Math.round((weekDone / weekIds.length) * 100) : 0;
+  const monthPct = monthTotal > 0 ? Math.round((monthDone / monthTotal) * 100) : 0;
+
+  const statsRow = `
+    <div class="dash-grid-3" style="margin-bottom: 8px;">
+      <div class="dash-card" data-clickable data-view="today" style="cursor:pointer">
+        <div class="dash-card-label">Oggi</div>
+        <div class="dash-card-stat">
+          <span class="big" style="color: ${accent}">${todayDone}</span>
+          <span class="sub">/ ${todayList.length} task</span>
+        </div>
+        <div class="dash-progress">
+          <div class="dash-progress-fill" style="width:${todayPct}%; background:${accent}"></div>
+        </div>
+        <div class="dash-card-foot">${ICONS.clock} ${todayTimeMin > 0 ? formatMinutes(todayTimeMin) + ' completati' : '— niente registrato'}</div>
+      </div>
+      <div class="dash-card" data-clickable data-view="weekly" style="cursor:pointer">
+        <div class="dash-card-label">Settimana ${wt === 'w1' ? 'W1' : 'W2'}</div>
+        <div class="dash-card-stat">
+          <span class="big">${weekDone}</span>
+          <span class="sub">/ ${weekIds.length} task</span>
+        </div>
+        <div class="dash-progress">
+          <div class="dash-progress-fill" style="width:${weekPct}%; background: var(--text-soft)"></div>
+        </div>
+        <div class="dash-card-foot">${ICONS.clock} stim. ${formatMinutes(weekTimeMin) || '–'}</div>
+      </div>
+      <div class="dash-card" data-clickable data-view="monthly" style="cursor:pointer">
+        <div class="dash-card-label" style="color: var(--monthly)">${formatMonthKey(state.currentMonth)}</div>
+        <div class="dash-card-stat">
+          <span class="big" style="color: var(--monthly)">${monthDone}</span>
+          <span class="sub">/ ${monthTotal} mensili</span>
+        </div>
+        <div class="dash-progress">
+          <div class="dash-progress-fill" style="width:${monthPct}%; background: var(--monthly)"></div>
+        </div>
+        <div class="dash-card-foot">${monthPending > 0 ? monthPending + ' ancora pendenti' : 'Tutti completati ✓'}</div>
+      </div>
+    </div>
+  `;
+
+  // === RIGA 3: PROSSIMI TASK + CALENDARIO ===
+  const upcoming = buildUpcomingTasks(wt);
+  const overdueCount = upcoming.filter(t => t.urgency === 'overdue').length;
+
+  const upcomingHtml = upcoming.length === 0
+    ? `<div class="dash-empty-mini">Niente di urgente</div>`
+    : upcoming.slice(0, 6).map(t => `
+        <div class="upcoming-row">
+          <span class="upcoming-tag ${t.urgency}">${t.tagLabel}</span>
+          <span class="upcoming-text">${escapeHtml(t.text)}</span>
+          ${t.right ? t.right : ''}
+        </div>
+      `).join('');
+
+  const calendarHtml = renderMiniCalendar(wt);
+
+  const row3 = `
+    <div class="dash-grid-32" style="margin-bottom: 8px;">
+      <div class="dash-card">
+        <div class="dash-card-head">
+          <div class="dash-card-label">⚡ Prossimi task</div>
+          ${overdueCount > 0 ? `<span class="badge-urgent">${overdueCount} in ritardo</span>` : ''}
+        </div>
+        <div class="upcoming-list">${upcomingHtml}</div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-head">
+          <div class="dash-card-label" style="text-transform: capitalize">${formatMonthKey(state.currentMonth)}</div>
+          <div style="display:flex;gap:4px">
+            <button class="cal-nav" id="cal-prev">‹</button>
+            <button class="cal-nav" id="cal-next">›</button>
+          </div>
+        </div>
+        ${calendarHtml}
+        <div class="cal-legend">
+          <span><span class="dot" style="background:var(--w1)"></span>W1</span>
+          <span><span class="dot" style="background:var(--w2)"></span>W2</span>
+          <span><span class="dot" style="background:var(--monthly)"></span>Mensili</span>
+          <span><span class="dot" style="background:var(--temp)"></span>Temp.</span>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // === RIGA 4: MENSILI + TEMPORANEI + HEATMAP ===
+  const pendingMonthly = state.monthly.filter(m => !state.monthlyState[m.id]?.done).slice(0, 5);
+  const monthlyListHtml = pendingMonthly.length === 0
+    ? `<div class="dash-empty-mini">Nessun mensile pendente</div>`
+    : pendingMonthly.map(m => `<div class="mini-row">• ${escapeHtml(m.text)}</div>`).join('');
+
+  const activeTemp = state.temporary.filter(t => !t.done);
+  const doneTemp = state.temporary.filter(t => t.done).length;
+  const tempSorted = [...activeTemp].sort((a, b) => {
+    if (!a.dueDate && !b.dueDate) return 0;
+    if (!a.dueDate) return 1;
+    if (!b.dueDate) return -1;
+    return a.dueDate.localeCompare(b.dueDate);
+  }).slice(0, 5);
+  const tempListHtml = tempSorted.length === 0
+    ? `<div class="dash-empty-mini">Nessun task temporaneo</div>`
+    : tempSorted.map(t => {
+        const due = formatTempDueDate(t.dueDate);
+        const dueLabel = due ? `<span class="mini-due ${due.urgency}">${due.label}</span>` : '';
+        const colorClass = due && due.urgency === 'overdue' ? 'overdue' : '';
+        return `<div class="mini-row ${colorClass}">• ${escapeHtml(t.text)} ${dueLabel}</div>`;
+      }).join('');
+
+  const heatmap4 = build4WeekHeatmap();
+
+  const row4 = `
+    <div class="dash-grid-3">
+      <div class="dash-card" data-clickable data-view="monthly" style="cursor:pointer">
+        <div class="dash-card-label" style="color: var(--monthly)">📅 Mensili pendenti</div>
+        <div class="mini-list">${monthlyListHtml}</div>
+        <div class="dash-card-link">vai a tutti i mensili →</div>
+      </div>
+      <div class="dash-card" data-clickable data-view="temporary" style="cursor:pointer">
+        <div class="dash-card-label" style="color: var(--temp)">✦ Temporanei</div>
+        <div class="mini-list">${tempListHtml}</div>
+        <div class="dash-card-link">${activeTemp.length} attivi · ${doneTemp} completati →</div>
+      </div>
+      <div class="dash-card" data-clickable data-view="insights" style="cursor:pointer">
+        <div class="dash-card-label">📊 Ultime 4 settimane</div>
+        ${heatmap4}
+        <div class="dash-card-link">vai a Insight →</div>
+      </div>
+    </div>
+  `;
+
+  return `<div class="dashboard">${headerRow}${statsRow}${row3}${row4}</div>`;
+}
+
+function getGreeting() {
+  const h = new Date().getHours();
+  if (h < 12) return 'Buongiorno';
+  if (h < 18) return 'Buon pomeriggio';
+  return 'Buonasera';
+}
+
+function buildUpcomingTasks(wt) {
+  const result = [];
+  const todayDate = new Date();
+  todayDate.setHours(0, 0, 0, 0);
+
+  // Temporanei in ritardo o oggi
+  state.temporary.forEach(t => {
+    if (t.done) return;
+    const due = t.dueDate ? parseWeekKey(t.dueDate) : null;
+    if (due) due.setHours(0, 0, 0, 0);
+    if (due && due < todayDate) {
+      const days = Math.round((todayDate - due) / 86400000);
+      result.push({ text: t.text, urgency: 'overdue', tagLabel: 'RITARDO', sortKey: -1000 + days, right: `<span class="upcoming-pill overdue">${days}g fa</span>` });
+    } else if (due && due.getTime() === todayDate.getTime()) {
+      result.push({ text: t.text, urgency: 'today', tagLabel: 'OGGI', sortKey: 0, right: '' });
+    }
+  });
+
+  // Task settimanali oggi e prossimi 3 giorni
+  const todayIdx = GIORNI.indexOf(getTodayShort());
+  for (let offset = 0; offset <= 3; offset++) {
+    const dayIdx = (todayIdx + offset) % 7;
+    const day = GIORNI[dayIdx];
+    const list = state.template[wt][day] || [];
+    list.forEach(t => {
+      if (state.tasks[t.id]?.done) return;
+      const tagLabel = offset === 0 ? 'OGGI' : (offset === 1 ? 'DOMANI' : `+${offset}g`);
+      const urgency = offset === 0 ? 'today' : 'soon';
+      const est = getEstimate(t);
+      const right = est ? `<span class="upcoming-pill time">${ICONS.clock}${formatMinutes(est.value)}</span>` : (t.link ? `<a href="${escapeHtml(t.link)}" target="_blank" class="upcoming-pill link">↗</a>` : '');
+      result.push({ text: t.text, urgency, tagLabel, sortKey: offset * 100 + (t.text.charCodeAt(0) || 0), right });
+    });
+  }
+
+  // Mensili pendenti (priorità bassa)
+  state.monthly.filter(m => !state.monthlyState[m.id]?.done).slice(0, 2).forEach(m => {
+    result.push({ text: m.text, urgency: 'monthly', tagLabel: 'MESE', sortKey: 500, right: '' });
+  });
+
+  return result.sort((a, b) => a.sortKey - b.sortKey);
+}
+
+function renderMiniCalendar(wt) {
+  const [y, m] = state.currentMonth.split('-').map(Number);
+  const firstDay = new Date(y, m - 1, 1);
+  const lastDay = new Date(y, m, 0).getDate();
+  const startDayOfWeek = (firstDay.getDay() + 6) % 7; // Lun = 0
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Dot per ogni giorno: che tipo di task ci sono?
+  const getDotsForDay = (date) => {
+    const dots = new Set();
+    const dayOfWeek = (date.getDay() + 6) % 7;
+    const dayShort = GIORNI[dayOfWeek];
+    // weekly tasks per quel giorno (W1 o W2 in base alla settimana)
+    const wkKey = getWeekKey(date);
+    const wType = getWeekType(wkKey);
+    if (state.template[wType][dayShort] && state.template[wType][dayShort].length > 0) {
+      dots.add(wType);
+    }
+    // temporanei con dueDate quel giorno
+    state.temporary.forEach(t => {
+      if (t.done || !t.dueDate) return;
+      const dueStr = t.dueDate;
+      const dateStr = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+      if (dueStr === dateStr) dots.add('temp');
+    });
+    return Array.from(dots);
+  };
+
+  let cellsHtml = '';
+  // Padding inizio
+  for (let i = 0; i < startDayOfWeek; i++) {
+    const d = new Date(y, m - 1, -startDayOfWeek + i + 1);
+    cellsHtml += `<div class="cal-cell empty">${d.getDate()}</div>`;
+  }
+  // Giorni mese
+  for (let d = 1; d <= lastDay; d++) {
+    const date = new Date(y, m - 1, d);
+    date.setHours(0, 0, 0, 0);
+    const isToday = date.getTime() === today.getTime();
+    const dots = getDotsForDay(date);
+    const dotsHtml = dots.map(t => {
+      const color = t === 'w1' ? 'var(--w1)' : (t === 'w2' ? 'var(--w2)' : (t === 'temp' ? 'var(--temp)' : 'var(--monthly)'));
+      return `<span class="cal-dot" style="background:${isToday ? 'white' : color}"></span>`;
+    }).join('');
+    cellsHtml += `<div class="cal-cell ${isToday ? 'today' : ''}">${d}<div class="cal-dots">${dotsHtml}</div></div>`;
+  }
+  // Padding fine
+  const totalCells = startDayOfWeek + lastDay;
+  const remainingCells = (7 - (totalCells % 7)) % 7;
+  for (let i = 1; i <= remainingCells; i++) {
+    cellsHtml += `<div class="cal-cell empty">${i}</div>`;
+  }
+
+  return `
+    <div class="cal-grid">
+      <div class="cal-head">L</div><div class="cal-head">M</div><div class="cal-head">M</div><div class="cal-head">G</div><div class="cal-head">V</div><div class="cal-head">S</div><div class="cal-head">D</div>
+      ${cellsHtml}
+    </div>
+  `;
+}
+
+function build4WeekHeatmap() {
+  const weeks = [];
+  const today = new Date();
+  for (let i = 3; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i * 7);
+    const key = getWeekKey(d);
+    const wType = getWeekType(key);
+    const data = loadWeekTasks(key);
+    const allIds = Object.values(state.template[wType]).flat().map(t => t.id);
+    const total = allIds.length;
+    const done = allIds.filter(id => data[id]?.done).length;
+    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+    weeks.push({ key, pct, isCurrent: i === 0 });
+  }
+
+  const cellsHtml = weeks.map(w => {
+    const bg = w.pct >= 90 ? '#10B981' : w.pct >= 70 ? '#34D399' : w.pct >= 50 ? '#FCD34D' : w.pct >= 25 ? '#FB923C' : w.pct > 0 ? '#F87171' : 'var(--surface-3)';
+    const opacity = w.pct === 0 ? 0.3 : 0.85;
+    return `<div class="hm-cell" style="background:${bg};opacity:${opacity}">${w.pct}%</div>`;
+  }).join('');
+
+  const labelsHtml = weeks.map(w => {
+    if (w.isCurrent) return `<div class="hm-label">oggi</div>`;
+    return `<div class="hm-label">${formatWeek(w.key).split(' – ')[0]}</div>`;
+  }).join('');
+
+  return `
+    <div class="hm-grid">${cellsHtml}</div>
+    <div class="hm-labels">${labelsHtml}</div>
+  `;
+}
+
+function quickAddTask(text, target) {
+  if (!text.trim()) return;
+  if (target === 'today') {
+    const day = getTodayShort();
+    const wt = state.overrideWeekType || getWeekType(state.currentWeek);
+    const newId = 'custom-' + Date.now();
+    saveTemplate({
+      ...state.template,
+      [wt]: { ...state.template[wt], [day]: [...(state.template[wt][day] || []), { id: newId, text }] },
+    });
+  } else if (target === 'weekly') {
+    // Aggiunge a Lunedì come default
+    const wt = state.overrideWeekType || getWeekType(state.currentWeek);
+    const newId = 'custom-' + Date.now();
+    saveTemplate({
+      ...state.template,
+      [wt]: { ...state.template[wt], 'Lun': [...(state.template[wt]['Lun'] || []), { id: newId, text }] },
+    });
+  } else if (target === 'monthly') {
+    saveMonthly([...state.monthly, { id: 'm-' + Date.now(), text }]);
+  } else if (target === 'temporary') {
+    saveTemporary([...state.temporary, { id: 't-' + Date.now(), text, done: false, createdAt: new Date().toISOString() }]);
+  }
+  render();
 }
 
 function renderTodayView(wt, accent) {
@@ -2711,6 +3412,30 @@ function attachEventListeners() {
   if (exportDataBtn) exportDataBtn.addEventListener('click', exportAllData);
   const importDataBtn = document.getElementById('import-data');
   if (importDataBtn) importDataBtn.addEventListener('click', triggerImport);
+
+  // === DASHBOARD ===
+  // Quick add
+  const quickAddInput = document.getElementById('quick-add-input');
+  const quickAddTarget = document.getElementById('quick-add-target');
+  if (quickAddInput) {
+    quickAddInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && quickAddInput.value.trim()) {
+        quickAddTask(quickAddInput.value, quickAddTarget ? quickAddTarget.value : 'today');
+      }
+    });
+  }
+  // Card cliccabili
+  document.querySelectorAll('[data-clickable][data-view]').forEach(el => {
+    el.addEventListener('click', () => {
+      state.view = el.dataset.view;
+      render();
+    });
+  });
+  // Cal nav (mini calendario)
+  const calPrev = document.getElementById('cal-prev');
+  if (calPrev) calPrev.addEventListener('click', () => navigateMonth(-1));
+  const calNext = document.getElementById('cal-next');
+  if (calNext) calNext.addEventListener('click', () => navigateMonth(1));
 
   // Header navigation
   const prev = document.getElementById('prev-week'); if (prev) prev.addEventListener('click', () => navigateWeek(-1));
