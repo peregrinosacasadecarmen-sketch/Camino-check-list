@@ -7,35 +7,52 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;450;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #FAF9F7;
+  --bg: #F7F7F5;
   --surface: #FFFFFF;
-  --surface-2: #F4F2EE;
-  --surface-3: #ECEAE5;
-  --surface-hover: #F7F5F1;
-  --border: #E8E5DF;
-  --border-strong: #D4D1CA;
-  --text: #14110D;
-  --text-soft: #4A453E;
-  --text-muted: #8B857C;
-  --text-subtle: #B5AFA4;
-  --accent: #2563EB;
-  --accent-hover: #1D4ED8;
-  --accent-soft: rgba(37, 99, 235, 0.08);
-  --accent-line: rgba(37, 99, 235, 0.18);
+  --surface-2: #F0EFEC;
+  --surface-3: #E5E4E0;
+  --surface-hover: #FAFAF8;
+  --border: #EAEAE5;
+  --border-strong: #D4D2CC;
+  --text: #15121F;
+  --text-soft: #4A4757;
+  --text-muted: #8E8B96;
+  --text-subtle: #C7C5CC;
+  --accent: #635BFF;
+  --accent-hover: #5046E5;
+  --accent-soft: rgba(99, 91, 255, 0.08);
+  --accent-line: rgba(99, 91, 255, 0.2);
+  --accent-grad: linear-gradient(135deg, #635BFF 0%, #8B7FFF 100%);
   --danger: #DC2626;
-  --w1: #2563EB;
-  --w2: #7C3AED;
-  --monthly: #D97706;
-  --monthly-soft: rgba(217, 119, 6, 0.1);
-  --temp: #DB2777;
-  --temp-soft: rgba(219, 39, 119, 0.1);
-  --shadow-sm: 0 1px 2px rgba(20, 17, 13, 0.04);
-  --shadow-md: 0 2px 8px rgba(20, 17, 13, 0.06), 0 0 0 1px rgba(20, 17, 13, 0.04);
-  --shadow-lg: 0 8px 24px rgba(20, 17, 13, 0.08), 0 0 0 1px rgba(20, 17, 13, 0.04);
-  --radius-sm: 5px;
-  --radius: 7px;
-  --radius-lg: 10px;
+  --danger-soft: #FEE2E2;
+  --success: #10B981;
+  --success-soft: #ECFDF5;
+  --warning: #F59E0B;
+  --warning-soft: #FEF3C7;
+  --w1: #635BFF;
+  --w1-soft: rgba(99, 91, 255, 0.08);
+  --w2: #A855F7;
+  --w2-soft: rgba(168, 85, 247, 0.08);
+  --monthly: #F59E0B;
+  --monthly-strong: #B45309;
+  --monthly-soft: rgba(245, 158, 11, 0.1);
+  --temp: #EC4899;
+  --temp-strong: #BE185D;
+  --temp-soft: rgba(236, 72, 153, 0.1);
+  --shadow-xs: 0 1px 2px rgba(20, 17, 13, 0.04);
+  --shadow-sm: 0 1px 3px rgba(20, 17, 13, 0.05), 0 1px 2px rgba(20, 17, 13, 0.03);
+  --shadow-md: 0 4px 12px rgba(20, 17, 13, 0.06), 0 0 0 1px rgba(20, 17, 13, 0.03);
+  --shadow-lg: 0 12px 32px rgba(20, 17, 13, 0.08), 0 0 0 1px rgba(20, 17, 13, 0.04);
+  --shadow-xl: 0 20px 50px rgba(20, 17, 13, 0.12), 0 0 0 1px rgba(20, 17, 13, 0.04);
+  --shadow-glow: 0 0 0 3px rgba(99, 91, 255, 0.15);
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
   --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 * { box-sizing: border-box; }
 html, body {
@@ -78,10 +95,10 @@ input::placeholder { color: var(--text-subtle); }
 
 /* === SIDEBAR === */
 .sidebar {
-  width: 232px; padding: 20px 12px;
+  width: 220px; padding: 16px 10px;
   border-right: 1px solid var(--border);
-  display: flex; flex-direction: column; gap: 22px;
-  background: var(--surface);
+  display: flex; flex-direction: column; gap: 14px;
+  background: #FCFCFA;
   position: sticky; top: 0; height: 100vh; overflow-y: auto;
   flex-shrink: 0;
   transition: transform 0.32s var(--ease);
@@ -91,86 +108,169 @@ input::placeholder { color: var(--text-subtle); }
 @media (min-width: 900px) { .sidebar-overlay { display: none !important; } }
 @media (max-width: 899px) { .sidebar { position: fixed; z-index: 100; box-shadow: var(--shadow-lg); } }
 
-.brand { display: flex; align-items: center; gap: 10px; padding: 4px 8px 0; }
-.brand-mark { width: 28px; height: 28px; background: var(--text); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
-.brand-dot { width: 8px; height: 8px; border-radius: 1.5px; background: var(--w1); transition: background 0.3s var(--ease); }
-.brand-name { font-family: 'Inter Tight', sans-serif; font-weight: 700; font-size: 13px; line-height: 1; letter-spacing: -0.02em; }
-.brand-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; font-weight: 500; letter-spacing: -0.005em; }
+.brand { display: flex; align-items: center; gap: 9px; padding: 0 6px; }
+.brand-mark {
+  width: 28px; height: 28px;
+  background: var(--accent-grad);
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 8px rgba(99, 91, 255, 0.25);
+  position: relative;
+}
+.brand-mark::after {
+  content: ''; width: 9px; height: 9px;
+  background: white; border-radius: 1.5px;
+}
+.brand-name { font-family: 'Inter Tight', sans-serif; font-weight: 700; font-size: 13px; line-height: 1; letter-spacing: -0.025em; color: var(--text); }
+.brand-sub { font-size: 10px; color: var(--text-muted); margin-top: 2px; font-weight: 500; letter-spacing: -0.005em; }
 
-.nav { display: flex; flex-direction: column; gap: 1px; padding: 0 4px; }
+.sidebar-search {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 11.5px; color: var(--text-muted);
+  box-shadow: var(--shadow-xs);
+  transition: all 0.15s ease;
+  width: 100%;
+  margin: 0 0 2px 0;
+}
+.sidebar-search:hover {
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+.sidebar-search .lucide { color: var(--text-muted); }
+.sidebar-search .kbd {
+  margin-left: auto;
+  font-size: 9px; padding: 1px 5px;
+  background: var(--surface-2);
+  border-radius: 3px;
+  font-weight: 600; color: var(--text);
+  font-family: 'Inter Tight', sans-serif;
+  letter-spacing: 0;
+}
+
+.nav { display: flex; flex-direction: column; gap: 1px; padding: 0; }
 .nav-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 6px 8px; border-radius: var(--radius-sm);
-  font-size: 13px; font-weight: 500;
+  display: flex; align-items: center; gap: 9px;
+  padding: 7px 10px; border-radius: var(--radius-sm);
+  font-size: 12.5px; font-weight: 500;
   color: var(--text-soft); text-align: left;
-  transition: all 0.12s ease;
+  transition: all 0.15s var(--ease);
   position: relative;
   letter-spacing: -0.005em;
+  width: 100%;
 }
 .nav-item:hover { background: var(--surface-2); color: var(--text); }
 .nav-item.active {
-  background: var(--surface-2);
-  color: var(--text);
-  font-weight: 600;
+  background: var(--accent-grad);
+  color: white;
+  font-weight: 500;
+  box-shadow: 0 2px 6px rgba(99, 91, 255, 0.2);
 }
-.nav-item.active::before {
-  content: ''; position: absolute; left: -4px; top: 6px; bottom: 6px;
-  width: 2px; background: var(--text); border-radius: 1px;
-}
+.nav-item.active::before { display: none; }
 .nav-icon {
   width: 16px; height: 16px;
   display: flex; align-items: center; justify-content: center;
   color: var(--text-muted);
   flex-shrink: 0;
 }
-.nav-item.active .nav-icon { color: var(--text); }
+.nav-item.active .nav-icon { color: white; }
+.nav-label { flex: 1; }
+
+.nav-badge {
+  font-size: 9.5px; padding: 1px 6px;
+  border-radius: 100px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+  letter-spacing: 0;
+}
+.nav-badge.accent { background: var(--accent-soft); color: var(--accent); }
+.nav-badge.monthly { background: var(--monthly-soft); color: var(--monthly-strong); }
+.nav-badge.temp { background: var(--temp-soft); color: var(--temp-strong); }
+.nav-badge.temp.warning { background: var(--danger-soft); color: var(--danger); }
+.nav-item.active .nav-badge { background: rgba(255,255,255,0.2); color: white; }
+
+.nav-tag {
+  font-size: 8.5px; padding: 1px 5px;
+  border-radius: 100px;
+  background: linear-gradient(135deg, #DBEAFE, #BFDBFE);
+  color: #1E40AF;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+.nav-item.active .nav-tag { background: rgba(255,255,255,0.2); color: white; }
 
 .week-type-box {
-  padding: 12px;
+  padding: 10px;
   background: var(--surface-2);
   border-radius: var(--radius);
-  display: flex; flex-direction: column; gap: 8px;
+  display: flex; flex-direction: column; gap: 7px;
+  margin: 0 2px;
 }
 .week-type-label {
-  font-size: 10px; font-weight: 600;
+  font-size: 9.5px; font-weight: 600;
   color: var(--text-muted);
   text-transform: uppercase; letter-spacing: 0.06em;
 }
 .week-type-toggle { display: flex; gap: 3px; padding: 2px; background: var(--surface); border-radius: var(--radius-sm); }
 .week-type-btn {
-  flex: 1; padding: 6px 8px; border-radius: 4px;
-  font-size: 11px; font-weight: 500;
+  flex: 1; padding: 5px 6px; border-radius: 4px;
+  font-size: 10.5px; font-weight: 500;
   color: var(--text-soft);
   text-align: center; transition: all 0.15s ease;
   letter-spacing: -0.005em;
 }
 .week-type-btn:hover:not(.active) { color: var(--text); }
-.week-type-btn.active { color: white; font-weight: 600; box-shadow: var(--shadow-sm); }
+.week-type-btn.active { color: white; font-weight: 600; box-shadow: var(--shadow-xs); }
 .week-type-btn.active.w1 { background: var(--w1); }
 .week-type-btn.active.w2 { background: var(--w2); }
 .reset-week-btn {
-  padding: 4px 6px; font-size: 10.5px;
+  padding: 3px 5px; font-size: 10px;
   color: var(--text-muted); border-radius: 4px;
   font-weight: 500; transition: all 0.12s ease;
   align-self: flex-start;
 }
 .reset-week-btn:hover { color: var(--text-soft); }
 
-.sidebar-footer { margin-top: auto; display: flex; flex-direction: column; gap: 8px; padding: 0 4px; }
+.motivational-card {
+  margin: 0 2px;
+  padding: 10px 12px;
+  background: linear-gradient(135deg, #FEF3C7 0%, #FCE7F3 100%);
+  border-radius: var(--radius);
+  font-size: 10.5px;
+}
+.motiv-title {
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 3px;
+  font-family: 'Inter Tight', sans-serif;
+  letter-spacing: -0.01em;
+  font-size: 11px;
+}
+.motiv-text {
+  color: var(--text-soft);
+  line-height: 1.4;
+}
+
+.sidebar-footer { margin-top: auto; display: flex; flex-direction: column; gap: 6px; padding: 0 2px; }
 .export-btn {
-  display: flex; align-items: center; justify-content: center; gap: 6px;
-  padding: 8px 12px; border-radius: var(--radius);
-  font-size: 12px; font-weight: 500;
-  color: var(--text); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+  padding: 6px 10px; border-radius: var(--radius-sm);
+  font-size: 11px; font-weight: 500;
+  color: var(--text-soft); border: 1px solid var(--border);
   background: var(--surface);
   transition: all 0.15s var(--ease);
   letter-spacing: -0.005em;
 }
 .export-btn:hover {
   background: var(--text); color: white; border-color: var(--text);
-  transform: translateY(-1px); box-shadow: var(--shadow-md);
+  transform: translateY(-1px); box-shadow: var(--shadow-sm);
 }
-.tiny-text { font-size: 10.5px; color: var(--text-muted); line-height: 1.45; padding: 0 4px; letter-spacing: -0.005em; }
+.tiny-text { font-size: 10px; color: var(--text-muted); line-height: 1.45; padding: 0 4px; letter-spacing: -0.005em; }
 
 /* === MAIN === */
 .main { flex: 1; padding: 20px 32px 40px; max-width: 1080px; width: 100%; min-width: 0; }
@@ -957,6 +1057,120 @@ button.due-pill {
 
 .hidden { display: none !important; }
 
+/* === COMMAND PALETTE === */
+.cmd-palette-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(20, 17, 13, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 9999;
+  display: flex; justify-content: center;
+  padding-top: 14vh;
+  animation: fadeIn 0.15s ease-out;
+}
+.cmd-palette {
+  width: 100%; max-width: 540px;
+  background: white;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  padding: 4px;
+  animation: cmdSlideIn 0.2s var(--ease-out);
+  max-height: 60vh;
+  display: flex; flex-direction: column;
+}
+@keyframes cmdSlideIn {
+  from { opacity: 0; transform: translateY(-12px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.cmd-palette-input-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.cmd-palette-input-row .lucide { color: var(--text-muted); }
+.cmd-palette-input-row input {
+  flex: 1; border: none; outline: none;
+  font-size: 15px;
+  background: transparent;
+  color: var(--text);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.cmd-palette-input-row input::placeholder { color: var(--text-muted); }
+.cmd-kbd {
+  font-size: 10px; padding: 2px 7px;
+  background: var(--surface-2);
+  border-radius: 4px;
+  font-weight: 600; color: var(--text-soft);
+  font-family: 'Inter Tight', sans-serif;
+  letter-spacing: 0;
+}
+.cmd-palette-list {
+  padding: 6px;
+  overflow-y: auto;
+  flex: 1;
+}
+.cmd-empty {
+  padding: 20px 12px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+.cmd-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 10px;
+  border-radius: var(--radius-sm);
+  transition: background 0.1s ease;
+  cursor: pointer;
+}
+.cmd-row.selected {
+  background: var(--surface-2);
+}
+.cmd-icon {
+  width: 24px; height: 24px;
+  border-radius: 5px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  background: var(--surface-2);
+  color: var(--text-soft);
+}
+.cmd-icon.accent { background: var(--accent-soft); color: var(--accent); }
+.cmd-icon.monthly { background: var(--monthly-soft); color: var(--monthly-strong); }
+.cmd-icon.temp { background: var(--temp-soft); color: var(--temp-strong); }
+.cmd-icon.success { background: var(--success-soft); color: var(--success); }
+.cmd-icon.w1 { background: var(--w1-soft); color: var(--w1); }
+.cmd-icon.w2 { background: var(--w2-soft); color: var(--w2); }
+.cmd-row-body { flex: 1; min-width: 0; }
+.cmd-row-text {
+  font-size: 13px; color: var(--text);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.cmd-row-sub {
+  font-size: 11px; color: var(--text-muted);
+  margin-top: 1px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.cmd-row-meta {
+  font-size: 10.5px;
+  color: var(--text-subtle);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+.cmd-palette-foot {
+  display: flex; gap: 14px;
+  padding: 8px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--surface-2);
+  border-radius: 0 0 calc(var(--radius-xl) - 4px) calc(var(--radius-xl) - 4px);
+  font-size: 10.5px; color: var(--text-muted);
+}
+.cmd-palette-foot .cmd-kbd {
+  background: white;
+  margin-right: 3px;
+}
+
 /* === DRAG & DROP === */
 [data-drag-task] {
   cursor: grab;
@@ -1007,157 +1221,488 @@ button.due-pill {
   text-align: center;
 }
 
+/* === CALENDAR VIEW (mensile completo) === */
+.calview-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 16px; gap: 16px; flex-wrap: wrap;
+}
+.calview-nav {
+  display: flex; align-items: center; gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 3px;
+  box-shadow: var(--shadow-xs);
+}
+.calview-today-btn {
+  padding: 5px 12px;
+  font-size: 11.5px; font-weight: 600;
+  color: var(--text);
+  border-radius: 5px;
+  transition: all 0.12s ease;
+}
+.calview-today-btn:hover { background: var(--surface-2); }
+
+.calview-grid-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-xs);
+}
+.calview-headrow {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+.calview-dayhead {
+  padding: 8px 10px;
+  font-size: 10.5px; font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.06em;
+  text-align: left;
+}
+.calview-cells {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+.calview-cell {
+  min-height: 100px;
+  padding: 6px 8px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 4px;
+  transition: background 0.15s ease;
+  position: relative;
+}
+.calview-cell:nth-child(7n) { border-right: none; }
+.calview-cell.weekend { background: var(--surface-2); }
+.calview-cell.out-of-month { opacity: 0.35; background: var(--surface-2); }
+.calview-cell.today {
+  background: var(--accent-soft);
+}
+.calview-cell.today .calview-day-num {
+  background: var(--accent-grad);
+  color: white;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(99, 91, 255, 0.3);
+}
+.calview-cell.cal-drop-target {
+  background: var(--accent-soft) !important;
+  outline: 2px dashed var(--accent);
+  outline-offset: -2px;
+}
+.calview-day-num {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 12px; font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 2px;
+}
+.calview-items {
+  display: flex; flex-direction: column; gap: 2px;
+}
+.calview-item {
+  font-size: 10.5px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  cursor: grab;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  transition: all 0.12s ease;
+  border-left: 2.5px solid transparent;
+}
+.calview-item:active { cursor: grabbing; }
+.calview-item.dragging { opacity: 0.4; }
+.calview-item.w1 {
+  background: var(--w1-soft);
+  color: var(--w1);
+  border-left-color: var(--w1);
+}
+.calview-item.w2 {
+  background: var(--w2-soft);
+  color: var(--w2);
+  border-left-color: var(--w2);
+}
+.calview-item.temp {
+  background: var(--temp-soft);
+  color: var(--temp-strong);
+  border-left-color: var(--temp);
+}
+.calview-item.done {
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+.calview-item:hover {
+  filter: brightness(0.97);
+  transform: translateY(-1px);
+}
+.calview-more {
+  font-size: 9.5px;
+  color: var(--text-muted);
+  padding: 1px 6px;
+  font-weight: 500;
+}
+
+.calview-legend {
+  display: flex; gap: 14px; align-items: center;
+  padding: 12px 16px;
+  font-size: 11px; color: var(--text-soft);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xs);
+  flex-wrap: wrap;
+}
+.calview-legend .dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 4px;
+}
+.calview-legend .cal-hint {
+  margin-left: auto;
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 10.5px;
+}
+
+/* === REPORTS VIEW === */
+.report-heatmap {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 8px;
+  align-items: end;
+  height: 140px;
+  margin: 12px 0 4px;
+}
+.report-week {
+  display: flex; flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  height: 100%;
+  position: relative;
+}
+.report-week-bar {
+  width: 100%;
+  border-radius: 4px 4px 2px 2px;
+  transition: all 0.4s var(--ease);
+  min-height: 4px;
+  position: relative;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+.report-week-pct {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+.report-week-label {
+  font-size: 9.5px;
+  color: var(--text-muted);
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+
+.report-list {
+  display: flex; flex-direction: column;
+  gap: 6px;
+}
+.report-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+}
+.report-row:last-child { border-bottom: none; }
+.report-row-text {
+  font-size: 12px;
+  color: var(--text);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.report-row-meta {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.report-bar {
+  grid-column: 1 / -1;
+  height: 3px;
+  background: var(--surface-3);
+  border-radius: 100px;
+  overflow: hidden;
+  margin-top: 2px;
+}
+.report-bar-fill {
+  height: 100%;
+  border-radius: 100px;
+  transition: width 0.4s var(--ease);
+}
+
 /* === DASHBOARD === */
 .dashboard {
   display: flex; flex-direction: column; gap: 6px;
 }
 .dash-header {
   display: flex; justify-content: space-between; align-items: flex-end;
-  margin-bottom: 4px; gap: 12px; flex-wrap: wrap;
+  margin-bottom: 16px; gap: 16px; flex-wrap: wrap;
 }
 .dash-eyebrow {
-  font-size: 9.5px; font-weight: 500; color: var(--text-muted);
+  font-size: 11px; font-weight: 500; color: var(--text-muted);
   text-transform: uppercase; letter-spacing: 0.07em;
-  margin-bottom: 3px;
+  margin-bottom: 4px;
   display: flex; align-items: center; gap: 5px;
 }
 .dash-title {
   font-family: 'Inter Tight', sans-serif;
-  font-size: 18px; font-weight: 600;
-  letter-spacing: -0.025em; line-height: 1.05;
+  font-size: 28px; font-weight: 700;
+  letter-spacing: -0.035em; line-height: 1.1;
+  color: var(--text);
 }
 .quick-add {
-  display: flex; gap: 3px; padding: 3px;
+  display: flex; align-items: center; gap: 4px;
+  padding: 4px 4px 4px 10px;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 5px;
-  min-width: 240px;
-  transition: border-color 0.15s ease;
+  border-radius: var(--radius);
+  min-width: 320px;
+  box-shadow: var(--shadow-xs);
+  transition: all 0.15s ease;
 }
-.quick-add:focus-within { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+.quick-add:focus-within {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-glow);
+}
 .quick-add input {
   flex: 1; border: none; outline: none;
-  padding: 3px 6px; font-size: 11.5px;
+  padding: 4px 4px; font-size: 12.5px;
   background: transparent;
+  color: var(--text);
 }
+.quick-add input::placeholder { color: var(--text-muted); }
 .quick-add select {
-  border: none; padding: 3px 6px; font-size: 10.5px;
+  border: none; padding: 4px 8px; font-size: 11px;
   color: var(--text-soft); background: var(--surface-2);
-  border-radius: 3px; font-weight: 500;
+  border-radius: 5px; font-weight: 500;
   cursor: pointer;
+}
+.quick-add-submit {
+  background: var(--text);
+  color: white;
+  padding: 5px 12px;
+  border-radius: 5px;
+  font-size: 11.5px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: var(--shadow-xs);
+}
+.quick-add-submit:hover {
+  background: #000;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
 }
 
 .dash-grid-3 {
   display: grid; grid-template-columns: 1fr 1fr 1fr;
-  gap: 6px;
+  gap: 10px;
+}
+.dash-grid-4 {
+  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px;
 }
 .dash-grid-32 {
-  display: grid; grid-template-columns: 1.4fr 1fr;
-  gap: 6px;
+  display: grid; grid-template-columns: 1.5fr 1fr;
+  gap: 12px;
 }
 @media (max-width: 720px) {
-  .dash-grid-3 { grid-template-columns: 1fr; }
+  .dash-grid-3 { grid-template-columns: 1fr 1fr; }
+  .dash-grid-4 { grid-template-columns: 1fr 1fr; }
   .dash-grid-32 { grid-template-columns: 1fr; }
 }
 
 .dash-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 9px 10px;
-  transition: all 0.15s var(--ease);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  transition: all 0.2s var(--ease);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-xs);
+}
+.dash-card[data-clickable] {
+  cursor: pointer;
 }
 .dash-card[data-clickable]:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
   border-color: var(--border-strong);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
 }
+.dash-card-accent {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.dash-card-accent.accent { background: var(--accent-grad); }
+.dash-card-accent.dark { background: linear-gradient(90deg, #15121F, #4A4757); }
+.dash-card-accent.monthly { background: linear-gradient(90deg, #F59E0B, #FBBF24); }
+.dash-card-accent.success { background: linear-gradient(90deg, #10B981, #34D399); }
+.dash-card-accent.temp { background: linear-gradient(90deg, #EC4899, #F472B6); }
+.dash-card-accent.w2 { background: linear-gradient(90deg, #A855F7, #C084FC); }
+
 .dash-card-head {
   display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+}
+.dash-card-title {
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 14px; font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.dash-card-title-bar {
+  width: 4px; height: 18px;
+  border-radius: 100px;
 }
 .dash-card-label {
-  font-size: 9.5px; font-weight: 600;
+  font-size: 10.5px; font-weight: 600;
   color: var(--text-muted);
   text-transform: uppercase; letter-spacing: 0.06em;
 }
 .dash-card-stat {
-  display: flex; align-items: baseline; gap: 3px;
+  display: flex; align-items: baseline; gap: 4px;
   margin-top: 2px;
 }
 .dash-card-stat .big {
   font-family: 'Inter Tight', sans-serif;
-  font-size: 17px; font-weight: 700;
-  letter-spacing: -0.025em;
+  font-size: 28px; font-weight: 700;
+  letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
   line-height: 1;
+  color: var(--text);
 }
 .dash-card-stat .sub {
-  font-size: 10px; color: var(--text-muted);
+  font-size: 12px; color: var(--text-muted);
   font-weight: 500;
 }
 .dash-progress {
-  height: 2.5px; background: var(--surface-3);
-  border-radius: 100px; margin-top: 5px; overflow: hidden;
+  height: 3px; background: var(--surface-3);
+  border-radius: 100px; margin-top: 8px; overflow: hidden;
 }
 .dash-progress-fill {
   height: 100%; border-radius: 100px;
   transition: width 0.6s var(--ease);
 }
 .dash-card-foot {
-  font-size: 9.5px; color: var(--text-muted);
-  margin-top: 4px;
-  display: flex; align-items: center; gap: 3px;
+  font-size: 10.5px; color: var(--text-soft);
+  margin-top: 8px;
+  display: flex; align-items: center; gap: 4px;
+  line-height: 1.3;
 }
+.dash-card-foot strong {
+  color: var(--text);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.dash-card-foot.success { color: var(--success); }
+.dash-card-foot.warning { color: var(--monthly-strong); font-weight: 600; }
 .dash-card-link {
-  font-size: 9.5px; color: var(--text-muted);
-  margin-top: 6px; padding-top: 6px;
+  font-size: 10.5px; color: var(--text-muted);
+  margin-top: 10px; padding-top: 10px;
   border-top: 1px solid var(--border);
+  font-weight: 500;
 }
 
 .badge-urgent {
-  font-size: 9.5px; color: var(--temp);
+  font-size: 10px; padding: 2px 8px;
+  background: var(--danger-soft); color: var(--danger);
+  border-radius: 100px;
   font-weight: 600;
 }
 .dash-empty-mini {
-  font-size: 11px; color: var(--text-subtle);
-  padding: 4px 0; text-align: center;
+  font-size: 11.5px; color: var(--text-subtle);
+  padding: 6px 0; text-align: center;
 }
 
 /* Upcoming list */
 .upcoming-list {
-  display: flex; flex-direction: column; gap: 0;
+  display: flex; flex-direction: column; gap: 2px;
 }
 .upcoming-row {
-  display: flex; align-items: center; gap: 7px;
-  padding: 3px 0;
-  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 10px;
+  border-radius: var(--radius-sm);
+  transition: background 0.12s ease;
 }
-.upcoming-row:last-child { border-bottom: none; }
+.upcoming-row:hover { background: var(--surface-2); }
+.upcoming-row.overdue {
+  background: var(--danger-soft);
+  border-left: 3px solid var(--danger);
+  padding-left: 8px;
+  align-items: flex-start;
+}
+.upcoming-row.overdue:hover { background: #FEE2E2; }
+.upcoming-row .checkbox-mini {
+  width: 16px; height: 16px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 4px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.upcoming-row.overdue .checkbox-mini { border-color: #FCA5A5; margin-top: 1px; }
 .upcoming-tag {
   font-family: 'Inter Tight', sans-serif;
-  font-size: 8.5px; font-weight: 700;
+  font-size: 9.5px; font-weight: 700;
   min-width: 38px; flex-shrink: 0;
   letter-spacing: 0.04em;
 }
 .upcoming-tag.overdue { color: var(--danger); }
 .upcoming-tag.today { color: var(--accent); }
 .upcoming-tag.soon { color: var(--text-muted); }
-.upcoming-tag.monthly { color: var(--monthly); }
+.upcoming-tag.monthly { color: var(--monthly-strong); }
+.upcoming-body { flex: 1; min-width: 0; }
 .upcoming-text {
-  font-size: 11px; color: var(--text);
-  flex: 1; min-width: 0;
+  font-size: 12.5px; color: var(--text);
+  font-weight: 500;
+  line-height: 1.3;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
-.upcoming-pill {
-  font-size: 9px; font-weight: 500;
-  padding: 0 5px; border-radius: 100px;
-  display: inline-flex; align-items: center; gap: 2px;
-  flex-shrink: 0; line-height: 1.5;
+.upcoming-note {
+  font-size: 10.5px; color: var(--danger);
+  margin-top: 2px;
+  line-height: 1.3;
 }
-.upcoming-pill.overdue { color: var(--danger); background: rgba(220,38,38,0.1); font-weight: 600; }
-.upcoming-pill.time { color: #059669; background: rgba(0,168,107,0.08); font-weight: 600; }
-.upcoming-pill.link { color: #4285F4; background: rgba(66,133,244,0.08); font-weight: 600; }
+.upcoming-pill {
+  font-size: 9.5px; font-weight: 600;
+  padding: 1px 7px; border-radius: 100px;
+  display: inline-flex; align-items: center; gap: 3px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.upcoming-pill.overdue { background: var(--danger); color: white; }
+.upcoming-pill.time { color: var(--success); background: var(--success-soft); }
+.upcoming-pill.link { color: var(--accent); background: var(--accent-soft); }
 
 /* Calendarietto */
 .cal-grid {
@@ -1331,6 +1876,8 @@ const ICONS = {
   sparkles2: '<svg class="lucide" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></svg>',
   clock: '<svg class="lucide" viewBox="0 0 24 24" style="width:9px;height:9px;stroke-width:2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
   home: '<svg class="lucide" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+  search: '<svg class="lucide" viewBox="0 0 24 24" style="width:14px;height:14px"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>',
+  flame: '<svg class="lucide" viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>',
 };
 
 // === DEFAULTS ===
@@ -1439,6 +1986,9 @@ let state = {
   taskDetailOpen: null,
   recentlyDone: null,
   sidebarOpen: window.innerWidth >= 900,
+  cmdPaletteOpen: false,
+  cmdPaletteQuery: '',
+  cmdPaletteSelected: 0,
   showFornitoreForm: false,
   editingFornitore: null,
   openMenu: null,
@@ -2057,39 +2607,360 @@ function render() {
         </div>
       </main>
     </div>
+    ${state.cmdPaletteOpen ? renderCommandPalette() : ''}
   `;
   attachEventListeners();
+
+  // Auto-focus su input command palette se aperta
+  if (state.cmdPaletteOpen) {
+    const inp = document.getElementById('cmd-palette-input');
+    if (inp) { inp.focus(); inp.select(); }
+  }
+}
+
+function renderCommandPalette() {
+  const cmds = buildCommandList(state.cmdPaletteQuery);
+  return `
+    <div class="cmd-palette-backdrop" id="cmd-palette-backdrop">
+      <div class="cmd-palette" onclick="event.stopPropagation()">
+        <div class="cmd-palette-input-row">
+          ${ICONS.search}
+          <input id="cmd-palette-input" placeholder="Cerca task, naviga, crea..." value="${escapeHtml(state.cmdPaletteQuery)}" autocomplete="off" spellcheck="false" />
+          <span class="cmd-kbd">esc</span>
+        </div>
+        <div class="cmd-palette-list" id="cmd-palette-list">
+          ${cmds.length === 0
+            ? '<div class="cmd-empty">Nessun risultato</div>'
+            : cmds.map((c, i) => `
+                <div class="cmd-row ${i === state.cmdPaletteSelected ? 'selected' : ''}" data-cmd-index="${i}">
+                  <div class="cmd-icon ${c.iconClass || ''}">${c.icon}</div>
+                  <div class="cmd-row-body">
+                    <div class="cmd-row-text">${c.text}</div>
+                    ${c.subtitle ? `<div class="cmd-row-sub">${c.subtitle}</div>` : ''}
+                  </div>
+                  <div class="cmd-row-meta">${c.meta || ''}</div>
+                </div>
+              `).join('')}
+        </div>
+        <div class="cmd-palette-foot">
+          <span><span class="cmd-kbd">↑↓</span> per muoverti</span>
+          <span><span class="cmd-kbd">⏎</span> per selezionare</span>
+          <span><span class="cmd-kbd">esc</span> per chiudere</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function buildCommandList(query) {
+  const q = (query || '').toLowerCase().trim();
+  const cmds = [];
+
+  // Comandi di navigazione
+  const navs = [
+    { id: 'home', label: 'Home', icon: ICONS.home, cls: 'accent' },
+    { id: 'today', label: 'Oggi', icon: ICONS.sparkles, cls: 'accent' },
+    { id: 'weekly', label: 'Settimana', icon: ICONS.inbox, cls: 'accent' },
+    { id: 'calendar', label: 'Calendario', icon: ICONS.cal, cls: 'accent' },
+    { id: 'monthly', label: 'Mensili', icon: ICONS.clock, cls: 'monthly' },
+    { id: 'temporary', label: 'Temporanei', icon: ICONS.sparkles2, cls: 'temp' },
+    { id: 'fornitori', label: 'Fornitori', icon: ICONS.truck, cls: '' },
+    { id: 'reports', label: 'Report', icon: ICONS.bar, cls: 'success' },
+  ];
+  navs.forEach(n => {
+    if (!q || n.label.toLowerCase().includes(q) || ('vai a ' + n.label.toLowerCase()).includes(q)) {
+      cmds.push({
+        type: 'nav', target: n.id,
+        text: `Vai a ${n.label}`,
+        icon: n.icon, iconClass: n.cls,
+        meta: 'Naviga',
+      });
+    }
+  });
+
+  // Crea task
+  if (q && q.length >= 2) {
+    cmds.unshift({
+      type: 'create-today', text: `Crea task "${query}" per oggi`,
+      icon: ICONS.plus, iconClass: 'accent',
+      payload: { text: query, target: 'today' },
+      meta: 'Crea',
+    });
+    cmds.push({
+      type: 'create-temp', text: `Crea temporaneo "${query}"`,
+      icon: ICONS.plus, iconClass: 'temp',
+      payload: { text: query, target: 'temporary' },
+      meta: 'Crea',
+    });
+    cmds.push({
+      type: 'create-monthly', text: `Crea mensile "${query}"`,
+      icon: ICONS.plus, iconClass: 'monthly',
+      payload: { text: query, target: 'monthly' },
+      meta: 'Crea',
+    });
+  }
+
+  // Cerca task esistenti per nome
+  if (q && q.length >= 2) {
+    const matches = [];
+    ['w1', 'w2'].forEach(wt => {
+      GIORNI.forEach(day => {
+        (state.template[wt][day] || []).forEach(t => {
+          if (t.text.toLowerCase().includes(q)) {
+            matches.push({
+              type: 'find-weekly', target: wt + ':' + day,
+              text: t.text,
+              subtitle: `Settimana ${wt === 'w1' ? '1' : '2'} · ${GIORNI_FULL[day]}`,
+              icon: ICONS.inbox, iconClass: wt,
+              meta: 'Task',
+            });
+          }
+        });
+      });
+    });
+    state.monthly.forEach(m => {
+      if (m.text.toLowerCase().includes(q)) {
+        matches.push({
+          type: 'find-monthly', target: m.id,
+          text: m.text, subtitle: 'Mensile',
+          icon: ICONS.clock, iconClass: 'monthly',
+          meta: 'Task',
+        });
+      }
+    });
+    state.temporary.forEach(t => {
+      if (!t.done && t.text.toLowerCase().includes(q)) {
+        matches.push({
+          type: 'find-temp', target: t.id,
+          text: t.text, subtitle: 'Temporaneo',
+          icon: ICONS.sparkles2, iconClass: 'temp',
+          meta: 'Task',
+        });
+      }
+    });
+    matches.slice(0, 8).forEach(m => cmds.push(m));
+  }
+
+  // Comandi di azione speciali
+  const actions = [
+    { id: 'export-ics', label: 'Esporta calendario .ics', icon: ICONS.download, action: () => downloadICS() },
+    { id: 'backup', label: 'Backup dati JSON', icon: ICONS.download, action: () => exportAllData() },
+    { id: 'restore', label: 'Ripristina da backup', icon: ICONS.download, action: () => triggerImport() },
+    { id: 'toggle-week', label: 'Cambia tipo settimana W1↔W2', icon: ICONS.rotate, action: () => {
+      const wt = state.overrideWeekType || getWeekType(state.currentWeek);
+      state.overrideWeekType = wt === 'w1' ? 'w2' : 'w1';
+      render();
+    } },
+  ];
+  actions.forEach(a => {
+    if (!q || a.label.toLowerCase().includes(q)) {
+      cmds.push({
+        type: 'action', payload: a,
+        text: a.label,
+        icon: a.icon, iconClass: '',
+        meta: 'Azione',
+      });
+    }
+  });
+
+  return cmds;
+}
+
+function executeCommand(cmd) {
+  if (cmd.type === 'nav') {
+    state.view = cmd.target;
+    closeCmdPalette();
+    render();
+  } else if (cmd.type.startsWith('create-')) {
+    quickAddTask(cmd.payload.text, cmd.payload.target);
+    closeCmdPalette();
+  } else if (cmd.type === 'find-weekly') {
+    const [wt, day] = cmd.target.split(':');
+    state.overrideWeekType = wt;
+    state.view = 'weekly';
+    closeCmdPalette();
+    render();
+  } else if (cmd.type === 'find-monthly') {
+    state.view = 'monthly';
+    closeCmdPalette();
+    render();
+  } else if (cmd.type === 'find-temp') {
+    state.view = 'temporary';
+    closeCmdPalette();
+    render();
+  } else if (cmd.type === 'action') {
+    cmd.payload.action();
+    closeCmdPalette();
+  }
+}
+
+function openCmdPalette() {
+  state.cmdPaletteOpen = true;
+  state.cmdPaletteQuery = '';
+  state.cmdPaletteSelected = 0;
+  render();
+}
+
+function closeCmdPalette() {
+  state.cmdPaletteOpen = false;
+  state.cmdPaletteQuery = '';
+  state.cmdPaletteSelected = 0;
+  render();
+}
+
+function attachCmdPaletteListeners() {
+  const backdrop = document.getElementById('cmd-palette-backdrop');
+  if (backdrop) {
+    backdrop.addEventListener('click', closeCmdPalette);
+  }
+  const inp = document.getElementById('cmd-palette-input');
+  if (inp) {
+    inp.addEventListener('input', (e) => {
+      state.cmdPaletteQuery = e.target.value;
+      state.cmdPaletteSelected = 0;
+      // re-render lista comandi senza ri-renderizzare tutto
+      const list = document.getElementById('cmd-palette-list');
+      if (list) {
+        const cmds = buildCommandList(state.cmdPaletteQuery);
+        list.innerHTML = cmds.length === 0
+          ? '<div class="cmd-empty">Nessun risultato</div>'
+          : cmds.map((c, i) => `
+              <div class="cmd-row ${i === state.cmdPaletteSelected ? 'selected' : ''}" data-cmd-index="${i}">
+                <div class="cmd-icon ${c.iconClass || ''}">${c.icon}</div>
+                <div class="cmd-row-body">
+                  <div class="cmd-row-text">${c.text}</div>
+                  ${c.subtitle ? `<div class="cmd-row-sub">${c.subtitle}</div>` : ''}
+                </div>
+                <div class="cmd-row-meta">${c.meta || ''}</div>
+              </div>
+            `).join('');
+        attachCmdRowClicks();
+      }
+    });
+    inp.addEventListener('keydown', (e) => {
+      const cmds = buildCommandList(state.cmdPaletteQuery);
+      if (e.key === 'Escape') { closeCmdPalette(); return; }
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        state.cmdPaletteSelected = Math.min(cmds.length - 1, state.cmdPaletteSelected + 1);
+        updateCmdSelection();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        state.cmdPaletteSelected = Math.max(0, state.cmdPaletteSelected - 1);
+        updateCmdSelection();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        const cmd = cmds[state.cmdPaletteSelected];
+        if (cmd) executeCommand(cmd);
+      }
+    });
+  }
+  attachCmdRowClicks();
+}
+
+function attachCmdRowClicks() {
+  document.querySelectorAll('[data-cmd-index]').forEach(el => {
+    el.addEventListener('click', () => {
+      const idx = parseInt(el.dataset.cmdIndex, 10);
+      const cmds = buildCommandList(state.cmdPaletteQuery);
+      const cmd = cmds[idx];
+      if (cmd) executeCommand(cmd);
+    });
+    el.addEventListener('mouseenter', () => {
+      state.cmdPaletteSelected = parseInt(el.dataset.cmdIndex, 10);
+      updateCmdSelection();
+    });
+  });
+}
+
+function updateCmdSelection() {
+  document.querySelectorAll('[data-cmd-index]').forEach(el => {
+    const idx = parseInt(el.dataset.cmdIndex, 10);
+    el.classList.toggle('selected', idx === state.cmdPaletteSelected);
+  });
 }
 
 function renderSidebar(wt, accent) {
+  // Calcola contatori per badge
+  const today = getTodayShort();
+  const todayList = state.template[wt][today] || [];
+  const todayPending = todayList.filter(t => !state.tasks[t.id]?.done).length;
+  const monthlyPending = state.monthly.filter(m => !state.monthlyState[m.id]?.done).length;
+  const tempActive = state.temporary.filter(t => !t.done).length;
+  // Temp in ritardo
+  const todayDate = new Date(); todayDate.setHours(0,0,0,0);
+  const tempOverdue = state.temporary.filter(t => {
+    if (t.done || !t.dueDate) return false;
+    const due = parseWeekKey(t.dueDate); due.setHours(0,0,0,0);
+    return due < todayDate;
+  }).length;
+
   const navItems = [
     { id: 'home', icon: ICONS.home, label: 'Home' },
-    { id: 'today', icon: ICONS.sparkles, label: 'Oggi' },
+    { id: 'today', icon: ICONS.sparkles, label: 'Oggi', badge: todayPending > 0 ? { count: todayPending, type: 'accent' } : null },
     { id: 'weekly', icon: ICONS.inbox, label: 'Settimana' },
+    { id: 'calendar', icon: ICONS.cal, label: 'Calendario', tag: 'NEW' },
     { id: 'biweekly', icon: ICONS.rotate, label: 'Bi-settimana' },
-    { id: 'monthly', icon: ICONS.cal, label: 'Mensili', dot: 'var(--monthly)' },
-    { id: 'temporary', icon: ICONS.sparkles2, label: 'Temporanei', dot: 'var(--temp)' },
+    { id: 'monthly', icon: ICONS.clock, label: 'Mensili', badge: monthlyPending > 0 ? { count: monthlyPending, type: 'monthly' } : null },
+    { id: 'temporary', icon: ICONS.sparkles2, label: 'Temporanei', badge: tempActive > 0 ? { count: tempActive, type: 'temp', warning: tempOverdue > 0 } : null },
     { id: 'fornitori', icon: ICONS.truck, label: 'Fornitori' },
-    { id: 'insights', icon: ICONS.bar, label: 'Insight' },
+    { id: 'reports', icon: ICONS.bar, label: 'Report', tag: 'NEW' },
     { id: 'history', icon: ICONS.archive, label: 'Storico' },
   ];
 
+  // Motivational card: percentuale settimana
+  const weekIds = Object.values(state.template[wt]).flat().map(t => t.id);
+  const weekDone = weekIds.filter(id => state.tasks[id]?.done).length;
+  const weekPct = weekIds.length > 0 ? Math.round((weekDone / weekIds.length) * 100) : 0;
+
+  // Confronto con settimana precedente
+  const prevWeekDate = parseWeekKey(state.currentWeek);
+  prevWeekDate.setDate(prevWeekDate.getDate() - 7);
+  const prevWeekKey = getWeekKey(prevWeekDate);
+  const prevWt = getWeekType(prevWeekKey);
+  const prevTasks = loadWeekTasks(prevWeekKey);
+  const prevWeekIds = Object.values(state.template[prevWt]).flat().map(t => t.id);
+  const prevDone = prevWeekIds.filter(id => prevTasks[id]?.done).length;
+  const delta = weekDone - prevDone;
+  let deltaText = '';
+  if (delta > 0) deltaText = `+${delta} task vs settimana scorsa. Ottimo!`;
+  else if (delta < 0) deltaText = `${delta} vs settimana scorsa. Recuperabile.`;
+  else deltaText = `Stesso ritmo della settimana scorsa.`;
+
   return `
     <div class="brand">
-      <div class="brand-mark"><div class="brand-dot" style="background:${accent}"></div></div>
+      <div class="brand-mark"></div>
       <div>
         <div class="brand-name">ACdC</div>
         <div class="brand-sub">Compiti</div>
       </div>
     </div>
 
+    <button class="sidebar-search" id="open-cmd-palette">
+      ${ICONS.search}
+      <span>Cerca</span>
+      <span class="kbd">⌘K</span>
+    </button>
+
     <nav class="nav">
-      ${navItems.map(item => `
-        <button class="nav-item ${state.view === item.id ? 'active' : ''}" data-view="${item.id}">
-          <span class="nav-icon" ${item.dot ? `style="color:${item.dot}"` : ''}>${item.icon}</span>
-          <span>${item.label}</span>
-        </button>
-      `).join('')}
+      ${navItems.map(item => {
+        const active = state.view === item.id;
+        let badgeHtml = '';
+        if (item.badge) {
+          const cls = item.badge.warning ? 'temp warning' : item.badge.type;
+          const label = item.badge.warning ? `${item.badge.count} ⚠` : item.badge.count;
+          badgeHtml = `<span class="nav-badge ${cls}">${label}</span>`;
+        } else if (item.tag) {
+          badgeHtml = `<span class="nav-tag">${item.tag}</span>`;
+        }
+        return `
+          <button class="nav-item ${active ? 'active' : ''}" data-view="${item.id}">
+            <span class="nav-icon">${item.icon}</span>
+            <span class="nav-label">${item.label}</span>
+            ${badgeHtml}
+          </button>
+        `;
+      }).join('')}
     </nav>
 
     ${(state.view === 'weekly' || state.view === 'today') ? `
@@ -2105,9 +2976,16 @@ function renderSidebar(wt, accent) {
       </div>
     ` : ''}
 
+    ${weekIds.length > 0 ? `
+      <div class="motivational-card">
+        <div class="motiv-title">🎯 Settimana al ${weekPct}%</div>
+        <div class="motiv-text">${deltaText}</div>
+      </div>
+    ` : ''}
+
     <div class="sidebar-footer">
       <button class="export-btn" id="export-ics">
-        ${ICONS.download} Esporta calendario (.ics)
+        ${ICONS.download} Esporta .ics
       </button>
       <div style="display:flex;gap:6px">
         <button class="export-btn" id="export-data" style="flex:1;font-size:11px;padding:7px 8px" title="Scarica backup di tutti i dati">
@@ -2117,7 +2995,6 @@ function renderSidebar(wt, accent) {
           ↑ Ripristina
         </button>
       </div>
-      <div class="tiny-text">Le ricorrenze sono bisettimanali (W1/W2 alternate).</div>
     </div>
   `;
 }
@@ -2266,11 +3143,13 @@ function renderViewContent(wt, accent) {
     case 'today': return renderTodayView(wt, accent);
     case 'weekly': return renderWeeklyView(wt, accent);
     case 'biweekly': return renderBiweeklyView();
+    case 'calendar': return renderCalendarView(wt, accent);
     case 'monthly': return renderMonthlyView();
     case 'temporary': return renderTemporaryView();
     case 'fornitori': return renderFornitoriView();
-    case 'history': return renderHistoryView();
+    case 'reports': return renderReportsView(wt);
     case 'insights': return renderInsightsView();
+    case 'history': return renderHistoryView();
     default: return '';
   }
 }
@@ -2309,6 +3188,9 @@ function renderHomeView(wt, accent) {
   const monthTotal = state.monthly.length;
   const monthPending = monthTotal - monthDone;
 
+  // Stats Streak (giorni consecutivi con almeno 1 task fatto)
+  const streak = computeStreak();
+
   // Empty state
   const isEmpty = weekIds.length === 0 && state.monthly.length === 0 && state.temporary.length === 0;
   if (isEmpty) {
@@ -2332,18 +3214,18 @@ function renderHomeView(wt, accent) {
     <div class="dash-header">
       <div>
         <div class="dash-eyebrow">
-          ${ICONS.home} Home · <span style="text-transform:capitalize">${dateStr}</span>
+          <span style="text-transform:capitalize">${dateStr}</span> · <span style="color: ${wt === 'w1' ? 'var(--w1)' : 'var(--w2)'}; font-weight:700;">Settimana ${wt === 'w1' ? 'W1' : 'W2'}</span>
         </div>
-        <div class="dash-title">${greeting} Fede</div>
+        <div class="dash-title">${greeting} Fede ✨</div>
       </div>
       <div class="quick-add">
-        <input id="quick-add-input" placeholder="+ aggiungi task veloce..." />
+        <input id="quick-add-input" placeholder="Cosa devi fare?" />
         <select id="quick-add-target">
-          <option value="today">oggi</option>
-          <option value="day">giorno...</option>
-          <option value="weekly">settimana</option>
-          <option value="monthly">mensile</option>
-          <option value="temporary">una tantum</option>
+          <option value="today">Oggi</option>
+          <option value="day">Giorno...</option>
+          <option value="weekly">Settimana</option>
+          <option value="monthly">Mensile</option>
+          <option value="temporary">Una tantum</option>
         </select>
         <select id="quick-add-day" style="display:none">
           <option value="Lun">Lun ${wt === 'w1' ? 'W1' : 'W2'}</option>
@@ -2362,49 +3244,57 @@ function renderHomeView(wt, accent) {
           <option value="Sab:${wt === 'w1' ? 'w2' : 'w1'}">Sab ${wt === 'w1' ? 'W2' : 'W1'}</option>
           <option value="Dom:${wt === 'w1' ? 'w2' : 'w1'}">Dom ${wt === 'w1' ? 'W2' : 'W1'}</option>
         </select>
+        <button class="quick-add-submit" id="quick-add-submit">Aggiungi</button>
       </div>
     </div>
   `;
 
-  // === RIGA 2: 3 STATS CARDS ===
+  // === RIGA 2: 4 STATS CARDS ===
   const todayPct = todayList.length > 0 ? Math.round((todayDone / todayList.length) * 100) : 0;
   const weekPct = weekIds.length > 0 ? Math.round((weekDone / weekIds.length) * 100) : 0;
   const monthPct = monthTotal > 0 ? Math.round((monthDone / monthTotal) * 100) : 0;
 
+  // Confronto streak con settimana scorsa
+  const lastWeekStreak = computeStreakLastWeek();
+  const streakDelta = streak - lastWeekStreak;
+
   const statsRow = `
-    <div class="dash-grid-3" style="margin-bottom: 8px;">
-      <div class="dash-card" data-clickable data-view="today" style="cursor:pointer">
+    <div class="dash-grid-4">
+      <div class="dash-card" data-clickable data-view="today">
+        <div class="dash-card-accent accent"></div>
         <div class="dash-card-label">Oggi</div>
         <div class="dash-card-stat">
-          <span class="big" style="color: ${accent}">${todayDone}</span>
-          <span class="sub">/ ${todayList.length} task</span>
+          <span class="big">${todayDone}</span>
+          <span class="sub">/ ${todayList.length}</span>
         </div>
-        <div class="dash-progress">
-          <div class="dash-progress-fill" style="width:${todayPct}%; background:${accent}"></div>
-        </div>
-        <div class="dash-card-foot">${ICONS.clock} ${todayTimeMin > 0 ? formatMinutes(todayTimeMin) + ' completati' : '— niente registrato'}</div>
+        <div class="dash-card-foot">${ICONS.clock} <strong>${todayTimeMin > 0 ? formatMinutes(todayTimeMin) : '—'}</strong> ${todayTimeMin > 0 ? 'completati' : ''}</div>
       </div>
-      <div class="dash-card" data-clickable data-view="weekly" style="cursor:pointer">
+      <div class="dash-card" data-clickable data-view="weekly">
+        <div class="dash-card-accent ${wt === 'w1' ? 'accent' : 'w2'}"></div>
         <div class="dash-card-label">Settimana ${wt === 'w1' ? 'W1' : 'W2'}</div>
         <div class="dash-card-stat">
           <span class="big">${weekDone}</span>
-          <span class="sub">/ ${weekIds.length} task</span>
+          <span class="sub">/ ${weekIds.length}</span>
         </div>
-        <div class="dash-progress">
-          <div class="dash-progress-fill" style="width:${weekPct}%; background: var(--text-soft)"></div>
-        </div>
-        <div class="dash-card-foot">${ICONS.clock} stim. ${formatMinutes(weekTimeMin) || '–'}</div>
+        <div class="dash-card-foot">stim. <strong>${formatMinutes(weekTimeMin) || '–'}</strong> totali</div>
       </div>
-      <div class="dash-card" data-clickable data-view="monthly" style="cursor:pointer">
-        <div class="dash-card-label" style="color: var(--monthly)">${formatMonthKey(state.currentMonth)}</div>
+      <div class="dash-card" data-clickable data-view="monthly">
+        <div class="dash-card-accent monthly"></div>
+        <div class="dash-card-label" style="text-transform:capitalize">${formatMonthKey(state.currentMonth).split(' ')[0]}</div>
         <div class="dash-card-stat">
-          <span class="big" style="color: var(--monthly)">${monthDone}</span>
+          <span class="big">${monthDone}</span>
           <span class="sub">/ ${monthTotal} mensili</span>
         </div>
-        <div class="dash-progress">
-          <div class="dash-progress-fill" style="width:${monthPct}%; background: var(--monthly)"></div>
+        <div class="dash-card-foot ${monthPending > 0 ? 'warning' : 'success'}">${monthPending > 0 ? monthPending + ' ancora pendenti' : 'Tutti completati ✓'}</div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-card-accent success"></div>
+        <div class="dash-card-label">Streak</div>
+        <div class="dash-card-stat">
+          <span class="big">${streak}</span>
+          <span class="sub">${streak === 1 ? 'giorno' : 'giorni'} ${streak >= 3 ? '🔥' : ''}</span>
         </div>
-        <div class="dash-card-foot">${monthPending > 0 ? monthPending + ' ancora pendenti' : 'Tutti completati ✓'}</div>
+        <div class="dash-card-foot ${streakDelta >= 0 ? 'success' : ''}">${streakDelta > 0 ? '+' + streakDelta + ' vs settimana scorsa' : (streakDelta === 0 ? 'Stesso ritmo' : streakDelta + ' vs settimana scorsa')}</div>
       </div>
     </div>
   `;
@@ -2415,29 +3305,52 @@ function renderHomeView(wt, accent) {
 
   const upcomingHtml = upcoming.length === 0
     ? `<div class="dash-empty-mini">Niente di urgente</div>`
-    : upcoming.slice(0, 6).map(t => `
-        <div class="upcoming-row">
-          <span class="upcoming-tag ${t.urgency}">${t.tagLabel}</span>
-          <span class="upcoming-text">${escapeHtml(t.text)}</span>
-          ${t.right ? t.right : ''}
-        </div>
-      `).join('');
+    : upcoming.slice(0, 6).map(t => {
+        if (t.urgency === 'overdue') {
+          return `
+            <div class="upcoming-row overdue">
+              <div class="checkbox-mini"></div>
+              <div class="upcoming-body">
+                <div class="upcoming-text">${escapeHtml(t.text)}</div>
+                ${t.note ? `<div class="upcoming-note">${escapeHtml(t.note)}</div>` : ''}
+              </div>
+              ${t.right ? t.right : ''}
+            </div>
+          `;
+        }
+        return `
+          <div class="upcoming-row">
+            <div class="checkbox-mini"></div>
+            <span class="upcoming-tag ${t.urgency}">${t.tagLabel}</span>
+            <div class="upcoming-body">
+              <div class="upcoming-text">${escapeHtml(t.text)}</div>
+            </div>
+            ${t.right ? t.right : ''}
+          </div>
+        `;
+      }).join('');
 
   const calendarHtml = renderMiniCalendar(wt);
 
   const row3 = `
-    <div class="dash-grid-32" style="margin-bottom: 8px;">
+    <div class="dash-grid-32">
       <div class="dash-card">
         <div class="dash-card-head">
-          <div class="dash-card-label">⚡ Prossimi task</div>
+          <div class="dash-card-title">
+            <span class="dash-card-title-bar" style="background: var(--accent-grad)"></span>
+            ⚡ Prossimi task
+          </div>
           ${overdueCount > 0 ? `<span class="badge-urgent">${overdueCount} in ritardo</span>` : ''}
         </div>
         <div class="upcoming-list">${upcomingHtml}</div>
       </div>
       <div class="dash-card">
         <div class="dash-card-head">
-          <div class="dash-card-label" style="text-transform: capitalize">${formatMonthKey(state.currentMonth)}</div>
-          <div style="display:flex;gap:4px">
+          <div class="dash-card-title">
+            <span class="dash-card-title-bar" style="background: linear-gradient(135deg, #F59E0B, #FBBF24)"></span>
+            <span style="text-transform:capitalize">${formatMonthKey(state.currentMonth)}</span>
+          </div>
+          <div style="display:flex;gap:3px">
             <button class="cal-nav" id="cal-prev">‹</button>
             <button class="cal-nav" id="cal-next">›</button>
           </div>
@@ -2480,25 +3393,395 @@ function renderHomeView(wt, accent) {
 
   const row4 = `
     <div class="dash-grid-3">
-      <div class="dash-card" data-clickable data-view="monthly" style="cursor:pointer">
-        <div class="dash-card-label" style="color: var(--monthly)">📅 Mensili pendenti</div>
+      <div class="dash-card" data-clickable data-view="monthly">
+        <div class="dash-card-accent monthly"></div>
+        <div class="dash-card-title" style="margin-bottom:8px">
+          <span class="dash-card-title-bar" style="background: linear-gradient(135deg, #F59E0B, #FBBF24)"></span>
+          📅 Mensili pendenti
+        </div>
         <div class="mini-list">${monthlyListHtml}</div>
         <div class="dash-card-link">vai a tutti i mensili →</div>
       </div>
-      <div class="dash-card" data-clickable data-view="temporary" style="cursor:pointer">
-        <div class="dash-card-label" style="color: var(--temp)">✦ Temporanei</div>
+      <div class="dash-card" data-clickable data-view="temporary">
+        <div class="dash-card-accent temp"></div>
+        <div class="dash-card-title" style="margin-bottom:8px">
+          <span class="dash-card-title-bar" style="background: linear-gradient(135deg, #EC4899, #F472B6)"></span>
+          ✦ Temporanei
+        </div>
         <div class="mini-list">${tempListHtml}</div>
         <div class="dash-card-link">${activeTemp.length} attivi · ${doneTemp} completati →</div>
       </div>
-      <div class="dash-card" data-clickable data-view="insights" style="cursor:pointer">
-        <div class="dash-card-label">📊 Ultime 4 settimane</div>
+      <div class="dash-card" data-clickable data-view="reports">
+        <div class="dash-card-accent success"></div>
+        <div class="dash-card-title" style="margin-bottom:8px">
+          <span class="dash-card-title-bar" style="background: linear-gradient(135deg, #10B981, #34D399)"></span>
+          📊 Ultime 4 settimane
+        </div>
         ${heatmap4}
-        <div class="dash-card-link">vai a Insight →</div>
+        <div class="dash-card-link">vai al Report →</div>
       </div>
     </div>
   `;
 
   return `<div class="dashboard">${headerRow}${statsRow}${row3}${row4}</div>`;
+}
+
+function computeStreak() {
+  // Conta giorni consecutivi (oggi e indietro) con almeno 1 task settimanale fatto
+  let count = 0;
+  const day = new Date();
+  day.setHours(0, 0, 0, 0);
+  for (let i = 0; i < 60; i++) {
+    const wkKey = getWeekKey(day);
+    const wType = getWeekType(wkKey);
+    const dayShort = GIORNI[(day.getDay() + 6) % 7];
+    const list = (state.template[wType][dayShort] || []);
+    if (list.length === 0) {
+      // Nessun task previsto questo giorno → non spezza la streak
+      day.setDate(day.getDate() - 1);
+      continue;
+    }
+    const tasks = loadWeekTasks(wkKey);
+    const someDone = list.some(t => tasks[t.id]?.done);
+    if (someDone) {
+      count++;
+      day.setDate(day.getDate() - 1);
+    } else {
+      break;
+    }
+  }
+  return count;
+}
+
+function computeStreakLastWeek() {
+  // Streak che era ad inizio settimana corrente (per calcolare il delta)
+  let count = 0;
+  const day = new Date();
+  day.setHours(0, 0, 0, 0);
+  // Salta a 7 giorni fa
+  day.setDate(day.getDate() - 7);
+  for (let i = 0; i < 60; i++) {
+    const wkKey = getWeekKey(day);
+    const wType = getWeekType(wkKey);
+    const dayShort = GIORNI[(day.getDay() + 6) % 7];
+    const list = (state.template[wType][dayShort] || []);
+    if (list.length === 0) {
+      day.setDate(day.getDate() - 1);
+      continue;
+    }
+    const tasks = loadWeekTasks(wkKey);
+    const someDone = list.some(t => tasks[t.id]?.done);
+    if (someDone) {
+      count++;
+      day.setDate(day.getDate() - 1);
+    } else {
+      break;
+    }
+  }
+  return count;
+}
+
+// === VISTA CALENDAR MENSILE COMPLETA ===
+function renderCalendarView(wt, accent) {
+  const [y, m] = state.currentMonth.split('-').map(Number);
+  const firstDay = new Date(y, m - 1, 1);
+  const lastDay = new Date(y, m, 0).getDate();
+  const startDayOfWeek = (firstDay.getDay() + 6) % 7;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Costruisci la matrice di giorni con i task per ognuno
+  const buildDayData = (date) => {
+    const dayOfWeek = (date.getDay() + 6) % 7;
+    const dayShort = GIORNI[dayOfWeek];
+    const wkKey = getWeekKey(date);
+    const wType = getWeekType(wkKey);
+    const tasks = loadWeekTasks(wkKey);
+    const weeklyList = (state.template[wType][dayShort] || []).map(t => ({
+      id: t.id, text: t.text,
+      type: 'weekly', wType,
+      done: tasks[t.id]?.done || false,
+    }));
+    const dateStr = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+    const tempList = state.temporary.filter(t => !t.done && t.dueDate === dateStr).map(t => ({
+      id: t.id, text: t.text, type: 'temp', done: false,
+    }));
+    return [...weeklyList, ...tempList];
+  };
+
+  // === HEADER CALENDAR ===
+  const headerHtml = `
+    <div class="calview-header">
+      <div>
+        <div class="dash-eyebrow">Vista calendario · <span style="text-transform:capitalize;color:var(--accent);font-weight:700">${formatMonthKey(state.currentMonth)}</span></div>
+        <div class="dash-title">Calendario</div>
+      </div>
+      <div class="calview-nav">
+        <button class="cal-nav" id="calview-prev">‹</button>
+        <button class="calview-today-btn" id="calview-today">Oggi</button>
+        <button class="cal-nav" id="calview-next">›</button>
+      </div>
+    </div>
+  `;
+
+  // === GRIGLIA DEL MESE ===
+  let cellsHtml = '';
+  // Header dei giorni della settimana
+  const dayHeaders = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];
+  let headerCells = dayHeaders.map(d => `<div class="calview-dayhead">${d}</div>`).join('');
+
+  // Padding inizio (giorni del mese precedente)
+  for (let i = 0; i < startDayOfWeek; i++) {
+    const d = new Date(y, m - 1, -startDayOfWeek + i + 1);
+    cellsHtml += `<div class="calview-cell out-of-month"><div class="calview-day-num">${d.getDate()}</div></div>`;
+  }
+  // Giorni del mese
+  for (let d = 1; d <= lastDay; d++) {
+    const date = new Date(y, m - 1, d);
+    date.setHours(0, 0, 0, 0);
+    const isToday = date.getTime() === today.getTime();
+    const isWeekend = (date.getDay() === 0 || date.getDay() === 6);
+    const items = buildDayData(date);
+    const dateStr = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+
+    const itemsHtml = items.slice(0, 4).map(item => {
+      const cls = item.type === 'temp' ? 'temp' : (item.wType === 'w1' ? 'w1' : 'w2');
+      const doneCls = item.done ? 'done' : '';
+      return `<div class="calview-item ${cls} ${doneCls}" draggable="true" data-drag-cal-id="${item.id}" data-drag-cal-type="${item.type}" data-drag-cal-date="${dateStr}" title="${escapeHtml(item.text)}">${escapeHtml(item.text)}</div>`;
+    }).join('');
+    const moreCount = items.length > 4 ? `<div class="calview-more">+${items.length - 4} altri</div>` : '';
+
+    cellsHtml += `
+      <div class="calview-cell ${isToday ? 'today' : ''} ${isWeekend ? 'weekend' : ''}" data-cal-drop-date="${dateStr}">
+        <div class="calview-day-num">${d}</div>
+        <div class="calview-items">${itemsHtml}${moreCount}</div>
+      </div>
+    `;
+  }
+  // Padding fine
+  const totalCells = startDayOfWeek + lastDay;
+  const remainingCells = (7 - (totalCells % 7)) % 7;
+  for (let i = 1; i <= remainingCells; i++) {
+    cellsHtml += `<div class="calview-cell out-of-month"><div class="calview-day-num">${i}</div></div>`;
+  }
+
+  return `
+    <div class="dashboard">
+      ${headerHtml}
+      <div class="calview-grid-wrap">
+        <div class="calview-grid">
+          <div class="calview-headrow">${headerCells}</div>
+          <div class="calview-cells">${cellsHtml}</div>
+        </div>
+      </div>
+      <div class="calview-legend">
+        <span><span class="dot" style="background:var(--w1)"></span>Settimana W1</span>
+        <span><span class="dot" style="background:var(--w2)"></span>Settimana W2</span>
+        <span><span class="dot" style="background:var(--temp)"></span>Temporanei</span>
+        <span class="cal-hint">Trascina i task tra giorni per spostarli</span>
+      </div>
+    </div>
+  `;
+}
+
+// === VISTA REPORTS ===
+function renderReportsView(wt) {
+  // Statistiche settimana
+  const weekIds = Object.values(state.template[wt]).flat().map(t => t.id);
+  const weekDone = weekIds.filter(id => state.tasks[id]?.done).length;
+  const weekPct = weekIds.length > 0 ? Math.round((weekDone / weekIds.length) * 100) : 0;
+
+  // Totale tempo registrato in questa settimana (dalle history -> ultimo valore per task done)
+  let weekActualMin = 0;
+  Object.values(state.template[wt]).flat().forEach(t => {
+    if (state.tasks[t.id]?.done) {
+      const hist = state.timeHistory[t.id];
+      if (hist && hist.length > 0) weekActualMin += hist[hist.length - 1];
+    }
+  });
+  let weekEstMin = 0;
+  Object.values(state.template[wt]).flat().forEach(t => {
+    const est = getEstimate(t);
+    if (est) weekEstMin += est.value;
+  });
+
+  // Heatmap ultime 8 settimane
+  const heatmapWeeks = [];
+  for (let i = 7; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i * 7);
+    const key = getWeekKey(d);
+    const wType = getWeekType(key);
+    const data = loadWeekTasks(key);
+    const allIds = Object.values(state.template[wType]).flat().map(t => t.id);
+    const total = allIds.length;
+    const done = allIds.filter(id => data[id]?.done).length;
+    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+    heatmapWeeks.push({ key, pct, done, total, isCurrent: i === 0 });
+  }
+
+  // Top task più "saltati" (mai completati nelle ultime 4 settimane in cui erano programmati)
+  const skipMap = {};
+  for (let i = 0; i < 4; i++) {
+    const d = new Date();
+    d.setDate(d.getDate() - i * 7);
+    const key = getWeekKey(d);
+    const wType = getWeekType(key);
+    const tasks = loadWeekTasks(key);
+    Object.values(state.template[wType]).flat().forEach(t => {
+      if (!skipMap[t.id]) skipMap[t.id] = { text: t.text, total: 0, skipped: 0 };
+      skipMap[t.id].total++;
+      if (!tasks[t.id]?.done) skipMap[t.id].skipped++;
+    });
+  }
+  const topSkipped = Object.entries(skipMap)
+    .map(([id, v]) => ({ id, ...v, rate: v.skipped / v.total }))
+    .filter(x => x.skipped >= 2 && x.rate >= 0.5)
+    .sort((a, b) => b.rate - a.rate || b.skipped - a.skipped)
+    .slice(0, 5);
+
+  // Top task più rapidi (tempo medio < 10 min)
+  // e Top più lenti (>= 30 min)
+  const byTimeArr = [];
+  Object.entries(state.timeHistory).forEach(([id, list]) => {
+    if (!list || list.length < 2) return;
+    const med = median(list);
+    const text = findTaskText(id);
+    if (!text) return;
+    byTimeArr.push({ id, text, median: med, samples: list.length });
+  });
+  const fastest = [...byTimeArr].sort((a, b) => a.median - b.median).slice(0, 5);
+  const slowest = [...byTimeArr].sort((a, b) => b.median - a.median).slice(0, 5);
+
+  return `
+    <div class="dashboard">
+      <div class="dash-header">
+        <div>
+          <div class="dash-eyebrow">Report · <span style="text-transform:capitalize">${formatWeek(state.currentWeek)}</span></div>
+          <div class="dash-title">Performance & Trend 📊</div>
+        </div>
+      </div>
+
+      <div class="dash-grid-4">
+        <div class="dash-card">
+          <div class="dash-card-accent accent"></div>
+          <div class="dash-card-label">Settimana corrente</div>
+          <div class="dash-card-stat"><span class="big">${weekPct}%</span><span class="sub">completato</span></div>
+          <div class="dash-card-foot"><strong>${weekDone}</strong> di ${weekIds.length} task</div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-accent success"></div>
+          <div class="dash-card-label">Tempo registrato</div>
+          <div class="dash-card-stat"><span class="big">${formatMinutes(weekActualMin) || '0m'}</span></div>
+          <div class="dash-card-foot">su <strong>${formatMinutes(weekEstMin) || '–'}</strong> stimati</div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-accent monthly"></div>
+          <div class="dash-card-label">Media completamento (8 sett.)</div>
+          <div class="dash-card-stat"><span class="big">${heatmapWeeks.length > 0 ? Math.round(heatmapWeeks.reduce((a, w) => a + w.pct, 0) / heatmapWeeks.length) : 0}%</span></div>
+          <div class="dash-card-foot">su tutta la storia recente</div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-accent temp"></div>
+          <div class="dash-card-label">Streak attuale</div>
+          <div class="dash-card-stat"><span class="big">${computeStreak()}</span><span class="sub">${computeStreak() === 1 ? 'giorno' : 'giorni'}${computeStreak() >= 3 ? ' 🔥' : ''}</span></div>
+          <div class="dash-card-foot">consecutivi con ≥1 task fatto</div>
+        </div>
+      </div>
+
+      <div class="dash-card">
+        <div class="dash-card-head">
+          <div class="dash-card-title">
+            <span class="dash-card-title-bar" style="background: var(--accent-grad)"></span>
+            Andamento ultime 8 settimane
+          </div>
+        </div>
+        <div class="report-heatmap">
+          ${heatmapWeeks.map(w => {
+            const bg = w.pct >= 90 ? '#10B981' : w.pct >= 70 ? '#34D399' : w.pct >= 50 ? '#FCD34D' : w.pct >= 25 ? '#FB923C' : w.pct > 0 ? '#F87171' : 'var(--surface-3)';
+            const opacity = w.pct === 0 ? 0.4 : 1;
+            return `
+              <div class="report-week">
+                <div class="report-week-bar" style="background:${bg};opacity:${opacity};height:${Math.max(w.pct, 4)}%" title="${w.pct}%"></div>
+                <div class="report-week-pct">${w.pct}%</div>
+                <div class="report-week-label">${w.isCurrent ? 'oggi' : formatWeek(w.key).split(' – ')[0]}</div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+
+      <div class="dash-grid-32">
+        <div class="dash-card">
+          <div class="dash-card-head">
+            <div class="dash-card-title">
+              <span class="dash-card-title-bar" style="background: linear-gradient(135deg, #EF4444, #F87171)"></span>
+              ⚠ Task spesso saltati
+            </div>
+          </div>
+          ${topSkipped.length === 0
+            ? '<div class="dash-empty-mini">Niente da segnalare. Bel ritmo!</div>'
+            : `<div class="report-list">${topSkipped.map(s => `
+                <div class="report-row">
+                  <div class="report-row-text">${escapeHtml(s.text)}</div>
+                  <div class="report-row-meta">${s.skipped}/${s.total} settimane</div>
+                  <div class="report-bar"><div class="report-bar-fill" style="width:${Math.round(s.rate*100)}%; background: var(--danger)"></div></div>
+                </div>
+              `).join('')}</div>`
+          }
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-head">
+            <div class="dash-card-title">
+              <span class="dash-card-title-bar" style="background: linear-gradient(135deg, #10B981, #34D399)"></span>
+              ⚡ Più veloci
+            </div>
+          </div>
+          ${fastest.length === 0
+            ? '<div class="dash-empty-mini">Servono ≥2 esecuzioni per il calcolo</div>'
+            : `<div class="report-list">${fastest.map(s => `
+                <div class="report-row">
+                  <div class="report-row-text">${escapeHtml(s.text)}</div>
+                  <div class="report-row-meta" style="color: var(--success); font-weight: 600">${formatMinutes(s.median)}</div>
+                </div>
+              `).join('')}</div>`
+          }
+        </div>
+      </div>
+
+      ${slowest.length > 0 ? `
+        <div class="dash-card">
+          <div class="dash-card-head">
+            <div class="dash-card-title">
+              <span class="dash-card-title-bar" style="background: linear-gradient(135deg, #F59E0B, #FBBF24)"></span>
+              🐌 I più lunghi (medi ≥ 5 valori)
+            </div>
+          </div>
+          <div class="report-list">${slowest.filter(s => s.samples >= 2).map(s => `
+            <div class="report-row">
+              <div class="report-row-text">${escapeHtml(s.text)}</div>
+              <div class="report-row-meta" style="color: var(--monthly-strong); font-weight: 600">${formatMinutes(s.median)}</div>
+            </div>
+          `).join('')}</div>
+        </div>
+      ` : ''}
+    </div>
+  `;
+}
+
+function findTaskText(taskId) {
+  for (const wt of ['w1', 'w2']) {
+    for (const day of GIORNI) {
+      const t = (state.template[wt][day] || []).find(t => t.id === taskId);
+      if (t) return t.text;
+    }
+  }
+  const m = state.monthly.find(x => x.id === taskId);
+  if (m) return m.text;
+  const tp = state.temporary.find(x => x.id === taskId);
+  if (tp) return tp.text;
+  return null;
 }
 
 function getGreeting() {
@@ -3566,7 +4849,15 @@ function attachEventListeners() {
   const quickAddInput = document.getElementById('quick-add-input');
   const quickAddTarget = document.getElementById('quick-add-target');
   const quickAddDay = document.getElementById('quick-add-day');
-  // Mostra/nasconde il dropdown giorno se target === 'day'
+  const quickAddSubmit = document.getElementById('quick-add-submit');
+
+  const submitQuickAdd = () => {
+    if (!quickAddInput || !quickAddInput.value.trim()) return;
+    const target = quickAddTarget ? quickAddTarget.value : 'today';
+    const day = quickAddDay && target === 'day' ? quickAddDay.value : null;
+    quickAddTask(quickAddInput.value, target, day);
+  };
+
   if (quickAddTarget && quickAddDay) {
     quickAddTarget.addEventListener('change', () => {
       quickAddDay.style.display = quickAddTarget.value === 'day' ? '' : 'none';
@@ -3574,13 +4865,10 @@ function attachEventListeners() {
   }
   if (quickAddInput) {
     quickAddInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && quickAddInput.value.trim()) {
-        const target = quickAddTarget ? quickAddTarget.value : 'today';
-        const day = quickAddDay && target === 'day' ? quickAddDay.value : null;
-        quickAddTask(quickAddInput.value, target, day);
-      }
+      if (e.key === 'Enter') submitQuickAdd();
     });
   }
+  if (quickAddSubmit) quickAddSubmit.addEventListener('click', submitQuickAdd);
   // Card cliccabili
   document.querySelectorAll('[data-clickable][data-view]').forEach(el => {
     el.addEventListener('click', () => {
@@ -3923,6 +5211,166 @@ function attachEventListeners() {
 
   // === DRAG & DROP TRA GIORNI/SETTIMANE ===
   setupDragAndDrop();
+
+  // === CALENDAR VIEW NAV ===
+  const calviewPrev = document.getElementById('calview-prev');
+  if (calviewPrev) calviewPrev.addEventListener('click', () => navigateMonth(-1));
+  const calviewNext = document.getElementById('calview-next');
+  if (calviewNext) calviewNext.addEventListener('click', () => navigateMonth(1));
+  const calviewToday = document.getElementById('calview-today');
+  if (calviewToday) calviewToday.addEventListener('click', () => {
+    state.currentMonth = getMonthKey();
+    state.monthlyState = loadMonthlyState(state.currentMonth);
+    render();
+  });
+
+  // === DnD CALENDAR ===
+  setupCalendarDragDrop();
+
+  // === COMMAND PALETTE LISTENERS ===
+  if (state.cmdPaletteOpen) attachCmdPaletteListeners();
+  // Sidebar search apre la palette
+  const sidebarSearch = document.getElementById('open-cmd-palette');
+  if (sidebarSearch) sidebarSearch.addEventListener('click', openCmdPalette);
+}
+
+function setupCalendarDragDrop() {
+  let draggedCalId = null;
+  let draggedCalType = null;
+  let draggedCalDate = null;
+
+  document.querySelectorAll('[data-drag-cal-id]').forEach(el => {
+    el.addEventListener('dragstart', (e) => {
+      draggedCalId = el.dataset.dragCalId;
+      draggedCalType = el.dataset.dragCalType;
+      draggedCalDate = el.dataset.dragCalDate;
+      el.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      try { e.dataTransfer.setData('text/plain', draggedCalId); } catch (err) {}
+    });
+    el.addEventListener('dragend', () => {
+      el.classList.remove('dragging');
+      document.querySelectorAll('.cal-drop-target').forEach(d => d.classList.remove('cal-drop-target'));
+    });
+  });
+
+  document.querySelectorAll('[data-cal-drop-date]').forEach(el => {
+    el.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      el.classList.add('cal-drop-target');
+    });
+    el.addEventListener('dragleave', () => el.classList.remove('cal-drop-target'));
+    el.addEventListener('drop', (e) => {
+      e.preventDefault();
+      el.classList.remove('cal-drop-target');
+      if (!draggedCalId) return;
+      const toDate = el.dataset.calDropDate;
+      if (toDate === draggedCalDate) return;
+
+      if (draggedCalType === 'temp') {
+        // Aggiorna dueDate
+        saveTemporary(state.temporary.map(t => t.id === draggedCalId ? { ...t, dueDate: toDate } : t));
+        render();
+      } else if (draggedCalType === 'weekly') {
+        // Sposta task settimanale: dal giorno di origine (calcolo dalla data) al giorno di destinazione
+        const fromDate = parseWeekKey(draggedCalDate);
+        const toDateObj = parseWeekKey(toDate);
+        const fromDay = GIORNI[(fromDate.getDay() + 6) % 7];
+        const toDay = GIORNI[(toDateObj.getDay() + 6) % 7];
+        const fromWt = getWeekType(getWeekKey(fromDate));
+        const toWt = getWeekType(getWeekKey(toDateObj));
+        moveTask(draggedCalId, fromWt, fromDay, toWt, toDay);
+      }
+      draggedCalId = null;
+    });
+  });
+
+  // Touch support per mobile (long press 400ms)
+  document.querySelectorAll('[data-drag-cal-id]').forEach(el => {
+    let touchTimer = null;
+    let activated = false;
+    let clone = null;
+    let calDragId = null, calDragType = null, calDragDate = null;
+
+    el.addEventListener('touchstart', (e) => {
+      const touch = e.touches[0];
+      const startX = touch.clientX, startY = touch.clientY;
+      activated = false;
+      touchTimer = setTimeout(() => {
+        activated = true;
+        calDragId = el.dataset.dragCalId;
+        calDragType = el.dataset.dragCalType;
+        calDragDate = el.dataset.dragCalDate;
+        el.classList.add('dragging');
+        clone = el.cloneNode(true);
+        clone.style.position = 'fixed';
+        clone.style.pointerEvents = 'none';
+        clone.style.opacity = '0.85';
+        clone.style.zIndex = '9999';
+        clone.style.left = (startX - 60) + 'px';
+        clone.style.top = (startY - 16) + 'px';
+        clone.style.maxWidth = '160px';
+        clone.style.boxShadow = '0 8px 24px rgba(0,0,0,0.2)';
+        document.body.appendChild(clone);
+        if (navigator.vibrate) navigator.vibrate(30);
+      }, 400);
+
+      const onMove = (ev) => {
+        const t = ev.touches[0];
+        if (!activated) {
+          if (Math.abs(t.clientX - startX) > 8 || Math.abs(t.clientY - startY) > 8) {
+            clearTimeout(touchTimer);
+            el.removeEventListener('touchmove', onMove);
+            el.removeEventListener('touchend', onEnd);
+          }
+          return;
+        }
+        ev.preventDefault();
+        if (clone) {
+          clone.style.left = (t.clientX - 60) + 'px';
+          clone.style.top = (t.clientY - 16) + 'px';
+        }
+        const elemBelow = document.elementFromPoint(t.clientX, t.clientY);
+        document.querySelectorAll('.cal-drop-target').forEach(d => d.classList.remove('cal-drop-target'));
+        const dropZone = elemBelow ? elemBelow.closest('[data-cal-drop-date]') : null;
+        if (dropZone) dropZone.classList.add('cal-drop-target');
+      };
+
+      const onEnd = (ev) => {
+        clearTimeout(touchTimer);
+        el.removeEventListener('touchmove', onMove);
+        el.removeEventListener('touchend', onEnd);
+        if (!activated) return;
+        const t = ev.changedTouches[0];
+        const elemBelow = document.elementFromPoint(t.clientX, t.clientY);
+        const dropZone = elemBelow ? elemBelow.closest('[data-cal-drop-date]') : null;
+        if (dropZone && calDragId) {
+          const toDate = dropZone.dataset.calDropDate;
+          if (toDate !== calDragDate) {
+            if (calDragType === 'temp') {
+              saveTemporary(state.temporary.map(t => t.id === calDragId ? { ...t, dueDate: toDate } : t));
+              render();
+            } else if (calDragType === 'weekly') {
+              const fromDate = parseWeekKey(calDragDate);
+              const toDateObj = parseWeekKey(toDate);
+              const fromDay = GIORNI[(fromDate.getDay() + 6) % 7];
+              const toDay = GIORNI[(toDateObj.getDay() + 6) % 7];
+              const fromWt = getWeekType(getWeekKey(fromDate));
+              const toWt = getWeekType(getWeekKey(toDateObj));
+              moveTask(calDragId, fromWt, fromDay, toWt, toDay);
+            }
+          }
+        }
+        if (clone) { clone.remove(); clone = null; }
+        document.querySelectorAll('.cal-drop-target').forEach(d => d.classList.remove('cal-drop-target'));
+        el.classList.remove('dragging');
+        calDragId = null;
+      };
+
+      el.addEventListener('touchmove', onMove, { passive: false });
+      el.addEventListener('touchend', onEnd);
+    }, { passive: true });
+  });
 }
 
 function setupDragAndDrop() {
@@ -4073,6 +5521,21 @@ window.addEventListener('resize', () => {
     render();
   }
 });
+
+// === COMMAND PALETTE GLOBAL SHORTCUT ===
+window.addEventListener('keydown', (e) => {
+  // Cmd+K (Mac) o Ctrl+K (Windows/Linux)
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    if (state.cmdPaletteOpen) closeCmdPalette();
+    else openCmdPalette();
+  } else if (e.key === 'Escape' && state.cmdPaletteOpen) {
+    closeCmdPalette();
+  }
+});
+
+window.openCmdPalette = openCmdPalette;
+window.closeCmdPalette = closeCmdPalette;
 </script>
 </body>
 </html>
