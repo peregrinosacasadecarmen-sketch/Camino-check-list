@@ -49,7 +49,14 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: 'cv11', 'ss01', 'ss03';
 }
-button { font-family: inherit; cursor: pointer; border: none; background: transparent; color: inherit; padding: 0; }
+button {
+  font-family: inherit; cursor: pointer; border: none; background: transparent; color: inherit; padding: 0;
+  -webkit-appearance: none; appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  font-size: inherit;
+  line-height: inherit;
+  text-align: inherit;
+}
 input, select, textarea { font-family: inherit; color: var(--text); border: none; background: transparent; }
 input:focus, select:focus, textarea:focus { outline: none; }
 a { color: inherit; text-decoration: none; }
@@ -520,6 +527,43 @@ input::placeholder { color: var(--text-subtle); }
   margin-bottom: 6px;
   padding-left: 2px;
 }
+/* Pill di stato: forza dimensioni inline, no stretching da flex parent */
+.task-header > .time-pill,
+.task-header > .link-pill,
+.task-header > .gcal-pill,
+.task-header > .due-pill,
+.task-header > .month-pill,
+.compact-row .task-body .task-header > .time-pill,
+.compact-row .task-body .task-header > .link-pill,
+.compact-row .task-body .task-header > .gcal-pill,
+.compact-row .task-body .task-header > .due-pill,
+.compact-row .task-body .task-header > .month-pill {
+  height: 16px !important;
+  min-height: 16px !important;
+  max-height: 16px !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: max-content !important;
+  align-self: center !important;
+  flex: 0 0 auto !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+button.time-pill,
+button.link-pill,
+button.month-pill,
+button.due-pill {
+  flex-direction: row !important;
+  min-height: 16px;
+  max-height: 16px;
+  min-width: auto;
+  max-width: 100%;
+}
+
 .time-pill {
   display: inline-flex; align-items: center; gap: 3px;
   padding: 0px 6px;
@@ -536,6 +580,7 @@ input::placeholder { color: var(--text-subtle); }
   white-space: nowrap;
   vertical-align: middle;
   width: auto;
+  flex-direction: row;
 }
 .time-pill.empty { background: var(--surface-2); color: var(--text-subtle); }
 .time-pill.empty:hover { background: var(--surface-3); color: var(--text-muted); }
@@ -911,6 +956,56 @@ input::placeholder { color: var(--text-subtle); }
 .skipped-count { font-size: 11px; color: var(--text-muted); font-variant-numeric: tabular-nums; min-width: 30px; text-align: right; letter-spacing: -0.005em; }
 
 .hidden { display: none !important; }
+
+/* === DRAG & DROP === */
+[data-drag-task] {
+  cursor: grab;
+}
+[data-drag-task]:active {
+  cursor: grabbing;
+}
+[data-drag-task].dragging {
+  opacity: 0.4;
+}
+.day-drop-zone {
+  height: 6px;
+  margin: 0 -8px;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+.day-drop-zone.drop-target {
+  height: 24px;
+  background: var(--accent-soft);
+  border: 1.5px dashed var(--accent);
+  margin: 4px -8px;
+}
+.compact-row.drop-target,
+.task-row.drop-target,
+.biweekly-task-cell.drop-target {
+  background: var(--accent-soft) !important;
+  outline: 1.5px dashed var(--accent);
+  outline-offset: -2px;
+}
+.biweekly-task-cell {
+  min-height: 32px;
+  transition: background 0.15s ease;
+}
+.biweekly-task-item {
+  cursor: grab;
+  padding: 2px 0;
+  transition: opacity 0.15s ease;
+}
+.biweekly-task-item.dragging {
+  opacity: 0.4;
+}
+.drag-hint {
+  font-size: 10px; color: var(--text-subtle);
+  margin-bottom: 8px; padding: 4px 8px;
+  background: var(--surface-2);
+  border-radius: 4px;
+  letter-spacing: -0.005em;
+  text-align: center;
+}
 
 /* === DASHBOARD === */
 .dashboard {
@@ -2245,9 +2340,27 @@ function renderHomeView(wt, accent) {
         <input id="quick-add-input" placeholder="+ aggiungi task veloce..." />
         <select id="quick-add-target">
           <option value="today">oggi</option>
+          <option value="day">giorno...</option>
           <option value="weekly">settimana</option>
           <option value="monthly">mensile</option>
           <option value="temporary">una tantum</option>
+        </select>
+        <select id="quick-add-day" style="display:none">
+          <option value="Lun">Lun ${wt === 'w1' ? 'W1' : 'W2'}</option>
+          <option value="Mar">Mar ${wt === 'w1' ? 'W1' : 'W2'}</option>
+          <option value="Mer">Mer ${wt === 'w1' ? 'W1' : 'W2'}</option>
+          <option value="Gio">Gio ${wt === 'w1' ? 'W1' : 'W2'}</option>
+          <option value="Ven">Ven ${wt === 'w1' ? 'W1' : 'W2'}</option>
+          <option value="Sab">Sab ${wt === 'w1' ? 'W1' : 'W2'}</option>
+          <option value="Dom">Dom ${wt === 'w1' ? 'W1' : 'W2'}</option>
+          <option disabled>──────</option>
+          <option value="Lun:${wt === 'w1' ? 'w2' : 'w1'}">Lun ${wt === 'w1' ? 'W2' : 'W1'}</option>
+          <option value="Mar:${wt === 'w1' ? 'w2' : 'w1'}">Mar ${wt === 'w1' ? 'W2' : 'W1'}</option>
+          <option value="Mer:${wt === 'w1' ? 'w2' : 'w1'}">Mer ${wt === 'w1' ? 'W2' : 'W1'}</option>
+          <option value="Gio:${wt === 'w1' ? 'w2' : 'w1'}">Gio ${wt === 'w1' ? 'W2' : 'W1'}</option>
+          <option value="Ven:${wt === 'w1' ? 'w2' : 'w1'}">Ven ${wt === 'w1' ? 'W2' : 'W1'}</option>
+          <option value="Sab:${wt === 'w1' ? 'w2' : 'w1'}">Sab ${wt === 'w1' ? 'W2' : 'W1'}</option>
+          <option value="Dom:${wt === 'w1' ? 'w2' : 'w1'}">Dom ${wt === 'w1' ? 'W2' : 'W1'}</option>
         </select>
       </div>
     </div>
@@ -2533,23 +2646,53 @@ function build4WeekHeatmap() {
   `;
 }
 
-function quickAddTask(text, target) {
-  if (!text.trim()) return;
+function moveTask(taskId, fromWt, fromDay, toWt, toDay) {
+  if (!fromWt || !fromDay || !toWt || !toDay) return;
+  if (fromWt === toWt && fromDay === toDay) return;
+
+  const fromList = state.template[fromWt][fromDay] || [];
+  const taskObj = fromList.find(t => t.id === taskId);
+  if (!taskObj) return;
+
+  const newTemplate = { ...state.template };
+  newTemplate[fromWt] = {
+    ...newTemplate[fromWt],
+    [fromDay]: fromList.filter(t => t.id !== taskId),
+  };
+  newTemplate[toWt] = {
+    ...newTemplate[toWt],
+    [toDay]: [...(newTemplate[toWt][toDay] || []), taskObj],
+  };
+  saveTemplate(newTemplate);
+  render();
+}
+
+function quickAddTask(text, target, dayValue) {
+  const currentWt = state.overrideWeekType || getWeekType(state.currentWeek);
+
   if (target === 'today') {
     const day = getTodayShort();
-    const wt = state.overrideWeekType || getWeekType(state.currentWeek);
     const newId = 'custom-' + Date.now();
     saveTemplate({
       ...state.template,
-      [wt]: { ...state.template[wt], [day]: [...(state.template[wt][day] || []), { id: newId, text }] },
+      [currentWt]: { ...state.template[currentWt], [day]: [...(state.template[currentWt][day] || []), { id: newId, text }] },
+    });
+  } else if (target === 'day' && dayValue) {
+    // dayValue formato "Lun" oppure "Lun:w2"
+    let day = dayValue, targetWt = currentWt;
+    if (dayValue.includes(':')) {
+      [day, targetWt] = dayValue.split(':');
+    }
+    const newId = 'custom-' + Date.now();
+    saveTemplate({
+      ...state.template,
+      [targetWt]: { ...state.template[targetWt], [day]: [...(state.template[targetWt][day] || []), { id: newId, text }] },
     });
   } else if (target === 'weekly') {
-    // Aggiunge a Lunedì come default
-    const wt = state.overrideWeekType || getWeekType(state.currentWeek);
     const newId = 'custom-' + Date.now();
     saveTemplate({
       ...state.template,
-      [wt]: { ...state.template[wt], 'Lun': [...(state.template[wt]['Lun'] || []), { id: newId, text }] },
+      [currentWt]: { ...state.template[currentWt], 'Lun': [...(state.template[currentWt]['Lun'] || []), { id: newId, text }] },
     });
   } else if (target === 'monthly') {
     saveMonthly([...state.monthly, { id: 'm-' + Date.now(), text }]);
@@ -2667,9 +2810,12 @@ function renderWeeklyView(wt, accent) {
     const isToday = today === day;
     const dayShort = day.toUpperCase();
 
+    // Drop zone all'inizio di ogni gruppo giorno
+    weekListHtml += `<div class="day-drop-zone" data-drop-wt="${wt}" data-drop-day="${day}"></div>`;
+
     if (list.length === 0) {
       weekListHtml += `
-        <div class="compact-row empty-row">
+        <div class="compact-row empty-row" data-drop-wt="${wt}" data-drop-day="${day}">
           <span class="day-tag ${isToday ? 'today' : ''}" ${isToday ? `style="color:${accent}"` : ''}>${dayShort}</span>
           <span class="empty-day-inline">— nessun task</span>
           <button class="add-day-btn" data-add-day="${day}" style="margin-left:auto">${ICONS.plus}</button>
@@ -2680,7 +2826,7 @@ function renderWeeklyView(wt, accent) {
     }
 
     list.forEach((t, i) => {
-      const showDayTag = i === 0; // mostra il tag solo sulla prima riga del giorno
+      const showDayTag = i === 0;
       weekListHtml += renderCompactTaskRow(t, accent, day, wt, showDayTag, isToday);
     });
 
@@ -2688,6 +2834,8 @@ function renderWeeklyView(wt, accent) {
       weekListHtml += renderAddForm(day);
     }
   });
+  // Drop zone finale per "domenica fine"
+  weekListHtml += `<div class="day-drop-zone" data-drop-wt="${wt}" data-drop-day="Dom"></div>`;
 
   // Pannello mensili SOTTO la settimana
   let monthlyPanel = '';
@@ -2705,7 +2853,7 @@ function renderWeeklyView(wt, accent) {
     }
   }
 
-  return `<div>${tempPanel}<div class="task-list">${weekListHtml}</div>${monthlyPanel}</div>`;
+  return `<div>${tempPanel}<div class="drag-hint">↕ Tieni premuto un task per spostarlo tra giorni</div><div class="task-list">${weekListHtml}</div>${monthlyPanel}</div>`;
 }
 
 function renderCompactTaskRow(task, accent, day, weekType, showDayTag, isToday) {
@@ -2740,7 +2888,7 @@ function renderCompactTaskRow(task, accent, day, weekType, showDayTag, isToday) 
     : `<span class="day-tag empty"></span>`;
 
   return `
-    <div class="task-wrapper ${flash}">
+    <div class="task-wrapper ${flash}" draggable="true" data-drag-task="${task.id}" data-drag-from-wt="${weekType}" data-drag-from-day="${day}">
       <div class="compact-row">
         ${dayTagHtml}
         <button class="checkbox ${done ? 'done' : ''}" data-toggle="${task.id}" style="${done ? `background:${accent};border-color:${accent}` : ''}">
@@ -2780,13 +2928,13 @@ function renderCompactTaskRow(task, accent, day, weekType, showDayTag, isToday) 
 function renderTimePill(task) {
   const est = getEstimate(task);
   if (!est) {
-    return `<button class="time-pill empty" data-set-time="${task.id}" title="Imposta stima tempo">${ICONS.clock} –</button>`;
+    return `<span class="time-pill empty" data-set-time="${task.id}" title="Imposta stima tempo" role="button" tabindex="0">${ICONS.clock}<span>–</span></span>`;
   }
   const cls = est.source === 'auto' ? 'auto' : (est.source === 'partial' ? 'partial' : 'manual');
   const title = est.source === 'auto'
     ? `Mediana ${est.samples} esecuzioni`
     : (est.source === 'partial' ? `${est.samples} esecuzioni` : 'Stima manuale');
-  return `<button class="time-pill ${cls}" data-set-time="${task.id}" title="${title}">${ICONS.clock} ${formatMinutes(est.value)}</button>`;
+  return `<span class="time-pill ${cls}" data-set-time="${task.id}" title="${title}" role="button" tabindex="0">${ICONS.clock}<span>${formatMinutes(est.value)}</span></span>`;
 }
 
 function renderTimePrompt(task) {
@@ -2903,17 +3051,17 @@ function renderBiweeklyView() {
       ${GIORNI.map(day => `
         <div class="biweekly-row">
           <div class="biweekly-day-cell">${GIORNI_FULL[day]}</div>
-          <div class="biweekly-task-cell" style="border-left-color:var(--w1)">
+          <div class="biweekly-task-cell" style="border-left-color:var(--w1)" data-drop-wt="w1" data-drop-day="${day}">
             ${(state.template.w1[day] || []).map(t => `
-              <div>
+              <div draggable="true" data-drag-task="${t.id}" data-drag-from-wt="w1" data-drag-from-day="${day}" class="biweekly-task-item">
                 <div class="biweekly-task-text">${escapeHtml(t.text)}</div>
                 ${t.note ? `<div class="biweekly-task-note">${escapeHtml(t.note)}</div>` : ''}
               </div>
             `).join('') || '<div class="biweekly-empty">—</div>'}
           </div>
-          <div class="biweekly-task-cell" style="border-left-color:var(--w2)">
+          <div class="biweekly-task-cell" style="border-left-color:var(--w2)" data-drop-wt="w2" data-drop-day="${day}">
             ${(state.template.w2[day] || []).map(t => `
-              <div>
+              <div draggable="true" data-drag-task="${t.id}" data-drag-from-wt="w2" data-drag-from-day="${day}" class="biweekly-task-item">
                 <div class="biweekly-task-text">${escapeHtml(t.text)}</div>
                 ${t.note ? `<div class="biweekly-task-note">${escapeHtml(t.note)}</div>` : ''}
               </div>
@@ -3417,10 +3565,19 @@ function attachEventListeners() {
   // Quick add
   const quickAddInput = document.getElementById('quick-add-input');
   const quickAddTarget = document.getElementById('quick-add-target');
+  const quickAddDay = document.getElementById('quick-add-day');
+  // Mostra/nasconde il dropdown giorno se target === 'day'
+  if (quickAddTarget && quickAddDay) {
+    quickAddTarget.addEventListener('change', () => {
+      quickAddDay.style.display = quickAddTarget.value === 'day' ? '' : 'none';
+    });
+  }
   if (quickAddInput) {
     quickAddInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' && quickAddInput.value.trim()) {
-        quickAddTask(quickAddInput.value, quickAddTarget ? quickAddTarget.value : 'today');
+        const target = quickAddTarget ? quickAddTarget.value : 'today';
+        const day = quickAddDay && target === 'day' ? quickAddDay.value : null;
+        quickAddTask(quickAddInput.value, target, day);
       }
     });
   }
@@ -3762,6 +3919,125 @@ function attachEventListeners() {
       const t = state.temporary.find(x => x.id === id);
       if (t) { saveTemporary(state.temporary.map(x => x.id === id ? { ...x, estimatedMinutes: min } : x)); render(); return; }
     });
+  });
+
+  // === DRAG & DROP TRA GIORNI/SETTIMANE ===
+  setupDragAndDrop();
+}
+
+function setupDragAndDrop() {
+  let draggedTaskId = null;
+  let draggedFromWt = null;
+  let draggedFromDay = null;
+  let touchClone = null;
+  let touchStartTimer = null;
+
+  // === HTML5 DRAG (desktop) ===
+  document.querySelectorAll('[data-drag-task]').forEach(el => {
+    el.addEventListener('dragstart', (e) => {
+      draggedTaskId = el.dataset.dragTask;
+      draggedFromWt = el.dataset.dragFromWt;
+      draggedFromDay = el.dataset.dragFromDay;
+      el.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      try { e.dataTransfer.setData('text/plain', draggedTaskId); } catch (err) {}
+    });
+    el.addEventListener('dragend', () => {
+      el.classList.remove('dragging');
+      document.querySelectorAll('.drop-target').forEach(d => d.classList.remove('drop-target'));
+    });
+  });
+
+  document.querySelectorAll('[data-drop-wt][data-drop-day]').forEach(el => {
+    el.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      el.classList.add('drop-target');
+    });
+    el.addEventListener('dragleave', () => {
+      el.classList.remove('drop-target');
+    });
+    el.addEventListener('drop', (e) => {
+      e.preventDefault();
+      el.classList.remove('drop-target');
+      if (!draggedTaskId) return;
+      const toWt = el.dataset.dropWt;
+      const toDay = el.dataset.dropDay;
+      moveTask(draggedTaskId, draggedFromWt, draggedFromDay, toWt, toDay);
+      draggedTaskId = null;
+    });
+  });
+
+  // === TOUCH (mobile) — long press 400ms per attivare ===
+  document.querySelectorAll('[data-drag-task]').forEach(el => {
+    el.addEventListener('touchstart', (e) => {
+      const touch = e.touches[0];
+      const startX = touch.clientX, startY = touch.clientY;
+      let activated = false;
+
+      touchStartTimer = setTimeout(() => {
+        activated = true;
+        draggedTaskId = el.dataset.dragTask;
+        draggedFromWt = el.dataset.dragFromWt;
+        draggedFromDay = el.dataset.dragFromDay;
+        el.classList.add('dragging');
+        touchClone = el.cloneNode(true);
+        touchClone.style.position = 'fixed';
+        touchClone.style.pointerEvents = 'none';
+        touchClone.style.opacity = '0.85';
+        touchClone.style.zIndex = '9999';
+        touchClone.style.left = (startX - 80) + 'px';
+        touchClone.style.top = (startY - 20) + 'px';
+        touchClone.style.width = '200px';
+        touchClone.style.background = 'white';
+        touchClone.style.boxShadow = '0 8px 24px rgba(0,0,0,0.2)';
+        touchClone.style.borderRadius = '6px';
+        touchClone.style.padding = '4px 8px';
+        document.body.appendChild(touchClone);
+        if (navigator.vibrate) navigator.vibrate(30);
+      }, 400);
+
+      const onMove = (ev) => {
+        const t = ev.touches[0];
+        if (!activated) {
+          if (Math.abs(t.clientX - startX) > 8 || Math.abs(t.clientY - startY) > 8) {
+            clearTimeout(touchStartTimer);
+            el.removeEventListener('touchmove', onMove);
+            el.removeEventListener('touchend', onEnd);
+          }
+          return;
+        }
+        ev.preventDefault();
+        if (touchClone) {
+          touchClone.style.left = (t.clientX - 80) + 'px';
+          touchClone.style.top = (t.clientY - 20) + 'px';
+        }
+        const elemBelow = document.elementFromPoint(t.clientX, t.clientY);
+        document.querySelectorAll('.drop-target').forEach(d => d.classList.remove('drop-target'));
+        const dropZone = elemBelow ? elemBelow.closest('[data-drop-wt][data-drop-day]') : null;
+        if (dropZone) dropZone.classList.add('drop-target');
+      };
+
+      const onEnd = (ev) => {
+        clearTimeout(touchStartTimer);
+        el.removeEventListener('touchmove', onMove);
+        el.removeEventListener('touchend', onEnd);
+        if (!activated) return;
+        const t = ev.changedTouches[0];
+        const elemBelow = document.elementFromPoint(t.clientX, t.clientY);
+        const dropZone = elemBelow ? elemBelow.closest('[data-drop-wt][data-drop-day]') : null;
+        if (dropZone && draggedTaskId) {
+          moveTask(draggedTaskId, draggedFromWt, draggedFromDay, dropZone.dataset.dropWt, dropZone.dataset.dropDay);
+        }
+        if (touchClone) { touchClone.remove(); touchClone = null; }
+        document.querySelectorAll('.drop-target').forEach(d => d.classList.remove('drop-target'));
+        el.classList.remove('dragging');
+        draggedTaskId = null;
+      };
+
+      el.addEventListener('touchmove', onMove, { passive: false });
+      el.addEventListener('touchend', onEnd);
+    }, { passive: true });
   });
 }
 
